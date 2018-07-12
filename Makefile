@@ -6,18 +6,19 @@ PATH_SRCS = srcs
 PATH_INCS = incs
 PATH_OBJS = objs
 
-SRCS = $(addprefix $(PATH_SRCS)/, main.cpp )
+SRCS = $(addprefix $(PATH_SRCS)/, main.cpp \
+		Reader.cpp )
 OBJS = $(SRCS:$(PATH_SRCS)/%.cpp=$(PATH_OBJS)/%.o)
 
 
 all: $(NAME)
 
 $(NAME): $(OBJS)
-	$(CC) $(FLAGS) -o $@ $^ -I $(PATH_INCS)
+	$(CC) $(FLAGS) -o $@ $^
 
 $(PATH_OBJS)/%.o: $(PATH_SRCS)/%.cpp
 	@test -d $(PATH_OBJS) || mkdir $(PATH_OBJS)
-	$(CC) $(FLAGS) -c $< -o $@
+	$(CC) $(FLAGS) -c $< -o $@ -I $(PATH_INCS)
 
 clean:
 	rm -rf $(OBJS)
