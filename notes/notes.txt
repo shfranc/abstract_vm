@@ -1,0 +1,104 @@
+ABTRACT_VM
+==========
+
+voir man dc - une stack qui pop des nombres et push un résultat.
+reverse polish notation RNP / notation polonaise inversée NPI
+3 x ( 4 + 7 ) <=> 3 4 7 + x
+((1 + 2) × 4) + 3 <=> 3 4 1 2 + x + or 1 2 + 4 x 3 +
+etapes:
+	- pousser l'operande 1
+	- pousser l'operande 2
+	- Addition --> 3
+	- pousser l'operande 4
+	- Multiplication --> 12
+	- pousser l'operande 3
+	- Addition --> 15 (est en haut de la pile)
+
+This virtual machine has a classical architecture:
+* CPU - Central Processing Unit
+perform basic arithmetic, logical, control and input/output operations 
+1960s - CPU is a processor
+Princpal components of a CPU :
+	- arithmetic logic unit (ALU): performs arithmetic and logical operations
+	- processor registers: supply operands to the ALU and store the results
+	  of the ALU operations
+	- control unit: manage the fetching (from memory) and the execution of
+	  instructions by directing the coordinated operations of the ALU,
+registers and other components.
+Modern CPUs are microprocessors, they are contained on a single ntegrated
+circuit, an IC contains a CPU but also, memory, peripherical interfaces, and
+other components (such as microcontrollers or SoC, Systems on a Chip)
+Multi-core processors: a single chip containing 2 or more CPUs called 'cores'
+--> sockets
+
+* Chipset
+
+* Computer Data Storage
+
+* Input/Output
+
+AbstractVM language:
+--------------------
+comments: begin with ';' <semicolon> and end with <newline>
+PUSH v: push the value v on the top of the stack
+	form of v:
+		int8(n): 8 bits integer with value n.
+		int16(n)
+		int32(n)
+		float(z): create a float with a value z.
+		double(z): create a double with a value z.
+POP: unstack the value from the top of the stack
+DUMP: display the values of the stack from the newest to the oldest, separated
+by a newline
+ASSERT v: assert that the value of the top of the stack is equal to the one
+passed as parameter. if not, the program stops with an error. v has the same
+forms as v for push.
+ADD: unstack the first two value of the stack, adds them together and stacks
+the result. If less than 2 values in the stack, the progran ends with an
+error.
+SUB: substracks or end with an error if less than 2 values.
+MUL: multiplies or end with an error if less than 2 values.
+DIV: divides or end with an error if less than 2 values. And if divisor is
+equal to 0, program end with an error. Quid floating point values ?
+MOD: similar to DIV
+PRINT: assert the value from the top of the stack is an int8 and print the
+ascii value. if not, assert will end with an error.
+EXIT: terminate the execution of the current program. if no exit at the end of
+the file, the execution must end with an error.
+
+Result is given with the most precise type. Precision is not trivial.
+
+GRAMMAR:
+S := INSTR [SEP INSTR]* #
+
+INSTR := push VALUE
+| pop
+| dump
+| assert VALUE
+| add
+| sub
+| mul
+| div
+| mod
+| print
+| exit
+
+VALUE := int8(N)
+| int16(N)
+| int32(N)
+| float(Z)
+| double(Z)
+
+N := [-]?[0..9]+
+
+Z := [-]?[0..9]+.[0..9]+
+
+SEP := '\n'+
+
+Errors:
+Scalar exceptions ??
+Exception will inherits from std::exception
+
+BONUS:
+------
+diagnose all errors and do not stop at the first one encountered.
