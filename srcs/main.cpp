@@ -1,4 +1,5 @@
-#include <Reader.hpp>
+#include "Reader.hpp"
+#include "Parser.hpp"
 
 void	ft_usage( void )
 {
@@ -8,6 +9,7 @@ void	ft_usage( void )
 int main( int argc, char const *argv[] )
 {
 	Reader	*input;
+	Parser	parser;
 
 	if (argc == 1)
 		input = new Reader();
@@ -21,6 +23,8 @@ int main( int argc, char const *argv[] )
 	try {
 		input->read();
 		std::cout << *input;
+		parser.parse( input->getContent() );
+		std::cout << parser;
 	}
 	catch ( std::invalid_argument e) {
 		std::cout << e.what() << std::endl;		
