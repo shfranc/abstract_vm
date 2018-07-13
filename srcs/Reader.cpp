@@ -1,59 +1,64 @@
 #include "Reader.hpp"
 
-Reader::Reader( void ) {
+Reader::Reader( void ) : _filename("") {
 
-    return;
+	return;
+}
+
+Reader::Reader( std::string filename ) : _filename(filename) {
+
+	return;
 }
 
 Reader::~Reader( void ) {
 
-    return;
+	return;
+}
+
+void		Reader::read( void ) {
+
+	if ( _filename != "" )
+		read_file();
+	else
+		read_stdin();
 }
 
 void		Reader::read_stdin( void ) {
 
 	std::string		buff;
 
+	std::cout << "> ";
 	while ( std::getline( std::cin, buff ) )
 	{
-		_content.push_back( buff );
-		std::cout << _content[_content.size() - 1] << std::endl;
+		_content += buff + '\n';
 		if ( buff.find(";;") != std::string::npos )
 			break ;
+		std::cout << "> ";
 	}
 }
 
-void		Reader::read_file( std::string filename ) {
+void		Reader::read_file( void ) {
 
-	std::ifstream	file( filename );
+	std::ifstream	file( _filename );
 	std::string 	buff;
 
-	if (!file.is_open())
+	std::cout << "Reading file " << _filename << std::endl;
+	if ( !file.is_open() )
 		throw std::invalid_argument("Error: file is not open or didn't exist"); // directory
 	while ( std::getline( file, buff ) )
 	{
-		_content.push_back( buff );
-		std::cout << _content[_content.size() - 1] << std::endl;
+		_content += buff + '\n';
 	}
 	file.close();
 }
 
 // ACCESSOR
-std::vector<std::string> *	Reader::getContent( void ) const { return _content; };
+std::string			Reader::getContent( void ) const { return _content; };
 
 // OPERATOR <<
 
-std::ostream &				operator<<( std::ostream & o, Reader & src ) {
+std::ostream &		operator<<( std::ostream & o, Reader & src ) {
 
-	std::vector<std::string> *	v;
-	unsigned int len;
-
-	v = src.getContent();
-	len = v->size();
-	for (unsigned int i = 0; i < len; i++)
-	{
-		o << v[0] << std::endl;
-	}
-
+	o << src.getContent();
 	return o;
 }

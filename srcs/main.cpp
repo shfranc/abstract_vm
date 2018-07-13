@@ -7,27 +7,25 @@ void	ft_usage( void )
 
 int main( int argc, char const *argv[] )
 {
-	Reader	input;
+	Reader	*input;
 
 	if (argc == 1)
-	{	
-		std::cout << "mode std::cin" << std::endl;
-		input.read_stdin();
-		std::cout << input << std::endl;
-	}
+		input = new Reader();
 	else if (argc == 2)
-	{
-		std::cout << "mode file: " << argv[1] << std::endl;
-		try {
-			input.read_file(argv[1]);
-			std::cout << input << std::endl;
-		}
-		catch ( std::invalid_argument e)
-		{
-			std::cout << e.what() << std::endl;		
-		}
-	}
-	else
+		input = new Reader(argv[1]);
+	else {
 		ft_usage();
+		return 1;
+	}
+
+	try {
+		input->read();
+		std::cout << *input;
+	}
+	catch ( std::invalid_argument e) {
+		std::cout << e.what() << std::endl;		
+	}
+	
+	delete input;
 	return 0;
 }

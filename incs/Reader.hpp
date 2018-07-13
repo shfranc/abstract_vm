@@ -10,14 +10,18 @@ class Reader {
 public:
 
 	Reader( void );
+	Reader( std::string filename );
 	~Reader( void );
 
-	void							read_stdin( void );
-	void							read_file( std::string filename );
-	std::vector<std::string> &		getContent( void ) const;
+	void			read( void );
+	std::string		getContent( void ) const;
 
 private:
-	std::vector<std::string>	_content;
+	std::string		_filename;
+	std::string		_content;
+
+	void			read_stdin( void );
+	void			read_file( void );
 
 	Reader( Reader const & src );
 	Reader & operator=( Reader const & rhs );
