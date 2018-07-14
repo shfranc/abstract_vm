@@ -18,6 +18,13 @@ private:
 	size_t			_line;
 	std::string		_input;
 
+	bool			isWhitespaces( char c );
+	bool			isNewline( char c );
+	void			skipWhitespaces( void );
+	void			skipNewline( void );
+	std::string		createToken( void );
+
+
 	Lexer( Lexer const & src );
 	Lexer & operator=( Lexer const & rhs );
 };
