@@ -20,8 +20,10 @@ private:
 
 	bool			isWhitespaces( char c );
 	bool			isNewline( char c );
+	bool			isComment( char c );
 	void			skipWhitespaces( void );
 	void			skipNewline( void );
+	void			skipComment( void );
 	std::string		createToken( void );
 
 
