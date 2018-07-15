@@ -14,11 +14,11 @@ public:
 
 	void						parse( std::string input );
 
-	std::vector<std::string> const &	getInstructions( void ) const;
+	std::vector<Token> const &	getInstructions( void ) const;
 
 private:
 
-	std::vector<std::string>		_instructions;
+	std::vector<Token>		_instructions;
 
 	Parser( Parser const & src );	
 	Parser & operator=( Parser const & rhs );

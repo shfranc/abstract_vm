@@ -15,7 +15,7 @@ Lexer::~Lexer( void ) {
 	return;
 }
 
-std::string		Lexer::getNextToken( void ) {
+Token &			Lexer::getNextToken( void ) {
 
 	while( _pos < _input.size() )
 	{
@@ -27,8 +27,9 @@ std::string		Lexer::getNextToken( void ) {
 		if ( isNewline(_input[_pos]) ) {
 			std::cout << "newline: " << _line << std::endl;
 			skipNewline();
+			return ( Token("\n") );
 		}
-		else if ( isComment(_input[_pos]) ) {
+		if ( isComment(_input[_pos]) ) {
 			std::cout << "skip comment" << std::endl;
 			skipComment();
 		}
@@ -72,10 +73,10 @@ void			Lexer::skipComment( void ) {
 	skipNewline();
 }
 
-std::string		Lexer::createToken( void ) {
+Token			Lexer::createToken( void ) {
 
 	size_t		len = 0;
-	size_t		start = _pos;
+	// size_t		start = _pos;
 
 	std::cout << "create token: ";
 	while ( !isWhitespaces(_input[_pos + len]) && !isNewline(_input[_pos + len]) )
@@ -87,5 +88,6 @@ std::string		Lexer::createToken( void ) {
 
 	std::cout << std::endl;
 	
-	return ( _input.substr (start, len) );
+	// return ( _input.substr (start, len) );
+	return ( Token("add") );
 }

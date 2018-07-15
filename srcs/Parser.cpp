@@ -13,10 +13,22 @@ Parser::~Parser( void ) {
 void	Parser::parse( std::string input ) {
 
 	Lexer			lexer(input);
-	std::string		token;
+	Token			currentToken;
+	Token			token;
 
-	while ( (token = lexer.getNextToken()) != ""  )
-		_instructions.push_back(token);
+	currentToken = "";
+	while ( (token = lexer.getNextToken()) != "" ) {
+
+		if (currentToken == "add" && token == "\n")
+		{
+			std::cout << "adding " << currentToken << std::endl;
+			_instructions.push_back(currentToken;
+		}
+		else
+			std::cerr << "more than one instruction on the same line" << std::endl;
+		currentToken = token;
+
+	}
 	// verifier si c'est un token reconnu ?
 	// if PUSH or ASSERT --> getNextToken pour chopper la Value.
 }
@@ -35,7 +47,7 @@ std::ostream &		operator<<( std::ostream & o, Parser const & src ) {
 
 	for (size_t i = 0; i < len; i++)
 	{
-		o << v[i] << std::endl;
+		o << v[i].getStr() << std::endl;
 	}
 
 	return o;
