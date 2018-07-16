@@ -13,21 +13,15 @@ Parser::~Parser( void ) {
 void	Parser::parse( std::string input ) {
 
 	Lexer			lexer(input);
-	Token			currentToken;
-	Token			token;
+	Token			*token;
 
-	currentToken = "";
-	while ( (token = lexer.getNextToken()) != "" ) {
-
-		if (currentToken == "add" && token == "\n")
-		{
-			std::cout << "adding " << currentToken << std::endl;
-			_instructions.push_back(currentToken;
+	while ( (token = lexer.getNextToken()) != nullptr ) {
+		if ( token->getType() != SEP) {
+			std::cout << "adding " << token->getStr() << std::endl;
+			_instructions.push_back(*token);
 		}
-		else
-			std::cerr << "more than one instruction on the same line" << std::endl;
-		currentToken = token;
-
+		std::cout << "je delete: ";
+		delete token;
 	}
 	// verifier si c'est un token reconnu ?
 	// if PUSH or ASSERT --> getNextToken pour chopper la Value.
@@ -36,7 +30,7 @@ void	Parser::parse( std::string input ) {
 // PRIVATE
 
 // ACCESSOR
-std::vector<std::string> const &	Parser::getInstructions( void ) const { return _instructions; }
+std::vector<Token> const &	Parser::getInstructions( void ) const { return _instructions; }
 
 
 // OPERATOR <<
@@ -47,7 +41,7 @@ std::ostream &		operator<<( std::ostream & o, Parser const & src ) {
 
 	for (size_t i = 0; i < len; i++)
 	{
-		o << v[i].getStr() << std::endl;
+		o << v[i].getStr() << "\t" << v[i].getType() << std::endl;
 	}
 
 	return o;

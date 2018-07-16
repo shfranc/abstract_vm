@@ -1,17 +1,7 @@
 #ifndef LEXER_HPP
 # define LEXER_HPP
 
-# include <iostream>
 # include "Token.hpp"
-
-# define	SEPARATOR "\n"
-
-enum tokenType
-{
-	SEP,
-	INSTRUCT,
-	OPERAND
-};
 
 class Lexer {
 
@@ -21,7 +11,7 @@ public:
 	Lexer( std::string input );
 	~Lexer( void );
 
-	Token			getNextToken( void );	
+	Token *			getNextToken( void );	
 
 private:
 	size_t			_pos;
@@ -34,7 +24,7 @@ private:
 	void			skipWhitespaces( void );
 	void			skipNewline( void );
 	void			skipComment( void );
-	Token			createToken( void );
+	Token *			createToken( void );
 
 
 	Lexer( Lexer const & src );

@@ -1,7 +1,9 @@
 #ifndef TOKEN_HPP
 # define TOKEN_HPP
 
-enum token
+# include <iostream>
+
+enum tokenType
 {
 	NONE,
 	PUSH,
@@ -14,7 +16,9 @@ enum token
 	DIV,
 	MOD,
 	PRINT,
-	EXIT
+	EXIT,
+	SEP,
+	VALUE
 };
 
 class Token {
@@ -27,11 +31,15 @@ public:
 	~Token( void );
 
 	Token & operator=( Token const & rhs );
+	std::string		getStr( void ) const;
+	int				getType( void ) const;
 
 
 private:
 	std::string		_str;
 	int				_type;
+
+	int				tokenType( void );
 
 };
 
