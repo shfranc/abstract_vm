@@ -42,7 +42,7 @@ std::vector<std::string> const &	Parser::getInstructions( void ) const { return 
 // OPERATOR <<
 
 std::ostream &		operator<<( std::ostream & o, Parser const & src ) {
-	std::vector<std::string> const &	v = src.getInstructions();
+	std::vector<Token> const &	v = src.getInstructions();
 	size_t	len = v.size();
 
 	for (size_t i = 0; i < len; i++)

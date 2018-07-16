@@ -11,9 +11,25 @@ Token::Token( std::string str ) : _str(str) {
 	return;
 }
 
+Token::Token( Token const & src ) {
+
+	*this = src;
+	return;
+}
+
 Token::~Token( void ) {
 
 	return;
+}
+
+Token &	Token::operator=( Token const & rhs ) {
+	
+	if ( this != &rhs ) {
+		_str = rhs._str;
+		_type = rhs._type;
+	}
+	
+    return *this;
 }
 
 void		tokenType( void ) {

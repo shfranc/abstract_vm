@@ -23,15 +23,15 @@ public:
 
 	Token( void );
 	Token( std::string str );
+	Token( Token const & src );
 	~Token( void );
+
+	Token & operator=( Token const & rhs );
 
 
 private:
 	std::string		_str;
 	int				_type;
-
-	Token( Token const & src );
-	Token & operator=( Token const & rhs );
 
 };
 

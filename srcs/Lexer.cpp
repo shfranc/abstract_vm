@@ -15,7 +15,7 @@ Lexer::~Lexer( void ) {
 	return;
 }
 
-Token &			Lexer::getNextToken( void ) {
+Token			Lexer::getNextToken( void ) {
 
 	while( _pos < _input.size() )
 	{
@@ -36,7 +36,7 @@ Token &			Lexer::getNextToken( void ) {
 		else
 			return ( createToken() );
 	}
-	return "";
+	return ( Token("") );
 }
 
 bool			Lexer::isWhitespaces( char c ) {

@@ -21,7 +21,7 @@ public:
 	Lexer( std::string input );
 	~Lexer( void );
 
-	Token &			getNextToken( void );	
+	Token			getNextToken( void );	
 
 private:
 	size_t			_pos;
