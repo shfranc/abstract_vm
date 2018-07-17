@@ -22,9 +22,11 @@ private:
 	bool			isWhitespaces( char c );
 	bool			isNewline( char c );
 	bool			isComment( char c );
+	bool			isEndOfInstr( void );
 	void			skipWhitespaces( void );
 	void			skipNewline( void );
 	void			skipComment( void );
+	void			skipEndOfInstr( void );
 	Token *			createToken( void );
 
 

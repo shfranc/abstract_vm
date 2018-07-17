@@ -67,7 +67,7 @@ int		Token::checkInstr( void ) {
 		return (MOD);
 	if ( _str == "print" )
 		return (PRINT);
-	if ( _str == "exit" )
+	if ( _str == "exit" || _str == ";;" )
 		return (EXIT);
 	return (NONE);
 }
