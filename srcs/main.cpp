@@ -8,6 +8,22 @@ void	ft_usage( void )
 
 int main( int argc, char const *argv[] )
 {
+	Avm		*avm;
+
+	if (argc == 1)
+		avm = Avm();
+	else if (argc == 2)
+		avm = new Avm(argv[1]);
+	else {
+		ft_usage();
+		return 1;
+	}
+
+	return 0;
+}
+
+int main( int argc, char const *argv[] )
+{
 	Reader	*input;
 	Parser	*parser;
 

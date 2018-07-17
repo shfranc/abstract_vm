@@ -1,0 +1,20 @@
+push int8(0)
+pop
+dump
+assert int8(0)
+add
+sub
+mul
+div
+mod
+print
+exit
+int8(0)
+int16(0)
+int32(0)
+int99(0)
+float(0)
+float9(0)
+double7(0)
+double(0)
+
