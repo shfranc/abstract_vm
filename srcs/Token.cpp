@@ -6,7 +6,7 @@ Token::Token( void ) : _str(""), _type(NONE) {
 	return;
 }
 
-Token::Token( std::string str ) : _str(str), _type( tokenType() ) {
+Token::Token( std::string str ) : _str(str), _type( checkType() ) {
 
 	std::cout << "Token: param contruct " << _str << std::endl;
 	return;
@@ -35,7 +35,17 @@ Token &	Token::operator=( Token const & rhs ) {
     return *this;
 }
 
-int		Token::tokenType( void ) {
+int		Token::checkType( void ) {
+	if ( (_instr = checkInstr()) != NONE )
+		return (INSTR);
+	if ( checkValue() != NONE )
+		return (VALUE);
+	if ( _str == "<newline>" )
+		return (SEP);
+	return (INVALID);
+}
+
+int		Token::checkInstr( void ) {
 
 	if ( _str == "push" )
 		return (PUSH);
@@ -59,13 +69,31 @@ int		Token::tokenType( void ) {
 		return (PRINT);
 	if ( _str == "exit" )
 		return (EXIT);
-	if ( _str == "<newline>" )
-		return (SEP);
-	if ( std::strncmp(_str.c_str(), "int", 3) == 0 || std::strncmp(_str.c_str(), "float", 5) == 0 || std::strncmp(_str.c_str(), "double", 6) == 0 ) // regex ?
-		return (VALUE);
 	return (NONE);
+}
+
+int		Token::checkValue( void ) {
+
+	if ( std::regex_match(_str, std::regex("int(8|16|32)[(][-]?[0-9]+[)]") ) )
+	{
+		_value = V_INT;
+		return (VALUE);
+	}
+	if ( std::regex_match(_str, std::regex("float[(][-]?[0-9]+[.]?[0-9]*[)]") ) )
+	{
+		_value = V_FLOAT;
+		return (VALUE);
+	}
+	if ( std::regex_match(_str, std::regex("double[(][-]?[0-9]+[.]?[0-9]*[)]") ) )
+	{
+		_value = V_DOUBLE;
+		return (VALUE);
+	}
+	return (NONE);		
 }
 
 // ACCESSOR
 std::string		Token::getStr( void ) const { return _str; }
 int				Token::getType( void ) const { return _type; }
+int				Token::getInstr( void ) const { return _instr; }
+int				Token::getValue( void ) const { return _value; }

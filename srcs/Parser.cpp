@@ -14,17 +14,36 @@ void	Parser::parse( std::string input ) {
 
 	Lexer			lexer(input);
 	Token			*token;
+	size_t			line;
 
 	while ( (token = lexer.getNextToken()) != nullptr ) {
-		if ( token->getType() != SEP) {
-			std::cout << "adding " << token->getStr() << std::endl;
-			_instructions.push_back(*token);
+
+		if ( token->getType() == INVALID ) {
+			std::cerr << "Line " << lexer.getLine() << ": Parser error: " << token->getStr() << " invalid token." << std::endl;
+			exit(1);
 		}
+		else if ( token->getType() == INSTR ) {
+
+			if ( token->getType() == PUSH || token->getType() == ASSERT ) {
+				_instructions.push_back(*token);
+				line = lexer.getLine();
+				token = lexer.getNextToken();
+				
+				if ( token->getType() != VALUE ) {
+					std::cerr << "Line " << line << ": Parser error: " << "a value was expected." << std::endl;
+					exit(1);
+				}
+				else
+					_instructions.push_back(*token);
+
+			}
+			else
+				_instructions.push_back(*token);
+		}
+
 		std::cout << "je delete: ";
 		delete token;
 	}
-	// verifier si c'est un token reconnu ?
-	// if PUSH or ASSERT --> getNextToken pour chopper la Value.
 }
 
 // PRIVATE

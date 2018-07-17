@@ -89,5 +89,7 @@ Token *			Lexer::createToken( void ) {
 	std::cout << std::endl;
 	
 	return ( new Token( _input.substr (start, len) ) );
-	// return ( new Token("add") );
 }
+
+// ACCESSOR
+size_t			Lexer::getLine( void ) const { return _line; }
