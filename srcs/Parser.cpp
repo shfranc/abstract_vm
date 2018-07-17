@@ -27,13 +27,15 @@ void	Parser::parse( std::string input ) {
 
 			if ( token->getInstr() == PUSH || token->getInstr() == ASSERT ) {
 				std::cout << "check push or assert" << std::endl;
-				prevToken = token;				
+				
 				line = lexer.getLine();
+				prevToken = token;				
 				token = lexer.getNextToken();
 				
 				if ( token->getType() == VALUE ) {
 					_instructions.push_back(*prevToken);
 					_instructions.push_back(*token);
+
 				}
 				else {
 					std::cerr << "Line " << line << ": Parsing error: " << "expecting VALUE after `" << prevToken->getStr() << "'." << std::endl;
@@ -41,23 +43,24 @@ void	Parser::parse( std::string input ) {
 				}
 			}
 			else {
-				prevToken = token;
+				
 				line = lexer.getLine();
+				prevToken = token;
 				token = lexer.getNextToken();
-				if ( token == nullptr || token->getType() == SEP )
+				
+				if ( token == nullptr || token->getType() == SEP ) {
 					_instructions.push_back(*prevToken);
+				}
 				else {
 					std::cerr << "Line " << line << ": Parsing error: " << "expecting <newline> after `" << prevToken->getStr() << "'." << std::endl;
 					// exit(1);
 				}
 			}
+			delete prevToken;
 		}
-		// std::cout << "je delete: ";
-		// delete token;
+		delete token;
 	}
 }
-
-// PRIVATE
 
 // ACCESSOR
 std::vector<Token> const &	Parser::getInstructions( void ) const { return _instructions; }
