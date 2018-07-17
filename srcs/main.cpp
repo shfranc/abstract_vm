@@ -9,7 +9,7 @@ void	ft_usage( void )
 int main( int argc, char const *argv[] )
 {
 	Reader	*input;
-	Parser	parser;
+	Parser	*parser;
 
 	if (argc == 1)
 		input = new Reader();
@@ -22,14 +22,15 @@ int main( int argc, char const *argv[] )
 
 	try {
 		input->read();
-		std::cout << *input;
-		parser.parse( input->getContent() );
-		std::cout << parser;
+		parser = new Parser( input->getContent() );
+		parser->parse();
+		std::cout << *parser;
 	}
 	catch ( std::invalid_argument e) {
 		std::cout << e.what() << std::endl;		
 	}
 	
 	delete input;
+	delete parser;
 	return 0;
 }

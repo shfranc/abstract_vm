@@ -2,26 +2,22 @@
 
 Token::Token( void ) : _str(""), _type(NONE) {
 
-	std::cout << "Token: default contruct " << _str << std::endl;
 	return;
 }
 
 Token::Token( std::string str ) : _str(str), _type( checkType() ) {
 
-	std::cout << "Token: param contruct " << _str << std::endl;
 	return;
 }
 
 Token::Token( Token const & src ) {
 
-	std::cout << "Token: copy contruct " << src._str << std::endl;
 	*this = src;
 	return;
 }
 
 Token::~Token( void ) {
 
-	std::cout << "Token: destruct " << _str << std::endl;
 	return;
 }
 
@@ -42,6 +38,8 @@ int		Token::checkType( void ) {
 		return (VALUE);
 	if ( _str == "<newline>" )
 		return (SEP);
+	if ( _str == ";;" )
+		return (END_INSTR);	
 	return (INVALID);
 }
 
@@ -67,7 +65,7 @@ int		Token::checkInstr( void ) {
 		return (MOD);
 	if ( _str == "print" )
 		return (PRINT);
-	if ( _str == "exit" || _str == ";;" )
+	if ( _str == "exit" )
 		return (EXIT);
 	return (NONE);
 }

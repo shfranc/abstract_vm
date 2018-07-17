@@ -9,7 +9,8 @@ enum tokenType
 	INVALID,
 	INSTR,
 	SEP,
-	VALUE
+	VALUE,
+	END_INSTR
 };
 
 enum tokenInstr

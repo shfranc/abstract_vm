@@ -1,6 +1,6 @@
 #include "Lexer.hpp"
 
-Lexer::Lexer( void ) { // n'a pas de sens
+Lexer::Lexer( void ) {
 	
 	return;
 }
@@ -20,22 +20,18 @@ Token *			Lexer::getNextToken( void ) {
 	while( _pos < _input.size() )
 	{
 		if ( isWhitespaces(_input[_pos]) ) {
-			std::cout << "space" << std::endl;
 			skipWhitespaces();
 			continue ;
 		}
 		if ( isNewline(_input[_pos]) ) {
-			std::cout << "newline: " << _line << std::endl;
 			skipNewline();
 			return ( new Token("<newline>") );
 		}
 		if ( isEndOfInstr() ) {
-			std::cout << ";; found" << std::endl;
 			skipEndOfInstr();
 			return ( new Token(";;") );
 		}		
 		if ( isComment(_input[_pos]) ) {
-			std::cout << "skip comment" << std::endl;
 			skipComment();
 		}
 		else
@@ -93,16 +89,9 @@ Token *			Lexer::createToken( void ) {
 	size_t		len = 0;
 	size_t		start = _pos;
 
-	std::cout << "create token: ";
 	while ( !isWhitespaces(_input[_pos + len]) && !isNewline(_input[_pos + len]) )
-	{
-		std::cout << _input[_pos + len];
 		len++;
-	}
 	_pos += len;
-
-	std::cout << std::endl;
-	
 	return ( new Token( _input.substr (start, len) ) );
 }
 

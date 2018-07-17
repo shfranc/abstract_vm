@@ -1,36 +1,35 @@
 #include "Parser.hpp"
 
-Parser::Parser( void ) {
+Parser::Parser( std::string input ) : _lexer( new Lexer(input) ) {
 	
 	return;
 }
 
 Parser::~Parser( void ) {
 
+	delete _lexer;
 	return;
 }
 
-void	Parser::parse( std::string input ) {
+void	Parser::parse( void ) {
 
-	Lexer			lexer(input);
 	Token			*prevToken;
 	Token			*token;
 	size_t			line;
 
-	while ( (token = lexer.getNextToken()) != nullptr ) {
+	while ( (token = _lexer->getNextToken()) != nullptr ) {
 
 		if ( token->getType() == INVALID ) {
-			std::cerr << "Line " << lexer.getLine() << ": Parsing error: `" << token->getStr() << "' is an invalid token" << std::endl;
+			std::cerr << "Line " << _lexer->getLine() << ": Parsing error: `" << token->getStr() << "' is an invalid token" << std::endl;
 			// exit(1);
 		}
 		else if ( token->getType() == INSTR ) {
 
 			if ( token->getInstr() == PUSH || token->getInstr() == ASSERT ) {
-				std::cout << "check push or assert" << std::endl;
 				
-				line = lexer.getLine();
+				line = _lexer->getLine();
 				prevToken = token;				
-				token = lexer.getNextToken();
+				token = _lexer->getNextToken();
 				
 				if ( token->getType() == VALUE ) {
 					_instructions.push_back(*prevToken);
@@ -44,9 +43,9 @@ void	Parser::parse( std::string input ) {
 			}
 			else {
 				
-				line = lexer.getLine();
+				line = _lexer->getLine();
 				prevToken = token;
-				token = lexer.getNextToken();
+				token = _lexer->getNextToken();
 				
 				if ( token == nullptr || token->getType() == SEP ) {
 					_instructions.push_back(*prevToken);

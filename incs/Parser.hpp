@@ -9,17 +9,18 @@ class Parser {
 
 public:
 
-	Parser( void );
+	Parser( std::string input );
 	~Parser( void );
 
-	void						parse( std::string input );
+	void						parse( void );
 
 	std::vector<Token> const &	getInstructions( void ) const;
 
 private:
-
+	Lexer					*_lexer;
 	std::vector<Token>		_instructions;
-
+	
+	Parser( void );
 	Parser( Parser const & src );	
 	Parser & operator=( Parser const & rhs );
 
