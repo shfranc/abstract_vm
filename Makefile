@@ -7,6 +7,7 @@ PATH_INCS = incs
 PATH_OBJS = objs
 
 SRCS = $(addprefix $(PATH_SRCS)/, main.cpp \
+		Avm.cpp \
 		Reader.cpp \
 		Lexer.cpp \
 		Token.cpp \

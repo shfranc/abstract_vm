@@ -1,22 +1,21 @@
 #ifndef TOKEN_HPP
 # define TOKEN_HPP
 
-# include <iostream>
-#include <regex>
+# include <regex>
 
 enum tokenType
 {
 	INVALID,
 	INSTR,
-	SEP,
 	VALUE,
+	SEP,
 	END_INSTR
 };
 
 enum tokenInstr
 {
-	NONE,
-	PUSH,
+	NONE = 0,
+	PUSH = 6,
 	POP,
 	DUMP,
 	ASSERT,
@@ -31,7 +30,7 @@ enum tokenInstr
 
 enum tokenValue
 {
-	V_INT,
+	V_INT = 17,
 	V_FLOAT,
 	V_DOUBLE
 };
@@ -45,22 +44,21 @@ public:
 	Token( Token const & src );
 	~Token( void );
 
-	Token & operator=( Token const & rhs );
-	std::string		getStr( void ) const;
-	int				getType( void ) const;
-	int				getInstr( void ) const;
-	int				getValue( void ) const;
-
+	Token & 			operator=( Token const & rhs );
+	std::string			getStr( void ) const;
+	int					getInstr( void ) const;
+	int					getValue( void ) const;
+	int					getType( void ) const;
 
 private:
-	std::string		_str;
-	int				_type;
-	int				_instr;
-	int				_value;
+	std::string			_str;
+	int					_instr;
+	int					_value;
+	int					_type;
 
-	int				checkType( void );
-	int				checkInstr( void );
-	int				checkValue( void );
+	int					checkInstr( void );
+	int					checkValue( void );
+	int					checkType( void );
 
 };
 

@@ -1,9 +1,9 @@
 #ifndef PARSER_HPP
 # define PARSER_HPP
 
-# include <vector>
 # include "Lexer.hpp"
-
+# include <vector>
+# include <iostream>
 
 class Parser {
 

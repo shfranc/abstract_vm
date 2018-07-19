@@ -72,10 +72,10 @@ std::ostream &		operator<<( std::ostream & o, Parser const & src ) {
 	size_t	len = v.size();
 
 	std::cout << "--------------" << std::endl;
-
+	o << "STR\tTYPE\tINSTR\tVALUE" << std::endl;
 	for (size_t i = 0; i < len; i++)
 	{
-		o << v[i].getStr() << "\t" << v[i].getType() << std::endl;
+		o << v[i].getStr() << "\t" << v[i].getType() << "\t" << v[i].getInstr() << "\t" << v[i].getValue() << std::endl;
 	}
 	std::cout << "--------------" << std::endl;
 

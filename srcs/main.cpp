@@ -1,5 +1,4 @@
-#include "Reader.hpp"
-#include "Parser.hpp"
+#include "Avm.hpp"
 
 void	ft_usage( void )
 {
@@ -11,7 +10,7 @@ int main( int argc, char const *argv[] )
 	Avm		*avm;
 
 	if (argc == 1)
-		avm = Avm();
+		avm = new Avm();
 	else if (argc == 2)
 		avm = new Avm(argv[1]);
 	else {
@@ -19,34 +18,9 @@ int main( int argc, char const *argv[] )
 		return 1;
 	}
 
-	return 0;
-}
+	avm->readUserInput();
+	avm->parseInstructions();
 
-int main( int argc, char const *argv[] )
-{
-	Reader	*input;
-	Parser	*parser;
-
-	if (argc == 1)
-		input = new Reader();
-	else if (argc == 2)
-		input = new Reader(argv[1]);
-	else {
-		ft_usage();
-		return 1;
-	}
-
-	try {
-		input->read();
-		parser = new Parser( input->getContent() );
-		parser->parse();
-		std::cout << *parser;
-	}
-	catch ( std::invalid_argument e) {
-		std::cout << e.what() << std::endl;		
-	}
-	
-	delete input;
-	delete parser;
+	delete avm;
 	return 0;
 }

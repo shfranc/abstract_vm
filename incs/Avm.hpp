@@ -1,6 +1,9 @@
 #ifndef AVM_HPP
 # define AVM_HPP
 
+#include "Reader.hpp"
+#include "Parser.hpp"
+
 class Avm {
 
 public:
@@ -9,7 +12,8 @@ public:
 	Avm( std::string filename );
 	~Avm( void );
 
-	void		
+	void		readUserInput();	
+	void		parseInstructions();	
 
 private:
 	Reader			*_reader;
