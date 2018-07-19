@@ -1,11 +1,11 @@
 #include "Token.hpp"
 
-Token::Token( void ) : _str(""), _type(NONE) {
+Token::Token( void ) : _str(""), _type(INVALID) {
 
 	return;
 }
 
-Token::Token( std::string str ) : _str(str), _instr( checkInstr() ), _value( checkValue() ), _type( checkType() ) {
+Token::Token( std::string str ) : _str(str), _instr( checkInstr() ), _operandType( checkOperandType() ), _type( checkType() ) {
 
 	return;
 }
@@ -21,23 +21,23 @@ Token::~Token( void ) {
 	return;
 }
 
-Token &	Token::operator=( Token const & rhs ) {
+Token &				Token::operator=( Token const & rhs ) {
 	
 	if ( this != &rhs ) {
 		_str = rhs._str;
 		_instr = rhs._instr;
-		_value = rhs._value;
+		_operandType = rhs._operandType;
 		_type = rhs._type;
 	}
 	
     return *this;
 }
 
-int		Token::checkType( void ) {
-	if ( _instr != NONE )
+eTokenType		Token::checkType( void ) {
+	if ( _instr != NO_INSTR )
 		return (INSTR);
-	if ( _value != NONE )
-		return (VALUE);
+	if ( _operandType != NO_OPERAND )
+		return ( OPERAND );
 	if ( _str == "<newline>" )
 		return (SEP);
 	if ( _str == ";;" )
@@ -45,7 +45,7 @@ int		Token::checkType( void ) {
 	return (INVALID);
 }
 
-int		Token::checkInstr( void ) {
+eInstructType		Token::checkInstr( void ) {
 
 	if ( _str == "push" )
 		return (PUSH);
@@ -69,22 +69,26 @@ int		Token::checkInstr( void ) {
 		return (PRINT);
 	if ( _str == "exit" )
 		return (EXIT);
-	return (NONE);
+	return (NO_INSTR);
 }
 
-int		Token::checkValue( void ) {
+eOperandType		Token::checkOperandType( void ) {
 
-	if ( std::regex_match(_str, std::regex("int(8|16|32)[(][-]?[0-9]+[)]") ) )
-		return (V_INT);
+	if ( std::regex_match(_str, std::regex("int8[(][-]?[0-9]+[)]") ) )
+		return (INT8);
+	if ( std::regex_match(_str, std::regex("int16[(][-]?[0-9]+[)]") ) )
+		return (INT16);
+	if ( std::regex_match(_str, std::regex("int32[(][-]?[0-9]+[)]") ) )
+		return (INT32);		
 	if ( std::regex_match(_str, std::regex("float[(][-]?[0-9]+[.]?[0-9]*[)]") ) )
-		return (V_FLOAT);
+		return (FLOAT);
 	if ( std::regex_match(_str, std::regex("double[(][-]?[0-9]+[.]?[0-9]*[)]") ) )
-		return (V_DOUBLE);
-	return (NONE);		
+		return (DOUBLE);
+	return (NO_OPERAND);		
 }
 
 // ACCESSOR
-std::string		Token::getStr( void ) const { return _str; }
-int				Token::getType( void ) const { return _type; }
-int				Token::getInstr( void ) const { return _instr; }
-int				Token::getValue( void ) const { return _value; }
+std::string			Token::getStr( void ) const { return _str; }
+eTokenType			Token::getType( void ) const { return _type; }
+eInstructType		Token::getInstr( void ) const { return _instr; }
+eOperandType		Token::getOperandType( void ) const { return _operandType; }

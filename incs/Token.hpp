@@ -3,19 +3,19 @@
 
 # include <regex>
 
-enum tokenType
+typedef enum	tokenType
 {
 	INVALID,
 	INSTR,
-	VALUE,
+	OPERAND,
 	SEP,
 	END_INSTR
-};
+}				eTokenType;
 
-enum tokenInstr
+typedef enum 	InstructType
 {
-	NONE = 0,
-	PUSH = 6,
+	NO_INSTR,
+	PUSH,
 	POP,
 	DUMP,
 	ASSERT,
@@ -26,14 +26,17 @@ enum tokenInstr
 	MOD,
 	PRINT,
 	EXIT,
-};
+}				eInstructType;
 
-enum tokenValue
-{
-	V_INT = 17,
-	V_FLOAT,
-	V_DOUBLE
-};
+typedef enum	OperandType {
+	
+	NO_OPERAND,
+	INT8,
+	INT16,
+	INT32,
+	FLOAT,
+	DOUBLE
+}				eOperandType;
 
 class Token {
 
@@ -46,19 +49,19 @@ public:
 
 	Token & 			operator=( Token const & rhs );
 	std::string			getStr( void ) const;
-	int					getInstr( void ) const;
-	int					getValue( void ) const;
-	int					getType( void ) const;
+	eInstructType		getInstr( void ) const;
+	eOperandType		getOperandType( void ) const;
+	eTokenType			getType( void ) const;
 
 private:
 	std::string			_str;
-	int					_instr;
-	int					_value;
-	int					_type;
+	eInstructType		_instr;
+	eOperandType		_operandType;
+	eTokenType			_type;
 
-	int					checkInstr( void );
-	int					checkValue( void );
-	int					checkType( void );
+	eInstructType		checkInstr( void );
+	eOperandType		checkOperandType( void );
+	eTokenType			checkType( void );
 
 };
 

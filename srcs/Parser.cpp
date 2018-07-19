@@ -31,7 +31,7 @@ void	Parser::parse( void ) {
 				prevToken = token;				
 				token = _lexer->getNextToken();
 				
-				if ( token->getType() == VALUE ) {
+				if ( token->getType() == OPERAND ) {
 					_instructions.push_back(*prevToken);
 					_instructions.push_back(*token);
 
@@ -83,7 +83,7 @@ std::ostream &		operator<<( std::ostream & o, Parser const & src ) {
 		o << std::setw(20) << v[i].getStr()
 			<< std::setw(8) << v[i].getType()
 			<< std::setw(8) << v[i].getInstr()
-			<< std::setw(8) << v[i].getValue()
+			<< std::setw(8) << v[i].getOperandType()
 			<< std::endl;
 	}
 	std::cout << "--------------------" << std::endl;

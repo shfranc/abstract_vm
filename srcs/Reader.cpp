@@ -42,7 +42,6 @@ void		Reader::read_file( void ) {
 	std::ifstream	file( _filename );
 	std::string 	buff;
 
-	std::cout << "Reading file " << _filename << std::endl;
 	if ( !file.is_open() )
 		throw std::invalid_argument("Error: file is not open or didn't exist"); // directory
 	while ( std::getline( file, buff ) )

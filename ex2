@@ -18,3 +18,8 @@ float9(0)
 double7(0)
 double(0)
 
+push int8(0)
+push int16(0)
+push int32(0)
+push float(0)
+push double(0)

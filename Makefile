@@ -11,7 +11,8 @@ SRCS = $(addprefix $(PATH_SRCS)/, main.cpp \
 		Reader.cpp \
 		Lexer.cpp \
 		Token.cpp \
-		Parser.cpp )
+		Parser.cpp \
+		Int8.cpp )
 OBJS = $(SRCS:$(PATH_SRCS)/%.cpp=$(PATH_OBJS)/%.o)
 
 
