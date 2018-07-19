@@ -32,11 +32,21 @@ void				Avm::parseInstructions() {
 		_parser = new Parser( _reader->getContent() );
 		_parser->parse();
 		std::cout << *_parser;
+		_instructions = _parser->getInstructions();
 	}
 	catch ( std::invalid_argument e) { // create custom exceptions
 		std::cout << e.what() << std::endl;		
 	}
 }
+
+void				Avm::compute() {
+	
+	IOperand const *	test;
+	
+	test = createOperand(INT8, "42");
+	std::cout << test->toString() << std::endl;
+}
+
 
 IOperand const *	Avm::createOperand( eOperandType type, std::string const & value ) const {
 	IOperand const *	operand;

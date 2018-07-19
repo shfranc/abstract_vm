@@ -4,6 +4,7 @@
 #include "Reader.hpp"
 #include "Parser.hpp"
 #include "Int8.hpp"
+#include <stack>
 
 class Avm {
 
@@ -15,16 +16,19 @@ public:
 
 	void		readUserInput();	
 	void		parseInstructions();
-	IOperand const * createOperand( eOperandType type, std::string const & value ) const;	
+	void		compute();
 
 private:
-	Reader			*_reader;
-	Parser			*_parser;
+	Reader *						_reader;
+	Parser *						_parser;
+	std::stack<IOperand*>			_stack;
+	std::vector<Token> *			_instructions;
 
 
 	Avm( Avm const & src );
 	Avm & operator=( Avm const & rhs );
 	
+	IOperand const * createOperand( eOperandType type, std::string const & value ) const;	
 
 };
 

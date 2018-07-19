@@ -11,7 +11,7 @@ Parser::~Parser( void ) {
 	return;
 }
 
-void	Parser::parse( void ) {
+void					Parser::parse( void ) {
 
 	Token			*prevToken;
 	Token			*token;
@@ -32,8 +32,8 @@ void	Parser::parse( void ) {
 				token = _lexer->getNextToken();
 				
 				if ( token->getType() == OPERAND ) {
-					_instructions.push_back(*prevToken);
-					_instructions.push_back(*token);
+					_instructions->push_back(*prevToken);
+					_instructions->push_back(*token);
 
 				}
 				else {
@@ -48,7 +48,7 @@ void	Parser::parse( void ) {
 				token = _lexer->getNextToken();
 				
 				if ( token == nullptr || token->getType() == SEP ) {
-					_instructions.push_back(*prevToken);
+					_instructions->push_back(*prevToken);
 				}
 				else {
 					std::cerr << "Line " << line << ": Parsing error: " << "expecting <newline> after `" << prevToken->getStr() << "'." << std::endl;
@@ -62,14 +62,14 @@ void	Parser::parse( void ) {
 }
 
 // ACCESSOR
-std::vector<Token> const &	Parser::getInstructions( void ) const { return _instructions; }
+std::vector<Token> *	Parser::getInstructions( void ) const { return _instructions; }
 
 
 // OPERATOR <<
 
 std::ostream &		operator<<( std::ostream & o, Parser const & src ) {
-	std::vector<Token> const &	v = src.getInstructions();
-	size_t	len = v.size();
+	std::vector<Token> *	v = src.getInstructions();
+	size_t	len = v->size();
 
 	std::cout << "--------------------" << std::endl;
 	o << std::setw(20) << "STR"
@@ -87,7 +87,6 @@ std::ostream &		operator<<( std::ostream & o, Parser const & src ) {
 			<< std::endl;
 	}
 	std::cout << "--------------------" << std::endl;
-
 
 	return o;
 }

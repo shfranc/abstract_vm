@@ -15,11 +15,11 @@ public:
 
 	void						parse( void );
 
-	std::vector<Token> const &	getInstructions( void ) const;
+	std::vector<Token> *		getInstructions( void ) const;
 
 private:
 	Lexer					*_lexer;
-	std::vector<Token>		_instructions;
+	std::vector<Token>		*_instructions;
 	
 	Parser( void );
 	Parser( Parser const & src );	

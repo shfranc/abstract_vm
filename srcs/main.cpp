@@ -8,7 +8,6 @@ void	ft_usage( void )
 int main( int argc, char const *argv[] )
 {
 	Avm *				avm;
-	IOperand const *	test;
 
 	if (argc == 1)
 		avm = new Avm();
@@ -21,9 +20,7 @@ int main( int argc, char const *argv[] )
 
 	avm->readUserInput();
 	avm->parseInstructions();
-	
-	test = avm->createOperand(INT8, "42");
-	std::cout << test->toString() << std::endl;
+	avm->compute();
 
 	delete avm;
 	return 0;
