@@ -6,8 +6,14 @@
 
 class Int8 : public IOperand {
 
-	virtual int				getPrecision( void ) const;
-	virtual eOperandType	getType( void ) const;
+public:
+
+	Int8( eOperandType type, std::string value );
+	virtual	~Int8( void ) {}
+
+	virtual int					getPrecision( void ) const;
+	virtual eOperandType		getType( void ) const;
+	virtual std::string const &	toString( void ) const;
 
 	// virtual IOperand const *	operator+( IOperand const & rhs ) const;
 	// virtual IOperand const *	operator-( IOperand const & rhs ) const;
@@ -15,14 +21,17 @@ class Int8 : public IOperand {
 	// virtual IOperand const *	operator/( IOperand const & rhs ) const;
 	// virtual IOperand const *	operator%( IOperand const & rhs ) const;
 
-	// virtual std::string const &	toString( void ) const;
 
-	virtual	~Int8( void ) {}
 
 private:
-	int				_precision;
 	eOperandType	_type;
+	int				_precision;
 	std::string		_value;
+
+	Int8( void );
+	Int8( Int8 const & src );
+	Int8 & operator=( Int8 const & rhs );
+
 };
 
 #endif
