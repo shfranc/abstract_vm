@@ -71,13 +71,22 @@ std::ostream &		operator<<( std::ostream & o, Parser const & src ) {
 	std::vector<Token> const &	v = src.getInstructions();
 	size_t	len = v.size();
 
-	std::cout << "--------------" << std::endl;
-	o << "STR\tTYPE\tINSTR\tVALUE" << std::endl;
+	std::cout << "--------------------" << std::endl;
+	o << std::setw(20) << "STR"
+		<< std::setw(8) << "TYPE"
+		<< std::setw(8) << "INSTR"
+		<< std::setw(8) << "VALUE"
+		<< std::endl;
+
 	for (size_t i = 0; i < len; i++)
 	{
-		o << v[i].getStr() << "\t" << v[i].getType() << "\t" << v[i].getInstr() << "\t" << v[i].getValue() << std::endl;
+		o << std::setw(20) << v[i].getStr()
+			<< std::setw(8) << v[i].getType()
+			<< std::setw(8) << v[i].getInstr()
+			<< std::setw(8) << v[i].getValue()
+			<< std::endl;
 	}
-	std::cout << "--------------" << std::endl;
+	std::cout << "--------------------" << std::endl;
 
 
 	return o;
