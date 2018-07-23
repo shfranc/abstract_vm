@@ -30,10 +30,8 @@ void				Avm::readUserInput() {
 void				Avm::parseInstructions() {
 
 	try {
-		std::cout << "Parser" << std::endl;
 		_parser = new Parser( _reader->getContent() );
 		_parser->parse();
-		std::cout << "Parser done" << std::endl;
 		std::cout << *_parser;
 		_instructions = _parser->getInstructions();
 	}
@@ -44,40 +42,55 @@ void				Avm::parseInstructions() {
 
 void				Avm::compute() {
 	
-	IOperand const *	test;
-	
-	test = createOperand(INT8, "42");
-	std::cout << test->toString() << std::endl;
-}
+	for (size_t i = 0; i < _instructions->size(); i++)
+	{
+		std::cout << (*_instructions)[i].getStr() << std::endl;
+		if ( (*_instructions)[i].getType() == INSTR )
+		{
+			std::cout << "execute action" << std::endl;
+		}
+		else
+		{
 
-
-IOperand const *	Avm::createOperand( eOperandType type, std::string const & value ) const {
-	IOperand const *	operand;
-
-	switch (type) {
-		case INT8 :
-			std::cout << "creating INT8" << std::endl;
-			operand = new Int8(type, value);
-			break;
-		case INT16 :
-			std::cout << "creating INT16" << std::endl;
-			operand = new Int8(type, value);
-			break;
-		case INT32 :
-			std::cout << "creating INT32" << std::endl;
-			operand = new Int8(type, value);
-			break;
-		case FLOAT :
-			std::cout << "creating FLOAT" << std::endl;
-			operand = new Int8(type, value);
-			break;
-		case DOUBLE :
-			std::cout << "creating DOUBLE" << std::endl;
-			operand = new Int8(type, value);
-			break;
-		default :
-			operand = nullptr;
-			break;								
+		}
 	}
-	return operand;
+	
+	// test = createOperand(INT8, "42");
+	// std::cout << test->toString() << std::endl;
 }
+
+// IOperand const *	Avm::createOperand( eOperandType type, std::string const & value ) const {
+
+// 	return (this->*_factory[type])( value );
+// }
+
+// IOperand const *	Avm::createOperand( eOperandType type, std::string const & value ) const {
+// 	IOperand const *	operand;
+
+// 	switch (type) {
+// 		case INT8 :
+// 			std::cout << "creating INT8" << std::endl;
+// 			operand = new Int8(type, value);
+// 			break;
+// 		case INT16 :
+// 			std::cout << "creating INT16" << std::endl;
+// 			operand = new Int8(type, value);
+// 			break;
+// 		case INT32 :
+// 			std::cout << "creating INT32" << std::endl;
+// 			operand = new Int8(type, value);
+// 			break;
+// 		case FLOAT :
+// 			std::cout << "creating FLOAT" << std::endl;
+// 			operand = new Int8(type, value);
+// 			break;
+// 		case DOUBLE :
+// 			std::cout << "creating DOUBLE" << std::endl;
+// 			operand = new Int8(type, value);
+// 			break;
+// 		default :
+// 			operand = nullptr;
+// 			break;								
+// 	}
+// 	return operand;
+// }

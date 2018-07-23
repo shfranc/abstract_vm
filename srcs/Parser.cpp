@@ -58,6 +58,11 @@ void					Parser::parse( void ) {
 			}
 			delete prevToken;
 		}
+		else if ( token->getType() == OPERAND ) {
+			line = _lexer->getLine();
+			std::cerr << "Line " << line << ": Parsing error: " << "line must begin with an instruction." << std::endl;
+			// exit(1);
+		}
 		delete token;
 	}
 }

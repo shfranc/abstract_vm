@@ -2,3 +2,4 @@ TODO
 ====
 
 . Parser: error during the parsing are exceptions
+. Parser: error while a value without instruction.
