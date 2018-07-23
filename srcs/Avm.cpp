@@ -41,56 +41,36 @@ void				Avm::parseInstructions() {
 }
 
 void				Avm::compute() {
-	
+
+	// IOperand const *	test;
+
 	for (size_t i = 0; i < _instructions->size(); i++)
 	{
-		std::cout << (*_instructions)[i].getStr() << std::endl;
-		if ( (*_instructions)[i].getType() == INSTR )
+		if ( (*_instructions)[i].getInstr() == PUSH )
 		{
-			std::cout << "execute action" << std::endl;
-		}
-		else
-		{
-
+			push((*_instructions)[i + 1]);
+			dump();
 		}
 	}
 	
-	// test = createOperand(INT8, "42");
+	// test = _factory.createOperand(INT8, "42");
 	// std::cout << test->toString() << std::endl;
 }
 
-// IOperand const *	Avm::createOperand( eOperandType type, std::string const & value ) const {
+void				Avm::push( Token const & token ) {
+	
+	std::smatch m;
+	std::regex e("\\((.+)\\)");
 
-// 	return (this->*_factory[type])( value );
-// }
+	std::cout << "** push" << std::endl;
+	std::regex_search( token.getStr(), m, e );
+	_stack.push( _factory.createOperand( token.getOperandType(), m[1] ) );
+	return;
+}
 
-// IOperand const *	Avm::createOperand( eOperandType type, std::string const & value ) const {
-// 	IOperand const *	operand;
+void				Avm::dump( void ) const {
 
-// 	switch (type) {
-// 		case INT8 :
-// 			std::cout << "creating INT8" << std::endl;
-// 			operand = new Int8(type, value);
-// 			break;
-// 		case INT16 :
-// 			std::cout << "creating INT16" << std::endl;
-// 			operand = new Int8(type, value);
-// 			break;
-// 		case INT32 :
-// 			std::cout << "creating INT32" << std::endl;
-// 			operand = new Int8(type, value);
-// 			break;
-// 		case FLOAT :
-// 			std::cout << "creating FLOAT" << std::endl;
-// 			operand = new Int8(type, value);
-// 			break;
-// 		case DOUBLE :
-// 			std::cout << "creating DOUBLE" << std::endl;
-// 			operand = new Int8(type, value);
-// 			break;
-// 		default :
-// 			operand = nullptr;
-// 			break;								
-// 	}
-// 	return operand;
-// }
+	std::cout << "** dump" << std::endl;
+	for (std::stack<IOperand const *> dump = _stack; !dump.empty(); dump.pop())
+	 	std::cout << dump.top()->toString() << std::endl;
+}

@@ -3,12 +3,14 @@
 
 #include "Reader.hpp"
 #include "Parser.hpp"
+#include "Factory.hpp"
 #include "IOperand.hpp"
 #include <stack>
 
 class Avm {
 
 public:
+	Factory							_factory;
 
 	Avm( void );
 	Avm( std::string filename );
@@ -21,11 +23,14 @@ public:
 private:
 	Reader *						_reader;
 	Parser *						_parser;
-	std::stack<IOperand*>			_stack;
+	std::stack<IOperand const *>	_stack;
 	std::vector<Token> *			_instructions;
 
 	Avm( Avm const & src );
 	Avm & operator=( Avm const & rhs );
+
+	void	push( Token const & );
+	void	dump( void ) const;
 
 };
 

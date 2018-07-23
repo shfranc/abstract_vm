@@ -1,4 +1,5 @@
 push int8(42)
-push int8(42)
+push int8(43)
+dump
 add
 exit
