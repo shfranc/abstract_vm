@@ -79,15 +79,7 @@ void				Avm::compute() {
 
 void				Avm::push( Token const & token ) {
 	
-	std::smatch m;
-	std::regex e("\\((.+)\\)");
-
-	std::cout << "** push" << std::endl;
-	std::regex_search( token.getStr(), m, e );
-	
-	std::cout << m[1] << std::endl;
-
-	_stack.push( _factory.createOperand( token.getOperandType(), m[1] ) );
+	_stack.push( _factory.createOperand( token.getOperandType(), captureNumericValue(token.getStr()) ) );
 	return;
 }
 
@@ -96,8 +88,10 @@ void				Avm::pop( Token const & token ) {
 	std::cout << "** pop" << std::endl;
 	if ( _stack.size() )
 		_stack.pop();
-	else
+	else {
 		std::cerr << "Line " << token.getLine() << ": Exec error: `" << token.getStr() << "' on an empty stack." << std::endl;
+		// exit(1);
+	}
 	return;
 }
 
@@ -109,35 +103,34 @@ void				Avm::dump( void ) const {
 }
 
 void				Avm::assert( Token const & token ) {
-	IOperand const *	reference;
+	IOperand const *	reference = _factory.createOperand( token.getOperandType(), captureNumericValue(token.getStr()) );
 	IOperand const *	temp;
-
-	// create an IOperand for the token in param
-	std::smatch m;
-	std::regex e("\\((.+)\\)");
-
-	std::cout << "** create ref" << std::endl;
-	std::regex_search( token.getStr(), m, e );
-	
-	std::cout << m[1] << std::endl;
-
-	reference = _factory.createOperand( token.getOperandType(), m[1] );
-
-	//
 
 	std::cout << "** assert" << std::endl;
 
 	if ( _stack.size() ) {
 
 		temp = _stack.top();
-		if ( compareOperand(temp, reference) == false )
+		if ( compareOperand(temp, reference) == false ) {
 			std::cerr << "Line " << token.getLine() << ": Exec error: `" << temp->toString() << "' is not equal to `" << reference->toString() << "'." << std::endl;
-		else
-			_stack.push(temp);
+		// exit(1);			
+		}
 	}
-	else
+	else {
 		std::cerr << "Line " << token.getLine() << ": Exec error: `" << token.getStr() << "' on an empty stack." << std::endl;
+		// exit(1);
+	}
+	delete reference;
 	return;
+}
+
+std::string 	Avm::captureNumericValue( std::string str ) const {
+
+	std::smatch m;
+	std::regex e("\\((.+)\\)");
+
+	std::regex_search( str, m, e );
+	return (m[1]);
 }
 
 bool			Avm::compareOperand(IOperand const * O1, IOperand const * O2) const {
@@ -145,7 +138,7 @@ bool			Avm::compareOperand(IOperand const * O1, IOperand const * O2) const {
 	if ( O1->getType() == O2->getType() )
 	{
 		if ( std::strcmp( O1->toString().c_str(), O2->toString().c_str() ) == 0 )
-			return true;
+			return (true);
 	}
-	return false;
+	return (false);
 }

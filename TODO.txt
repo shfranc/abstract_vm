@@ -7,7 +7,7 @@ TODO
 	√ push v
 	√ pop + ERR
 	√ dump
-	. assert + ERR
+	. assert v + ERR
 	. add + ERR
 	. sub + ERR
 	. mul + ERR

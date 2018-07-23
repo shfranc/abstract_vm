@@ -3,6 +3,8 @@ pop
 push int8(42)
 assert int8(89)
 push int8(43)
+push double(42)
+assert double(42)
 dump
 pop
 add
