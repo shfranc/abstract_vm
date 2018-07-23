@@ -13,6 +13,7 @@ Avm::Avm( std::string filename ) : _reader( new Reader(filename) ) {
 Avm::~Avm( void ) {
 
 	delete _reader;
+	delete _parser;
 	return;
 }
 
@@ -29,8 +30,10 @@ void				Avm::readUserInput() {
 void				Avm::parseInstructions() {
 
 	try {
+		std::cout << "Parser" << std::endl;
 		_parser = new Parser( _reader->getContent() );
 		_parser->parse();
+		std::cout << "Parser done" << std::endl;
 		std::cout << *_parser;
 		_instructions = _parser->getInstructions();
 	}

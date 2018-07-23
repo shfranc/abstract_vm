@@ -1,5 +1,5 @@
 NAME = avm
-FLAGS = -Wall -Wextra -Werror
+FLAGS = -Wall -Wextra -Werror -g
 CC = clang++
 
 PATH_SRCS = srcs

@@ -19,11 +19,11 @@ Token *			Lexer::getNextToken( void ) {
 
 	while( _pos < _input.size() )
 	{
-		if ( isWhitespaces(_input[_pos]) ) {
+		if ( isWhitespaces( _input[_pos]) ) {
 			skipWhitespaces();
 			continue ;
 		}
-		if ( isNewline(_input[_pos]) ) {
+		if ( isNewline( _input[_pos]) ) {
 			skipNewline();
 			return ( new Token("<newline>") );
 		}
@@ -31,7 +31,7 @@ Token *			Lexer::getNextToken( void ) {
 			skipEndOfInstr();
 			return ( new Token(";;") );
 		}		
-		if ( isComment(_input[_pos]) ) {
+		if ( isComment( _input[_pos]) ) {
 			skipComment();
 		}
 		else

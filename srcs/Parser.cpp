@@ -1,6 +1,6 @@
 #include "Parser.hpp"
 
-Parser::Parser( std::string input ) : _lexer( new Lexer(input) ) {
+Parser::Parser( std::string input ) : _lexer( new Lexer(input) ), _instructions( new std::vector<Token>() ) {
 	
 	return;
 }
@@ -8,6 +8,7 @@ Parser::Parser( std::string input ) : _lexer( new Lexer(input) ) {
 Parser::~Parser( void ) {
 
 	delete _lexer;
+	delete _instructions;
 	return;
 }
 
@@ -80,10 +81,10 @@ std::ostream &		operator<<( std::ostream & o, Parser const & src ) {
 
 	for (size_t i = 0; i < len; i++)
 	{
-		o << std::setw(20) << v[i].getStr()
-			<< std::setw(8) << v[i].getType()
-			<< std::setw(8) << v[i].getInstr()
-			<< std::setw(8) << v[i].getOperandType()
+		o << std::setw(20) << (*v)[i].getStr()
+			<< std::setw(8) << (*v)[i].getType()
+			<< std::setw(8) << (*v)[i].getInstr()
+			<< std::setw(8) << (*v)[i].getOperandType()
 			<< std::endl;
 	}
 	std::cout << "--------------------" << std::endl;

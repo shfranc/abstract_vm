@@ -23,5 +23,6 @@ int main( int argc, char const *argv[] )
 	avm->compute();
 
 	delete avm;
+	while(1);
 	return 0;
 }

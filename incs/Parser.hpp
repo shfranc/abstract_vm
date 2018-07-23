@@ -18,8 +18,8 @@ public:
 	std::vector<Token> *		getInstructions( void ) const;
 
 private:
-	Lexer					*_lexer;
-	std::vector<Token>		*_instructions;
+	Lexer *						_lexer;
+	std::vector<Token> *		_instructions;
 	
 	Parser( void );
 	Parser( Parser const & src );	
