@@ -30,6 +30,7 @@ private:
 	Avm & operator=( Avm const & rhs );
 
 	void	push( Token const & );
+	void	pop( Token const & );
 	void	dump( void ) const;
 
 };

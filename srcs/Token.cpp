@@ -5,7 +5,7 @@ Token::Token( void ) : _str(""), _type(INVALID) {
 	return;
 }
 
-Token::Token( std::string str ) : _str(str), _instr( checkInstr() ), _operandType( checkOperandType() ), _type( checkType() ) {
+Token::Token( std::string str, size_t line ) : _str(str), _line(line), _instr( checkInstr() ), _operandType( checkOperandType() ), _type( checkType() ) {
 
 	return;
 }
@@ -25,6 +25,7 @@ Token &				Token::operator=( Token const & rhs ) {
 	
 	if ( this != &rhs ) {
 		_str = rhs._str;
+		_line = rhs._line;
 		_instr = rhs._instr;
 		_operandType = rhs._operandType;
 		_type = rhs._type;
@@ -89,6 +90,7 @@ eOperandType		Token::checkOperandType( void ) {
 
 // ACCESSOR
 std::string			Token::getStr( void ) const { return _str; }
+size_t				Token::getLine( void ) const { return _line; }
 eTokenType			Token::getType( void ) const { return _type; }
 eInstructType		Token::getInstr( void ) const { return _instr; }
 eOperandType		Token::getOperandType( void ) const { return _operandType; }

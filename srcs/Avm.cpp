@@ -48,7 +48,7 @@ void				Avm::compute() {
 	{
 		if ( (*_instructions)[i].getInstr() == PUSH )
 		{
-			push((*_instructions)[i + 1]);
+			push((*_instructions)[++i]);
 			dump();
 		}
 	}
@@ -64,7 +64,20 @@ void				Avm::push( Token const & token ) {
 
 	std::cout << "** push" << std::endl;
 	std::regex_search( token.getStr(), m, e );
+	
+	std::cout << m[1] << std::endl;
+
 	_stack.push( _factory.createOperand( token.getOperandType(), m[1] ) );
+	return;
+}
+
+void				Avm::pop( Token const & token ) {
+	
+	std::cout << "** pop" << std::endl;
+	if ( !_stack.size() )
+		_stack.pop(); // error handling
+	else
+		std::cerr << "Line " << token.getLine() << ": Exec error: `" << token.getStr() << "' on an empty stack." << std::endl;
 	return;
 }
 

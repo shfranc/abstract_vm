@@ -25,11 +25,11 @@ Token *			Lexer::getNextToken( void ) {
 		}
 		if ( isNewline( _input[_pos]) ) {
 			skipNewline();
-			return ( new Token("<newline>") );
+			return ( new Token("<newline>", _line) );
 		}
 		if ( isEndOfInstr() ) {
 			skipEndOfInstr();
-			return ( new Token(";;") );
+			return ( new Token(";;", _line) );
 		}		
 		if ( isComment( _input[_pos]) ) {
 			skipComment();
@@ -92,7 +92,7 @@ Token *			Lexer::createToken( void ) {
 	while ( !isWhitespaces(_input[_pos + len]) && !isNewline(_input[_pos + len]) )
 		len++;
 	_pos += len;
-	return ( new Token( _input.substr (start, len) ) );
+	return ( new Token( _input.substr (start, len), _line ) );
 }
 
 // ACCESSOR

@@ -79,6 +79,7 @@ std::ostream &		operator<<( std::ostream & o, Parser const & src ) {
 
 	std::cout << "--------------------" << std::endl;
 	o << std::setw(20) << "STR"
+		<< std::setw(8) << "LINE"
 		<< std::setw(8) << "TYPE"
 		<< std::setw(8) << "INSTR"
 		<< std::setw(8) << "VALUE"
@@ -87,6 +88,7 @@ std::ostream &		operator<<( std::ostream & o, Parser const & src ) {
 	for (size_t i = 0; i < len; i++)
 	{
 		o << std::setw(20) << (*v)[i].getStr()
+			<< std::setw(8) << (*v)[i].getLine()
 			<< std::setw(8) << (*v)[i].getType()
 			<< std::setw(8) << (*v)[i].getInstr()
 			<< std::setw(8) << (*v)[i].getOperandType()

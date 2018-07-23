@@ -43,18 +43,20 @@ class Token {
 public:
 
 	Token( void );
-	Token( std::string str );
+	Token( std::string str, size_t line );
 	Token( Token const & src );
 	~Token( void );
 
 	Token & 			operator=( Token const & rhs );
 	std::string			getStr( void ) const;
+	size_t				getLine( void ) const;
 	eInstructType		getInstr( void ) const;
 	eOperandType		getOperandType( void ) const;
 	eTokenType			getType( void ) const;
 
 private:
 	std::string			_str;
+	size_t				_line;
 	eInstructType		_instr;
 	eOperandType		_operandType;
 	eTokenType			_type;
