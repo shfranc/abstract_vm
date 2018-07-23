@@ -32,7 +32,9 @@ private:
 	void	push( Token const & );
 	void	pop( Token const & );
 	void	dump( void ) const;
+	void	assert( Token const & );
 
+	bool	compareOperand(IOperand const * O1, IOperand const * O2) const;
 };
 
 #endif

@@ -1,5 +1,9 @@
+dump
+pop
 push int8(42)
+assert int8(89)
 push int8(43)
 dump
+pop
 add
 exit

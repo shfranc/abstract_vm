@@ -42,19 +42,39 @@ void				Avm::parseInstructions() {
 
 void				Avm::compute() {
 
-	// IOperand const *	test;
-
 	for (size_t i = 0; i < _instructions->size(); i++)
 	{
-		if ( (*_instructions)[i].getInstr() == PUSH )
-		{
-			push((*_instructions)[++i]);
-			dump();
+		switch ( (*_instructions)[i].getInstr() ) {
+			case PUSH :
+				push((*_instructions)[++i]);
+				break;
+			case POP :
+				pop((*_instructions)[i]);
+				break;
+			case DUMP :
+				dump();
+				break;
+			case ASSERT :
+				assert((*_instructions)[++i]);
+				break;
+			case ADD :
+				break;
+			case SUB :
+				break;
+			case MUL :
+				break;
+			case DIV :
+				break;
+			case MOD :
+				break;
+			case PRINT :
+				break;
+			case EXIT :
+				break;
+			case NO_INSTR :
+				break;										
 		}
 	}
-	
-	// test = _factory.createOperand(INT8, "42");
-	// std::cout << test->toString() << std::endl;
 }
 
 void				Avm::push( Token const & token ) {
@@ -74,8 +94,8 @@ void				Avm::push( Token const & token ) {
 void				Avm::pop( Token const & token ) {
 	
 	std::cout << "** pop" << std::endl;
-	if ( !_stack.size() )
-		_stack.pop(); // error handling
+	if ( _stack.size() )
+		_stack.pop();
 	else
 		std::cerr << "Line " << token.getLine() << ": Exec error: `" << token.getStr() << "' on an empty stack." << std::endl;
 	return;
@@ -86,4 +106,46 @@ void				Avm::dump( void ) const {
 	std::cout << "** dump" << std::endl;
 	for (std::stack<IOperand const *> dump = _stack; !dump.empty(); dump.pop())
 	 	std::cout << dump.top()->toString() << std::endl;
+}
+
+void				Avm::assert( Token const & token ) {
+	IOperand const *	reference;
+	IOperand const *	temp;
+
+	// create an IOperand for the token in param
+	std::smatch m;
+	std::regex e("\\((.+)\\)");
+
+	std::cout << "** create ref" << std::endl;
+	std::regex_search( token.getStr(), m, e );
+	
+	std::cout << m[1] << std::endl;
+
+	reference = _factory.createOperand( token.getOperandType(), m[1] );
+
+	//
+
+	std::cout << "** assert" << std::endl;
+
+	if ( _stack.size() ) {
+
+		temp = _stack.top();
+		if ( compareOperand(temp, reference) == false )
+			std::cerr << "Line " << token.getLine() << ": Exec error: `" << temp->toString() << "' is not equal to `" << reference->toString() << "'." << std::endl;
+		else
+			_stack.push(temp);
+	}
+	else
+		std::cerr << "Line " << token.getLine() << ": Exec error: `" << token.getStr() << "' on an empty stack." << std::endl;
+	return;
+}
+
+bool			Avm::compareOperand(IOperand const * O1, IOperand const * O2) const {
+
+	if ( O1->getType() == O2->getType() )
+	{
+		if ( std::strcmp( O1->toString().c_str(), O2->toString().c_str() ) == 0 )
+			return true;
+	}
+	return false;
 }

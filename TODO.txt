@@ -5,13 +5,13 @@ TODO
 . Parser: error while a value without instruction.
 . Exec:
 	√ push v
-	. pop
+	√ pop + ERR
 	√ dump
-	. assert
-	. add
-	. sub
-	. mul
-	. div
-	. mod
-	. print
+	. assert + ERR
+	. add + ERR
+	. sub + ERR
+	. mul + ERR
+	. div + ERR
+	. mod + ERR
+	. print + ERR
 	. exit
