@@ -32,15 +32,10 @@ void				Avm::parseInstructions() {
 	if ( _reader->getContent() == "" )
 		return;
 
-	// try {
-		_parser = new Parser( _reader->getContent() );
-		_parser->parse();
-		std::cout << *_parser;
-		_instructions = _parser->getInstructions();
-	// }
-	// catch ( Parser::ParsingException e ) {
-		// std::cout << e.what() << std::endl;
-	// }
+	_parser = new Parser( _reader->getContent() );
+	_parser->parse();
+	std::cout << *_parser;
+	_instructions = _parser->getInstructions();
 }
 
 void				Avm::compute() {
@@ -137,6 +132,7 @@ std::string 	Avm::captureNumericValue( std::string str ) const {
 	std::regex e("\\((.+)\\)");
 
 	std::regex_search( str, m, e );
+	std::cout << m[1] << std::endl;
 	return (m[1]);
 }
 

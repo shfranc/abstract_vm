@@ -27,51 +27,74 @@ void					Parser::parse( void ) {
 }
 
 void					Parser::analyseToken( Token * token ) {
-	
-	Token			*prevToken;
-	size_t			line;
 
 	if ( token->getType() == INVALID ) {
+		delete token;
 		throw ParsingException( std::to_string(_lexer->getLine()), token->getStr() + INVALID_TOKEN );
 	}
 	else if ( token->getType() == INSTR ) {
-
-		if ( token->getInstr() == PUSH || token->getInstr() == ASSERT ) {
-			
-			line = _lexer->getLine();
-			prevToken = token;				
-			token = _lexer->getNextToken();
-			
-			if ( token->getType() == OPERAND ) {
-				_instructions->push_back(*prevToken);
-				_instructions->push_back(*token);
-
-			}
-			else {
-				throw ParsingException( std::to_string(line), prevToken->getStr() + OPERAND_EXPECTED );
-			}
-		}
-		else {
-			
-			line = _lexer->getLine();
-			prevToken = token;
-			token = _lexer->getNextToken();
-			
-			if ( token == nullptr || token->getType() == SEP ) {
-				_instructions->push_back(*prevToken);
-			}
-			else {
-				throw ParsingException( std::to_string(line), prevToken->getStr() + NEWLINE_EXPECTED );
-			}
-		}
-		delete prevToken;
+		analyseInstruction(token);
 	}
 	else if ( token->getType() == OPERAND ) {
+		delete token;
 		throw ParsingException( std::to_string(_lexer->getLine()), token->getStr() + LINE_BEGIN );
 	}
-	delete token;
+	else
+		delete token;
+}
+
+
+void					Parser::analyseInstruction( Token * token ) {
+
+	Token			*prevToken;
+	size_t			line;
+
+	if ( token->getInstr() == PUSH || token->getInstr() == ASSERT ) {
+		analyseOperand(token);
+	}
+	else {
+		
+		line = _lexer->getLine();
+		prevToken = token;
+		token = _lexer->getNextToken();
+		
+		if ( token == nullptr || token->getType() == SEP ) {
+			_instructions->push_back(*prevToken);
+			delete prevToken;
+			delete token;
+		}
+		else {
+			delete prevToken;
+			delete token;
+			throw ParsingException( std::to_string(line), prevToken->getStr() + NEWLINE_EXPECTED );
+		}
+	}
 
 }
+
+void					Parser::analyseOperand( Token * token ) {
+
+	Token			*prevToken;
+	size_t			line;
+
+	line = _lexer->getLine();
+	prevToken = token;				
+	token = _lexer->getNextToken();
+	
+	if ( token->getType() == OPERAND ) {
+		_instructions->push_back(*prevToken);
+		_instructions->push_back(*token);
+		delete prevToken;
+		delete token;
+	}
+	else {
+		delete prevToken;
+		delete token;		
+		throw ParsingException( std::to_string(line), prevToken->getStr() + OPERAND_EXPECTED );
+	}
+}
+
+
 
 
 // ACCESSOR

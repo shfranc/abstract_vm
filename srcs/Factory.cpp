@@ -3,7 +3,7 @@
 Factory::Factory( void ) {
 
 	_factory[INT8] = &Factory::createInt8;
-	_factory[INT8] = &Factory::createInt16;
+	_factory[INT16] = &Factory::createInt16;
 	_factory[INT32] = &Factory::createInt32;
 	_factory[DOUBLE] = &Factory::createDouble;
 	_factory[FLOAT] = &Factory::createFloat;

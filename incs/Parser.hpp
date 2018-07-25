@@ -51,6 +51,8 @@ private:
 	Parser & 	operator=( Parser const & rhs );
 
 	void		analyseToken( Token * token );
+	void		analyseInstruction( Token * token );
+	void		analyseOperand( Token * token );
 
 };
 
