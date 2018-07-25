@@ -15,3 +15,6 @@ TODO
 	. mod + ERR
 	. print + ERR
 	. exit
+. Handling errors: catch exceptions and continue
+	- Reader.read : std::invalid_argument
+	- Parser.parse

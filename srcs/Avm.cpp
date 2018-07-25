@@ -30,17 +30,23 @@ void				Avm::readUserInput() {
 void				Avm::parseInstructions() {
 
 	try {
+		// std::cout << "Parsing..." << std::endl;		
 		_parser = new Parser( _reader->getContent() );
 		_parser->parse();
 		std::cout << *_parser;
 		_instructions = _parser->getInstructions();
+		// std::cout << "Parsing done." << std::endl;		
 	}
-	catch ( std::invalid_argument e) { // create custom exceptions
+	catch ( Parser::ParsingException e ) { // create custom exceptions
+		// std::cout << "catch!" << std::endl;		
 		std::cout << e.what() << std::endl;		
 	}
 }
 
 void				Avm::compute() {
+
+	if ( !_instructions )
+		return;
 
 	for (size_t i = 0; i < _instructions->size(); i++)
 	{
@@ -79,6 +85,7 @@ void				Avm::compute() {
 
 void				Avm::push( Token const & token ) {
 	
+	std::cout << "** push" << std::endl;
 	_stack.push( _factory.createOperand( token.getOperandType(), captureNumericValue(token.getStr()) ) );
 	return;
 }

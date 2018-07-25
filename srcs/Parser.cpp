@@ -21,8 +21,7 @@ void					Parser::parse( void ) {
 	while ( (token = _lexer->getNextToken()) != nullptr ) {
 
 		if ( token->getType() == INVALID ) {
-			std::cerr << "Line " << _lexer->getLine() << ": Parsing error: `" << token->getStr() << "' is an invalid token" << std::endl;
-			// exit(1);
+			throw ParsingException( std::to_string(_lexer->getLine()), token->getStr() + INVALID_TOKEN );
 		}
 		else if ( token->getType() == INSTR ) {
 
@@ -38,8 +37,7 @@ void					Parser::parse( void ) {
 
 				}
 				else {
-					std::cerr << "Line " << line << ": Parsing error: " << "expecting VALUE after `" << prevToken->getStr() << "'." << std::endl;
-					// exit(1);
+					throw ParsingException( std::to_string(line), prevToken->getStr() + OPERAND_EXPECTED );
 				}
 			}
 			else {
@@ -52,16 +50,13 @@ void					Parser::parse( void ) {
 					_instructions->push_back(*prevToken);
 				}
 				else {
-					std::cerr << "Line " << line << ": Parsing error: " << "expecting <newline> after `" << prevToken->getStr() << "'." << std::endl;
-					// exit(1);
+					throw ParsingException( std::to_string(line), prevToken->getStr() + NEWLINE_EXPECTED );
 				}
 			}
 			delete prevToken;
 		}
 		else if ( token->getType() == OPERAND ) {
-			line = _lexer->getLine();
-			std::cerr << "Line " << line << ": Parsing error: " << "line must begin with an instruction." << std::endl;
-			// exit(1);
+			throw ParsingException( std::to_string(_lexer->getLine()), token->getStr() + LINE_BEGIN );
 		}
 		delete token;
 	}
@@ -97,4 +92,32 @@ std::ostream &		operator<<( std::ostream & o, Parser const & src ) {
 	std::cout << "--------------------" << std::endl;
 
 	return o;
+}
+
+// EXCEPTIONS
+Parser::ParsingException::ParsingException( std::string line, std::string error ) : _line(line), _error(error) { return; }
+
+Parser::ParsingException::ParsingException( Parser::ParsingException const & src ) {
+
+	*this = src;
+	return;
+}
+
+Parser::ParsingException::~ParsingException( void ) throw() { return; }
+
+Parser::ParsingException &	Parser::ParsingException::operator=( Parser::ParsingException const & rhs ) {
+
+	if ( this != &rhs ) {
+		_line = rhs._line;
+		_error = rhs._error;
+	}
+    return *this;
+}
+
+
+const char *	Parser::ParsingException::what() const throw() {
+	
+	std::string message = "Line " + _line + " Parsing error: `" + _error;
+
+	return (message.c_str());
 }
