@@ -4,6 +4,8 @@
 # include <iostream>
 # include <fstream>
 
+# define READ_ERROR "Read error: file doesn't exist or is not openned."
+
 class Reader {
 
 public:

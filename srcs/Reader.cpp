@@ -43,7 +43,7 @@ void		Reader::read_file( void ) {
 	std::string 	buff;
 
 	if ( !file.is_open() )
-		throw std::invalid_argument("Error: file is not open or didn't exist"); // directory
+		throw std::invalid_argument( READ_ERROR ); // directory
 	while ( std::getline( file, buff ) )
 	{
 		_content += buff + '\n';

@@ -14,53 +14,65 @@ Parser::~Parser( void ) {
 
 void					Parser::parse( void ) {
 
-	Token			*prevToken;
 	Token			*token;
-	size_t			line;
 
 	while ( (token = _lexer->getNextToken()) != nullptr ) {
 
-		if ( token->getType() == INVALID ) {
-			throw ParsingException( std::to_string(_lexer->getLine()), token->getStr() + INVALID_TOKEN );
+		try {
+			analyseToken(token);
+		} catch (ParsingException e) {
+			std::cout << e.what() << std::endl;
 		}
-		else if ( token->getType() == INSTR ) {
-
-			if ( token->getInstr() == PUSH || token->getInstr() == ASSERT ) {
-				
-				line = _lexer->getLine();
-				prevToken = token;				
-				token = _lexer->getNextToken();
-				
-				if ( token->getType() == OPERAND ) {
-					_instructions->push_back(*prevToken);
-					_instructions->push_back(*token);
-
-				}
-				else {
-					throw ParsingException( std::to_string(line), prevToken->getStr() + OPERAND_EXPECTED );
-				}
-			}
-			else {
-				
-				line = _lexer->getLine();
-				prevToken = token;
-				token = _lexer->getNextToken();
-				
-				if ( token == nullptr || token->getType() == SEP ) {
-					_instructions->push_back(*prevToken);
-				}
-				else {
-					throw ParsingException( std::to_string(line), prevToken->getStr() + NEWLINE_EXPECTED );
-				}
-			}
-			delete prevToken;
-		}
-		else if ( token->getType() == OPERAND ) {
-			throw ParsingException( std::to_string(_lexer->getLine()), token->getStr() + LINE_BEGIN );
-		}
-		delete token;
 	}
 }
+
+void					Parser::analyseToken( Token * token ) {
+	
+	Token			*prevToken;
+	size_t			line;
+
+	if ( token->getType() == INVALID ) {
+		throw ParsingException( std::to_string(_lexer->getLine()), token->getStr() + INVALID_TOKEN );
+	}
+	else if ( token->getType() == INSTR ) {
+
+		if ( token->getInstr() == PUSH || token->getInstr() == ASSERT ) {
+			
+			line = _lexer->getLine();
+			prevToken = token;				
+			token = _lexer->getNextToken();
+			
+			if ( token->getType() == OPERAND ) {
+				_instructions->push_back(*prevToken);
+				_instructions->push_back(*token);
+
+			}
+			else {
+				throw ParsingException( std::to_string(line), prevToken->getStr() + OPERAND_EXPECTED );
+			}
+		}
+		else {
+			
+			line = _lexer->getLine();
+			prevToken = token;
+			token = _lexer->getNextToken();
+			
+			if ( token == nullptr || token->getType() == SEP ) {
+				_instructions->push_back(*prevToken);
+			}
+			else {
+				throw ParsingException( std::to_string(line), prevToken->getStr() + NEWLINE_EXPECTED );
+			}
+		}
+		delete prevToken;
+	}
+	else if ( token->getType() == OPERAND ) {
+		throw ParsingException( std::to_string(_lexer->getLine()), token->getStr() + LINE_BEGIN );
+	}
+	delete token;
+
+}
+
 
 // ACCESSOR
 std::vector<Token> *	Parser::getInstructions( void ) const { return _instructions; }
@@ -117,7 +129,7 @@ Parser::ParsingException &	Parser::ParsingException::operator=( Parser::ParsingE
 
 const char *	Parser::ParsingException::what() const throw() {
 	
-	std::string message = "Line " + _line + " Parsing error: `" + _error;
+	std::string message = "Line " + _line + ": Parsing error: `" + _error;
 
 	return (message.c_str());
 }

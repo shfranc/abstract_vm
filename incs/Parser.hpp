@@ -6,8 +6,8 @@
 # include <iostream>
 # include <iomanip>
 
-# define LINE_BEGIN			"' intline must begin with an instruction."
-# define INVALID_TOKEN		"' is an invalid token."
+# define LINE_BEGIN			"' all lines must begin with an instruction."
+# define INVALID_TOKEN		"' is not a valid token."
 # define OPERAND_EXPECTED	"' is not followed by an OPERAND."
 # define NEWLINE_EXPECTED	"' is not followed by a <newline>."
 
@@ -48,7 +48,9 @@ private:
 	
 	Parser( void );
 	Parser( Parser const & src );	
-	Parser & operator=( Parser const & rhs );
+	Parser & 	operator=( Parser const & rhs );
+
+	void		analyseToken( Token * token );
 
 };
 

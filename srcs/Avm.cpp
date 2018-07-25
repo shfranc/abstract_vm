@@ -29,18 +29,18 @@ void				Avm::readUserInput() {
 
 void				Avm::parseInstructions() {
 
-	try {
-		// std::cout << "Parsing..." << std::endl;		
+	if ( _reader->getContent() == "" )
+		return;
+
+	// try {
 		_parser = new Parser( _reader->getContent() );
 		_parser->parse();
 		std::cout << *_parser;
 		_instructions = _parser->getInstructions();
-		// std::cout << "Parsing done." << std::endl;		
-	}
-	catch ( Parser::ParsingException e ) { // create custom exceptions
-		// std::cout << "catch!" << std::endl;		
-		std::cout << e.what() << std::endl;		
-	}
+	// }
+	// catch ( Parser::ParsingException e ) {
+		// std::cout << e.what() << std::endl;
+	// }
 }
 
 void				Avm::compute() {
