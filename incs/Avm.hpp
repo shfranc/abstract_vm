@@ -34,7 +34,7 @@ private:
 	void			dump( void ) const;
 	void			assert( Token const & );
 
-	std::string * 	captureNumericValue( std::string str ) const;
+	std::string		captureNumericValue( std::string str ) const;
 	bool			compareOperand(IOperand const * O1, IOperand const * O2) const;
 };
 

@@ -126,13 +126,14 @@ void				Avm::assert( Token const & token ) {
 	return;
 }
 
-std::string 	Avm::captureNumericValue( std::string str ) const {
+std::string	Avm::captureNumericValue( std::string str ) const {
 
 	std::smatch m;
 	std::regex e("\\((.+)\\)");
 
 	std::regex_search( str, m, e );
 	std::cout << m[1] << std::endl;
+
 	return (m[1]);
 }
 
