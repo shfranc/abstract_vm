@@ -9,6 +9,8 @@
 #include <map>
 #include <sstream>
 
+#include <string> // stoi
+
 class Avm {
 
 public:
@@ -27,13 +29,33 @@ public:
 	// ACCESSORS
 	std::ostringstream const &	getError( void ) const;
 
+	// // EXCEPTIONS
+	// class ExecException : public std::exception {
+	
+	// public:
+
+	// 	ExecException( std::string line, std::string error );
+	// 	ExecException( ExecException const & src );
+	// 	virtual ~ExecException( void ) throw();
+		
+	// 	ExecException &	operator=( ExecException const & rhs );
+	// 	virtual const char *	what() const throw();
+
+	// private:
+	// 	std::string			_line;
+	// 	std::string			_error;
+	
+	// 	ExecException( void );
+	// };
+
 private:
 	Reader *						_reader;
 	Parser *						_parser;
 	std::stack<IOperand const *>	_stack;
 	std::vector<Token> *			_instructions;
-	std::ostringstream				_error;
 	std::map<std::string, execute>	_execute;
+	std::ostringstream				_error;
+	bool							_exit;
 
 	Avm( Avm const & src );
 	Avm & 			operator=( Avm const & rhs );

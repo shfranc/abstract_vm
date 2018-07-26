@@ -2,13 +2,13 @@
 
 
 
-Avm::Avm( void ) : _reader( new Reader() ) {
+Avm::Avm( void ) : _reader( new Reader() ), _exit(false) {
 	
 	initExecute();
 	return;
 }
 
-Avm::Avm( std::string filename ) : _reader( new Reader(filename) ) {
+Avm::Avm( std::string filename ) : _reader( new Reader(filename) ), _exit(false) {
 	
 	initExecute();
 	return;
@@ -85,7 +85,7 @@ void					Avm::compute() {
 
 void					Avm::push( Token const & token ) {
 	
-	std::cout << "** pçsh" << std::endl;
+	std::cout << "** push" << std::endl;
 	_stack.push( _factory.createOperand( token.getOperandType(), captureNumericValue(token.getStr()) ) );
 	return;
 }
@@ -117,15 +117,15 @@ void					Avm::dump( Token const & token ) {
 
 void					Avm::a_ssert( Token const & token ) {
 	IOperand const *	reference = _factory.createOperand( token.getOperandType(), captureNumericValue(token.getStr()) );
-	IOperand const *	temp;
+	IOperand const *	tmp;
 
 	std::cout << "** assert" << std::endl;
 
 	if ( !_stack.empty() ) {
 
-		temp = _stack.top();
-		if ( compareOperand(temp, reference) == false ) {
-			std::cerr << "Line " << token.getLine() << ": Exec error: `" << temp->toString() << "' is not equal to `" << reference->toString() << "'." << std::endl;
+		tmp = _stack.top();
+		if ( compareOperand(tmp, reference) == false ) {
+			std::cerr << "Line " << token.getLine() << ": Exec error: `" << tmp->toString() << "' is not equal to `" << reference->toString() << "'." << std::endl;
 		// exit(1);			
 		}
 	}
@@ -174,7 +174,24 @@ void					Avm::mod( Token const & token ) {
 
 void					Avm::print( Token const & token ) {
 	
+	IOperand const *	tmp;
+
 	std::cout << "** print" << std::endl;
+	if ( !_stack.empty() ) {
+
+		tmp = _stack.top();
+		if ( tmp->getType() == INT8 ) {
+			int c = std::stoi( tmp->toString() );
+			std::cout << static_cast<char>(c) << std::endl;
+		}
+		else {
+			std::cerr << "Line " << token.getLine() << ": Exec error: `" << tmp->toString() << "' is not an 8-bit integer." << std::endl;			
+		}
+	}
+	else {
+		std::cerr << "Line " << token.getLine() << ": Exec error: `" << token.getStr() << "' on an empty stack." << std::endl;
+		// exit(1);
+	}
 	(void)token;
 	return;
 }
@@ -183,6 +200,7 @@ void					Avm::e_xit( Token const & token ) {
 
 	std::cout << "** exit" << std::endl;
 	(void)token;
+	_exit = true;
 	return;
 }
 

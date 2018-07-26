@@ -1,6 +1,7 @@
 dump
 pop
 push int8(42)
+print
 assert int8(89)
 push int8(43)
 push double(42)
