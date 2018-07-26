@@ -1,5 +1,7 @@
 #include "Avm.hpp"
 
+
+
 Avm::Avm( void ) : _reader( new Reader() ) {
 	
 	return;
@@ -22,6 +24,11 @@ Avm::~Avm( void ) {
 }
 
 // PUBLIC
+
+void					Avm::initExecute( void ) {
+	_execute["push"] = &Avm::push;
+	_execute["pop"] = &Avm::pop;
+}
 
 void					Avm::readUserInput() {
 

@@ -13,10 +13,13 @@ class Avm {
 public:
 	Factory						_factory;
 
+	typedef void (Avm::*execute)( Token const & );
+
 	Avm( void );
 	Avm( std::string filename );
 	~Avm( void );
 
+	void						initExecute( void );
 	void						readUserInput();	
 	void						parseInstructions();
 	void						compute();
@@ -30,6 +33,7 @@ private:
 	std::stack<IOperand const *>	_stack;
 	std::vector<Token> *			_instructions;
 	std::ostringstream				_error;
+	std::map<std::string, execute>	_execute;
 
 	Avm( Avm const & src );
 	Avm & 			operator=( Avm const & rhs );
@@ -37,8 +41,8 @@ private:
 	// INSTRUCTIONS
 	void			push( Token const & );
 	void			pop( Token const & );
-	void			dump( void ) const;
-	void			assert( Token const & );
+	void			dump( Token const & );
+	void			a_ssert( Token const & );
 
 	// ERROR HANDLING
 	bool			checkError( std::ostringstream const & error ) const;
