@@ -12,7 +12,7 @@ Parser::~Parser( void ) {
 	return;
 }
 
-void					Parser::parse( void ) {
+void						Parser::parse( void ) {
 
 	Token			*token;
 
@@ -26,7 +26,7 @@ void					Parser::parse( void ) {
 	}
 }
 
-void					Parser::analyseToken( Token * token ) {
+void						Parser::analyseToken( Token * token ) {
 
 	if ( token->getType() == INVALID ) {
 		delete token;
@@ -44,7 +44,7 @@ void					Parser::analyseToken( Token * token ) {
 }
 
 
-void					Parser::analyseInstruction( Token * token ) {
+void						Parser::analyseInstruction( Token * token ) {
 
 	Token			*prevToken;
 	size_t			line;
@@ -72,7 +72,7 @@ void					Parser::analyseInstruction( Token * token ) {
 
 }
 
-void					Parser::analyseOperand( Token * token ) {
+void						Parser::analyseOperand( Token * token ) {
 
 	Token			*prevToken;
 	size_t			line;
@@ -93,9 +93,6 @@ void					Parser::analyseOperand( Token * token ) {
 		throw ParsingException( std::to_string(line), prevToken->getStr() + OPERAND_EXPECTED );
 	}
 }
-
-
-
 
 // ACCESSOR
 std::vector<Token> *		Parser::getInstructions( void ) const { return _instructions; }
@@ -127,32 +124,4 @@ std::ostream &				operator<<( std::ostream & o, Parser const & src ) {
 	std::cout << "--------------------" << std::endl;
 
 	return o;
-}
-
-// EXCEPTIONS
-Parser::ParsingException::ParsingException( std::string line, std::string error ) : _line(line), _error(error) { return; }
-
-Parser::ParsingException::ParsingException( Parser::ParsingException const & src ) {
-
-	*this = src;
-	return;
-}
-
-Parser::ParsingException::~ParsingException( void ) throw() { return; }
-
-Parser::ParsingException &	Parser::ParsingException::operator=( Parser::ParsingException const & rhs ) {
-
-	if ( this != &rhs ) {
-		_line = rhs._line;
-		_error = rhs._error;
-	}
-    return *this;
-}
-
-
-const char *	Parser::ParsingException::what() const throw() {
-	
-	std::string message = "Line " + _line + ": Parsing error: `" + _error;
-
-	return (message.c_str());
 }
