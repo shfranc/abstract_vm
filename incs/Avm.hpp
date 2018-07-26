@@ -40,6 +40,10 @@ private:
 	void			dump( void ) const;
 	void			assert( Token const & );
 
+	// ERROR HANDLING
+	bool			checkError( std::ostringstream const & error ) const;
+	void			flushError( std::ostringstream const & error ) const;
+
 	// TOOLS
 	std::string		captureNumericValue( std::string str ) const;
 	bool			compareOperand(IOperand const * O1, IOperand const * O2) const;

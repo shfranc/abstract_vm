@@ -5,6 +5,7 @@
 # include <vector>
 # include <iostream>
 # include <iomanip>
+#include <sstream>
 
 # define LINE_BEGIN			"' all lines must begin with an instruction."
 # define INVALID_TOKEN		"' is not a valid token."
@@ -22,7 +23,8 @@ public:
 
 	// ACCESSOR
 	std::vector<Token> *		getInstructions( void ) const;
-
+	std::ostringstream const &	getError( void ) const;
+	
 	// EXCEPTIONS
 	class ParsingException : public std::exception {
 	
@@ -45,6 +47,7 @@ public:
 private:
 	Lexer *						_lexer;
 	std::vector<Token> *		_instructions;
+	std::ostringstream			_error;
 	
 	Parser( void );
 	Parser( Parser const & src );	

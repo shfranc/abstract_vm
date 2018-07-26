@@ -28,14 +28,14 @@ void					Avm::readUserInput() {
 	try {
 		_reader->read();
 	}
-	catch ( std::invalid_argument e) { // create custom exceptions
-		std::cout << e.what() << std::endl;		
+	catch ( std::invalid_argument e) {
+		_error << e.what() << std::endl;		
 	}
 }	
 
 void					Avm::parseInstructions() {
 
-	if ( _reader->getContent() == "" )
+	if ( !checkError( _error ) || _reader->getContent() == "" )
 		return;
 
 	_parser = new Parser( _reader->getContent() );
@@ -46,7 +46,7 @@ void					Avm::parseInstructions() {
 
 void					Avm::compute() {
 
-	if ( !_instructions )
+	if ( !checkError( _parser->getError() ) || !_instructions )
 		return;
 
 	for (size_t i = 0; i < _instructions->size(); i++)
@@ -135,6 +135,19 @@ void					Avm::assert( Token const & token ) {
 	}
 	delete reference;
 	return;
+}
+
+// ERROR HANDLING
+bool					Avm::checkError( std::ostringstream const & error ) const {
+
+	if ( error.str() == "")
+		return true;
+	flushError(error);
+	return false;
+}
+void					Avm::flushError( std::ostringstream const & error ) const {
+
+	std::cerr << error.str();
 }
 
 // TOOLS

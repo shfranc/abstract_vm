@@ -21,7 +21,7 @@ void					Parser::parse( void ) {
 		try {
 			analyseToken(token);
 		} catch (ParsingException e) {
-			std::cout << e.what() << std::endl;
+			_error << e.what() << std::endl;
 		}
 	}
 }
@@ -98,12 +98,12 @@ void					Parser::analyseOperand( Token * token ) {
 
 
 // ACCESSOR
-std::vector<Token> *	Parser::getInstructions( void ) const { return _instructions; }
-
+std::vector<Token> *		Parser::getInstructions( void ) const { return _instructions; }
+std::ostringstream const &	Parser::getError( void ) const { return _error; }
 
 // OPERATOR <<
 
-std::ostream &		operator<<( std::ostream & o, Parser const & src ) {
+std::ostream &				operator<<( std::ostream & o, Parser const & src ) {
 	std::vector<Token> *	v = src.getInstructions();
 	size_t	len = v->size();
 
