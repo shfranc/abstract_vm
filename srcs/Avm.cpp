@@ -25,8 +25,6 @@ Avm::~Avm( void ) {
 	return;
 }
 
-// PUBLIC
-
 void					Avm::initExecute( void ) {
 
 	_execute["push"] = &Avm::push;
@@ -42,6 +40,8 @@ void					Avm::initExecute( void ) {
 	_execute["exit"] = &Avm::e_xit;
 	return;
 }
+
+// PUBLIC
 
 void					Avm::readUserInput() {
 

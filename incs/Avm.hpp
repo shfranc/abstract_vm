@@ -20,7 +20,6 @@ public:
 	Avm( std::string filename );
 	~Avm( void );
 
-	void						initExecute( void );
 	void						readUserInput();	
 	void						parseInstructions();
 	void						compute();
@@ -38,6 +37,9 @@ private:
 
 	Avm( Avm const & src );
 	Avm & 			operator=( Avm const & rhs );
+
+	// INIT INSTRUCTIONS MAP
+	void			initExecute( void );
 
 	// INSTRUCTIONS
 	void			push( Token const & );
