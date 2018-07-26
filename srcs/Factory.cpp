@@ -17,7 +17,7 @@ Factory::~Factory( void ) {
 
 IOperand const *	Factory::createOperand( eOperandType type, std::string const & value ) const {
 
-	return (this->*_factory[type])( value );
+	return ( (this->*_factory[type])( value ) );
 }
 
 IOperand const *	Factory::createInt8( std::string const & value ) const {

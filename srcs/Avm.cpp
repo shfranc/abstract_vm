@@ -4,11 +4,13 @@
 
 Avm::Avm( void ) : _reader( new Reader() ) {
 	
+	initExecute();
 	return;
 }
 
 Avm::Avm( std::string filename ) : _reader( new Reader(filename) ) {
-
+	
+	initExecute();
 	return;
 }
 
@@ -26,8 +28,19 @@ Avm::~Avm( void ) {
 // PUBLIC
 
 void					Avm::initExecute( void ) {
+
 	_execute["push"] = &Avm::push;
 	_execute["pop"] = &Avm::pop;
+	_execute["dump"] = &Avm::dump;
+	_execute["assert"] = &Avm::a_ssert;
+	_execute["add"] = &Avm::add;
+	_execute["sub"] = &Avm::sub;
+	_execute["mul"] = &Avm::mul;
+	_execute["div"] = &Avm::div;
+	_execute["mod"] = &Avm::mod;
+	_execute["print"] = &Avm::print;
+	_execute["exit"] = &Avm::e_xit;
+	return;
 }
 
 void					Avm::readUserInput() {
@@ -58,35 +71,12 @@ void					Avm::compute() {
 
 	for (size_t i = 0; i < _instructions->size(); i++)
 	{
-		switch ( (*_instructions)[i].getInstr() ) {
-			case PUSH :
-				push((*_instructions)[++i]);
-				break;
-			case POP :
-				pop((*_instructions)[i]);
-				break;
-			case DUMP :
-				dump();
-				break;
-			case ASSERT :
-				assert((*_instructions)[++i]);
-				break;
-			case ADD :
-				break;
-			case SUB :
-				break;
-			case MUL :
-				break;
-			case DIV :
-				break;
-			case MOD :
-				break;
-			case PRINT :
-				break;
-			case EXIT :
-				break;
-			case NO_INSTR :
-				break;										
+		if ( (*_instructions)[i].getInstr() == PUSH || (*_instructions)[i].getInstr() == ASSERT ) {
+			(this->*_execute[(*_instructions)[i].getStr()])( (*_instructions)[i + 1] );
+			i++;
+		}
+		else {
+			(this->*_execute[(*_instructions)[i].getStr()])( (*_instructions)[i] );
 		}
 	}
 }
@@ -94,12 +84,9 @@ void					Avm::compute() {
 // INSTRUCTIONS
 
 void					Avm::push( Token const & token ) {
-	IOperand const *	reference = _factory.createOperand( token.getOperandType(), captureNumericValue(token.getStr()) );
 	
-	(void)token;
-	std::cout << "** push" << std::endl;
-	std::cout << reference << std::endl;
-	_stack.push( reference );
+	std::cout << "** pçsh" << std::endl;
+	_stack.push( _factory.createOperand( token.getOperandType(), captureNumericValue(token.getStr()) ) );
 	return;
 }
 
@@ -115,14 +102,20 @@ void					Avm::pop( Token const & token ) {
 	return;
 }
 
-void					Avm::dump( void ) const {
+void					Avm::dump( Token const & token ) {
 
 	std::cout << "** dump" << std::endl;
-	for (std::stack<IOperand const *> dump = _stack; !dump.empty(); dump.pop())
-	 	std::cout << dump.top()->toString() << std::endl;
+	if ( !_stack.empty() ) {
+		for (std::stack<IOperand const *> dump = _stack; !dump.empty(); dump.pop())
+			std::cout << dump.top()->toString() << std::endl;
+	}
+	else {
+		std::cerr << "Line " << token.getLine() << ": Exec error: `" << token.getStr() << "' on an empty stack." << std::endl;
+		// exit(1);
+	}	 	
 }
 
-void					Avm::assert( Token const & token ) {
+void					Avm::a_ssert( Token const & token ) {
 	IOperand const *	reference = _factory.createOperand( token.getOperandType(), captureNumericValue(token.getStr()) );
 	IOperand const *	temp;
 
@@ -141,6 +134,55 @@ void					Avm::assert( Token const & token ) {
 		// exit(1);
 	}
 	delete reference;
+	return;
+}
+
+void					Avm::add( Token const & token ) {
+
+	std::cout << "** add" << std::endl;
+	(void)token;
+	return;
+}
+
+void					Avm::sub( Token const & token ) {
+
+	std::cout << "** sub" << std::endl;
+	(void)token;
+	return;
+}
+
+void					Avm::mul( Token const & token ) {
+
+	std::cout << "** mul" << std::endl;
+	(void)token;
+	return;
+}
+
+void					Avm::div( Token const & token ) {
+	
+	std::cout << "** div" << std::endl;
+	(void)token;
+	return;
+}
+
+void					Avm::mod( Token const & token ) {
+
+	std::cout << "** mod" << std::endl;
+	(void)token;
+	return;
+}
+
+void					Avm::print( Token const & token ) {
+	
+	std::cout << "** print" << std::endl;
+	(void)token;
+	return;
+}
+
+void					Avm::e_xit( Token const & token ) {
+
+	std::cout << "** exit" << std::endl;
+	(void)token;
 	return;
 }
 

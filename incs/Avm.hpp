@@ -6,6 +6,7 @@
 #include "Factory.hpp"
 #include "IOperand.hpp"
 #include <stack>
+#include <map>
 #include <sstream>
 
 class Avm {
@@ -43,6 +44,13 @@ private:
 	void			pop( Token const & );
 	void			dump( Token const & );
 	void			a_ssert( Token const & );
+	void			add( Token const & );
+	void			sub( Token const & );
+	void			mul( Token const & );
+	void			div( Token const & );
+	void			mod( Token const & );
+	void			print( Token const & );
+	void			e_xit( Token const & );
 
 	// ERROR HANDLING
 	bool			checkError( std::ostringstream const & error ) const;
