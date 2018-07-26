@@ -9,7 +9,7 @@ class Int8 : public IOperand {
 public:
 
 	Int8( eOperandType type, std::string value );
-	virtual	~Int8( void ) {}
+	virtual	~Int8( void );
 
 	virtual int					getPrecision( void ) const;
 	virtual eOperandType		getType( void ) const;

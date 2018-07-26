@@ -1,6 +1,7 @@
 #include "Int8.hpp"
 
 Int8::Int8( eOperandType type, std::string value ) : _type(type), _precision(0), _value(value) { return; }
+Int8::~Int8( void ) { return; }
 
 // ACCESSOR
 int				Int8::getPrecision( void ) const { return _precision; }

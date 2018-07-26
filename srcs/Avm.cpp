@@ -14,6 +14,10 @@ Avm::~Avm( void ) {
 
 	delete _reader;
 	delete _parser;
+	for (;!_stack.empty(); _stack.pop()) {
+		delete _stack.top();
+	}
+
 	return;
 }
 
@@ -79,16 +83,19 @@ void				Avm::compute() {
 }
 
 void				Avm::push( Token const & token ) {
+	IOperand const *	reference = _factory.createOperand( token.getOperandType(), captureNumericValue(token.getStr()) );
 	
+	(void)token;
 	std::cout << "** push" << std::endl;
-	_stack.push( _factory.createOperand( token.getOperandType(), captureNumericValue(token.getStr()) ) );
+	std::cout << reference << std::endl;
+	_stack.push( reference );
 	return;
 }
 
 void				Avm::pop( Token const & token ) {
 	
 	std::cout << "** pop" << std::endl;
-	if ( _stack.size() )
+	if ( !_stack.empty() )
 		_stack.pop();
 	else {
 		std::cerr << "Line " << token.getLine() << ": Exec error: `" << token.getStr() << "' on an empty stack." << std::endl;
@@ -110,7 +117,7 @@ void				Avm::assert( Token const & token ) {
 
 	std::cout << "** assert" << std::endl;
 
-	if ( _stack.size() ) {
+	if ( !_stack.empty() ) {
 
 		temp = _stack.top();
 		if ( compareOperand(temp, reference) == false ) {
