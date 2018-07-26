@@ -21,7 +21,9 @@ Avm::~Avm( void ) {
 	return;
 }
 
-void				Avm::readUserInput() {
+// PUBLIC
+
+void					Avm::readUserInput() {
 
 	try {
 		_reader->read();
@@ -31,7 +33,7 @@ void				Avm::readUserInput() {
 	}
 }	
 
-void				Avm::parseInstructions() {
+void					Avm::parseInstructions() {
 
 	if ( _reader->getContent() == "" )
 		return;
@@ -42,7 +44,7 @@ void				Avm::parseInstructions() {
 	_instructions = _parser->getInstructions();
 }
 
-void				Avm::compute() {
+void					Avm::compute() {
 
 	if ( !_instructions )
 		return;
@@ -82,7 +84,9 @@ void				Avm::compute() {
 	}
 }
 
-void				Avm::push( Token const & token ) {
+// INSTRUCTIONS
+
+void					Avm::push( Token const & token ) {
 	IOperand const *	reference = _factory.createOperand( token.getOperandType(), captureNumericValue(token.getStr()) );
 	
 	(void)token;
@@ -92,7 +96,7 @@ void				Avm::push( Token const & token ) {
 	return;
 }
 
-void				Avm::pop( Token const & token ) {
+void					Avm::pop( Token const & token ) {
 	
 	std::cout << "** pop" << std::endl;
 	if ( !_stack.empty() )
@@ -104,14 +108,14 @@ void				Avm::pop( Token const & token ) {
 	return;
 }
 
-void				Avm::dump( void ) const {
+void					Avm::dump( void ) const {
 
 	std::cout << "** dump" << std::endl;
 	for (std::stack<IOperand const *> dump = _stack; !dump.empty(); dump.pop())
 	 	std::cout << dump.top()->toString() << std::endl;
 }
 
-void				Avm::assert( Token const & token ) {
+void					Avm::assert( Token const & token ) {
 	IOperand const *	reference = _factory.createOperand( token.getOperandType(), captureNumericValue(token.getStr()) );
 	IOperand const *	temp;
 
@@ -133,7 +137,9 @@ void				Avm::assert( Token const & token ) {
 	return;
 }
 
-std::string	Avm::captureNumericValue( std::string str ) const {
+// TOOLS
+
+std::string				Avm::captureNumericValue( std::string str ) const {
 
 	std::smatch m;
 	std::regex e("\\((.+)\\)");
@@ -144,7 +150,7 @@ std::string	Avm::captureNumericValue( std::string str ) const {
 	return (m[1]);
 }
 
-bool			Avm::compareOperand(IOperand const * O1, IOperand const * O2) const {
+bool					Avm::compareOperand(IOperand const * O1, IOperand const * O2) const {
 
 	if ( O1->getType() == O2->getType() )
 	{
@@ -153,3 +159,7 @@ bool			Avm::compareOperand(IOperand const * O1, IOperand const * O2) const {
 	}
 	return (false);
 }
+
+// ACCESSORS
+
+std::ostringstream const &	Avm::getError( void ) const { return _error; }

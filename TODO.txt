@@ -18,5 +18,4 @@ TODO
 . Handling errors: catch exceptions and continue
 	- Reader.read : std::invalid_argument
 	- Parser.parse
-
-Coucou, quelle serait une bonne implémentation pour catcher des exceptions, tout en continuant d'exécuter un code en c++ ? (je suis sur Abstract VM, et je veux diagnostiquer toutes les erreurs et non pas uniquement la première). Mes rapides recherches me mènent sur l'utilisation d'un while (true) qui englobe le try / catch, mais bon...	
+	- string::stream to check before each step.
