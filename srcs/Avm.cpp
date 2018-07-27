@@ -71,14 +71,32 @@ void					Avm::compute() {
 
 	for (size_t i = 0; i < _instructions->size(); i++)
 	{
-		if ( (*_instructions)[i].getInstr() == PUSH || (*_instructions)[i].getInstr() == ASSERT ) {
-			(this->*_execute[(*_instructions)[i].getStr()])( (*_instructions)[i + 1] );
-			i++;
-		}
-		else {
-			(this->*_execute[(*_instructions)[i].getStr()])( (*_instructions)[i] );
+		try {
+			// i = doInstruction(i);
+
+			if ( (*_instructions)[i].getInstr() == PUSH || (*_instructions)[i].getInstr() == ASSERT ) {
+				(this->*_execute[(*_instructions)[i].getStr()])( (*_instructions)[i + 1] );
+				i++;
+			}
+			else {
+				(this->*_execute[(*_instructions)[i].getStr()])( (*_instructions)[i] );
+			}
+		} catch (std::out_of_range e) {
+			std::cerr << e.what() << std::endl;
 		}
 	}
+}
+
+int				Avm::doInstruction( int i ) {
+
+	if ( (*_instructions)[i].getInstr() == PUSH || (*_instructions)[i].getInstr() == ASSERT ) {
+		(this->*_execute[(*_instructions)[i].getStr()])( (*_instructions)[i + 1] );
+		i++;
+	}
+	else {
+		(this->*_execute[(*_instructions)[i].getStr()])( (*_instructions)[i] );
+	}
+	return (i);
 }
 
 // INSTRUCTIONS

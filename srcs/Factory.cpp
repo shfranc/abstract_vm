@@ -22,21 +22,21 @@ IOperand const *	Factory::createOperand( eOperandType type, std::string const & 
 
 IOperand const *	Factory::createInt8( std::string const & value ) const {
 
-	return ( new Int8(INT8, value) );
+	return ( new Operand<int>(INT8, value) );
 }
 IOperand const *	Factory::createInt16( std::string const & value ) const {
 
-	return ( new Int8(INT8, value) );
+	return ( new Operand<int>(INT8, value) );
 }
 IOperand const *	Factory::createInt32( std::string const & value ) const {
 
-	return ( new Int8(INT8, value) );
+	return ( new Operand<int>(INT8, value) );
 }
 IOperand const *	Factory::createFloat( std::string const & value ) const {
 
-	return ( new Int8(INT8, value) );
+	return ( new Operand<int>(INT8, value) );
 }
 IOperand const *	Factory::createDouble( std::string const & value ) const {
 
-	return ( new Int8(INT8, value) );
+	return ( new Operand<int>(INT8, value) );
 }

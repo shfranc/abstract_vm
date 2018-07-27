@@ -1,7 +1,7 @@
 #ifndef FACTORY_HPP
 # define FACTORY_HPP
 
-#include "Int8.hpp"
+#include "Operand.tpp"
 
 class Factory {
 

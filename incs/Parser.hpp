@@ -5,7 +5,7 @@
 # include <vector>
 # include <iostream>
 # include <iomanip>
-#include <sstream>
+# include <sstream>
 
 # define LINE_BEGIN			"' all lines must begin with an instruction."
 # define INVALID_TOKEN		"' is not a valid token."

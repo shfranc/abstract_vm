@@ -29,25 +29,6 @@ public:
 	// ACCESSORS
 	std::ostringstream const &	getError( void ) const;
 
-	// // EXCEPTIONS
-	// class ExecException : public std::exception {
-	
-	// public:
-
-	// 	ExecException( std::string line, std::string error );
-	// 	ExecException( ExecException const & src );
-	// 	virtual ~ExecException( void ) throw();
-		
-	// 	ExecException &	operator=( ExecException const & rhs );
-	// 	virtual const char *	what() const throw();
-
-	// private:
-	// 	std::string			_line;
-	// 	std::string			_error;
-	
-	// 	ExecException( void );
-	// };
-
 private:
 	Reader *						_reader;
 	Parser *						_parser;
@@ -64,6 +45,7 @@ private:
 	void			initExecute( void );
 
 	// INSTRUCTIONS
+	int				doInstruction(int i);
 	void			push( Token const & );
 	void			pop( Token const & );
 	void			dump( Token const & );
