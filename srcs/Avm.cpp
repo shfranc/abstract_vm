@@ -71,18 +71,13 @@ void					Avm::compute() {
 
 	for (size_t i = 0; i < _instructions->size(); i++)
 	{
-		try {
-			// i = doInstruction(i);
-
-			if ( (*_instructions)[i].getInstr() == PUSH || (*_instructions)[i].getInstr() == ASSERT ) {
-				(this->*_execute[(*_instructions)[i].getStr()])( (*_instructions)[i + 1] );
-				i++;
-			}
-			else {
-				(this->*_execute[(*_instructions)[i].getStr()])( (*_instructions)[i] );
-			}
-		} catch (std::out_of_range e) {
-			std::cerr << e.what() << std::endl;
+		// i = doInstruction(i);
+		if ( (*_instructions)[i].getInstr() == PUSH || (*_instructions)[i].getInstr() == ASSERT ) {
+			(this->*_execute[(*_instructions)[i].getStr()])( (*_instructions)[i + 1] );
+			i++;
+		}
+		else {
+			(this->*_execute[(*_instructions)[i].getStr()])( (*_instructions)[i] );
 		}
 	}
 }
@@ -102,9 +97,14 @@ int				Avm::doInstruction( int i ) {
 // INSTRUCTIONS
 
 void					Avm::push( Token const & token ) {
-	
+
 	std::cout << "** push" << std::endl;
-	_stack.push( _factory.createOperand( token.getOperandType(), captureNumericValue(token.getStr()) ) );
+	try {
+		IOperand const *	tmp = _factory.createOperand( token.getOperandType(), captureNumericValue(token.getStr()) );
+		_stack.push( tmp );
+	} catch (std::out_of_range e) {
+		std::cerr << e.what() << std::endl;
+	}
 	return;
 }
 
