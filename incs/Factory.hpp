@@ -1,7 +1,11 @@
 #ifndef FACTORY_HPP
 # define FACTORY_HPP
 
-#include "Operand.tpp"
+// #include "IOperand.hpp"
+// #include "Operand.tpp"
+#include "Token.hpp"
+
+class IOperand;
 
 class Factory {
 

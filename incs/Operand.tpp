@@ -1,9 +1,11 @@
 #ifndef OPERAND_HPP
 # define OPERAND_HPP
 
-# include <iostream>
-# include "Token.hpp"
+// # include <iostream>
+// # include "Factory.hpp"
 # include "IOperand.hpp"
+
+class Factory;
 
 template< typename T >
 class Operand : public IOperand {
@@ -41,14 +43,14 @@ public:
 		return (value);
 	}
 
-	// IOperand const *	operator+( IOperand const & rhs ) const;
+	IOperand const *	operator+( IOperand const & rhs ) const { return &rhs; }
 	// IOperand const *	operator-( IOperand const & rhs ) const;
 	// IOperand const *	operator*( IOperand const & rhs ) const;
 	// IOperand const *	operator/( IOperand const & rhs ) const;
 	// IOperand const *	operator%( IOperand const & rhs ) const;
 
 private:
-
+	Factory			_factory;
 	eOperandType	_type;
 	int				_precision;
 	std::string		_str;

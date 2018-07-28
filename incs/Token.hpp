@@ -1,6 +1,7 @@
 #ifndef TOKEN_HPP
 # define TOKEN_HPP
 
+# include <iostream>
 # include <regex>
 
 typedef enum	tokenType

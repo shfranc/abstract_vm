@@ -1,4 +1,5 @@
 #include "Factory.hpp"
+#include "Operand.tpp"
 
 Factory::Factory( void ) {
 

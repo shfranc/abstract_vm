@@ -1,7 +1,5 @@
 #include "Avm.hpp"
 
-
-
 Avm::Avm( void ) : _reader( new Reader() ), _exit(false) {
 	
 	initExecute();
