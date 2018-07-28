@@ -69,14 +69,7 @@ void					Avm::compute() {
 
 	for (size_t i = 0; i < _instructions->size(); i++)
 	{
-		// i = doInstruction(i);
-		if ( (*_instructions)[i].getInstr() == PUSH || (*_instructions)[i].getInstr() == ASSERT ) {
-			(this->*_execute[(*_instructions)[i].getStr()])( (*_instructions)[i + 1] );
-			i++;
-		}
-		else {
-			(this->*_execute[(*_instructions)[i].getStr()])( (*_instructions)[i] );
-		}
+		i = doInstruction(i);
 	}
 }
 

@@ -38,7 +38,7 @@ public:
 			value = std::stof( str );
 		}
 		else {
-			value = std::stol( str );
+			value = std::stod( str );
 		}
 		return (value);
 	}

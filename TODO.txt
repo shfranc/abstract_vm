@@ -19,3 +19,6 @@ TODO
 	- Reader.read : std::invalid_argument
 	- Parser.parse
 	- string::stream to check before each step.
+
+. catch (std::eception const & e) // pas de copie
+possible d''enchainer plusieurs exception a la suite avec plussieurs catch	
