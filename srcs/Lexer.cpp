@@ -76,7 +76,7 @@ void			Lexer::skipComment( void ) {
 
 	while ( !isNewline(_input[_pos]) )
 		_pos++;
-	skipNewline();
+	// skipNewline();
 }
 
 void			Lexer::skipEndOfInstr( void ) {
