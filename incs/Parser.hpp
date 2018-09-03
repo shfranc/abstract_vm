@@ -55,6 +55,7 @@ private:
 	void		analyseToken( Token * token );
 	void		analyseInstruction( Token * token );
 	void		analyseOperand( Token * token );
+	Token *		skipLine( Token * token );
 
 };
 

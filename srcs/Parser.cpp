@@ -21,11 +21,7 @@ void						Parser::parse( void ) {
 		try {
 			analyseToken(token);
 		} catch (ParsingException const & e) {
-			// std::cout << "cout: "<< e.what() << std::endl;
 			_error << e.what() << std::endl;
-			// _error.write(e.what(), std::strlen(e.what()));
-			// _error.write("\n", 1);
-			std::cout << "check iostream: " << _error.str() << std::endl;
 		}
 	}
 }
@@ -33,18 +29,21 @@ void						Parser::parse( void ) {
 void						Parser::analyseToken( Token * token ) {
 
 	if ( token->getType() == INVALID ) {
-		// delete token;
-		throw ParsingException( std::to_string(_lexer->getLine()), token->getStr() + INVALID_TOKEN );
+		std::string message = token->getStr() + INVALID_TOKEN;
+		token = skipLine( token );
+		delete token;
+		throw ParsingException( std::to_string(_lexer->getLine()), message );
 	}
 	else if ( token->getType() == INSTR ) {
 		analyseInstruction(token);
 	}
 	else if ( token->getType() == OPERAND ) {
-		// delete token;
-		throw ParsingException( std::to_string(_lexer->getLine()), token->getStr() + LINE_BEGIN );
+		std::string message = token->getStr() + INVALID_TOKEN;
+		delete token;
+		throw ParsingException( std::to_string(_lexer->getLine()), message );
 	}
-	// else
-		// delete token;
+	else
+		delete token;
 }
 
 
@@ -54,7 +53,7 @@ void						Parser::analyseInstruction( Token * token ) {
 	size_t			line;
 
 	if ( token->getInstr() == PUSH || token->getInstr() == ASSERT ) {
-		analyseOperand(token);
+		analyseOperand( token );
 	}
 	else {
 		
@@ -63,17 +62,29 @@ void						Parser::analyseInstruction( Token * token ) {
 		token = _lexer->getNextToken();
 		
 		if ( token == nullptr || token->getType() == SEP ) {
-			_instructions->push_back(*prevToken);
-			// delete prevToken;
-			// delete token;
+			_instructions->push_back( *prevToken );
+			delete prevToken;
+			delete token;
 		}
 		else {
-			// delete prevToken;
-			// delete token;
-			throw ParsingException( std::to_string(line), prevToken->getStr() + NEWLINE_EXPECTED );
+			std::string message = prevToken->getStr() + INVALID_TOKEN;
+			token = skipLine( token );
+			delete prevToken;
+			delete token;
+			throw ParsingException( std::to_string(line), message );
 		}
 	}
 
+}
+
+// When an error is detected, the line is skipped.
+Token *					Parser::skipLine( Token * token ) {
+
+	while ( token != nullptr && token->getType() != SEP ) {
+		delete token;
+		token = _lexer->getNextToken();
+	}
+	return ( token );
 }
 
 void						Parser::analyseOperand( Token * token ) {
@@ -88,13 +99,14 @@ void						Parser::analyseOperand( Token * token ) {
 	if ( token->getType() == OPERAND ) {
 		_instructions->push_back(*prevToken);
 		_instructions->push_back(*token);
-		// delete prevToken;
-		// delete token;
+		delete prevToken;
+		delete token;
 	}
 	else {
-		// delete prevToken;
-		// delete token;		
-		throw ParsingException( std::to_string(line), prevToken->getStr() + OPERAND_EXPECTED );
+		std::string message = token->getStr() + INVALID_TOKEN;
+		delete prevToken;
+		delete token;		
+		throw ParsingException( std::to_string(line), message );
 	}
 }
 
