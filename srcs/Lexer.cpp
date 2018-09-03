@@ -88,7 +88,7 @@ Token *			Lexer::createToken( void ) {
 	size_t		len = 0;
 	size_t		start = _pos;
 
-	while ( !isWhitespaces(_input[_pos + len]) && !isNewline(_input[_pos + len]) )
+	while ( !isWhitespaces(_input[_pos + len]) && !isNewline(_input[_pos + len]) && !isComment(_input[_pos + len]) )
 		len++;
 	_pos += len;
 	return ( new Token( _input.substr (start, len), _line ) );
