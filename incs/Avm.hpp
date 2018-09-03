@@ -27,7 +27,7 @@ public:
 	void						compute();
 
 	// ACCESSORS
-	std::ostringstream const &	getError( void ) const;
+	std::stringstream const &	getError( void ) const;
 
 private:
 	Reader *						_reader;
@@ -35,7 +35,7 @@ private:
 	std::stack<IOperand const *>	_stack;
 	std::vector<Token> *			_instructions;
 	std::map<std::string, execute>	_execute;
-	std::ostringstream				_error;
+	std::stringstream				_error;
 	bool							_exit;
 
 	Avm( Avm const & src );
@@ -59,8 +59,8 @@ private:
 	void			e_xit( Token const & );
 
 	// ERROR HANDLING
-	bool			checkError( std::ostringstream const & error ) const;
-	void			flushError( std::ostringstream const & error ) const;
+	bool			checkError( std::stringstream const & error ) const;
+	void			flushError( std::stringstream const & error ) const;
 
 	// TOOLS
 	std::string		captureNumericValue( std::string str ) const;

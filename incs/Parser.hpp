@@ -23,7 +23,7 @@ public:
 
 	// ACCESSOR
 	std::vector<Token> *		getInstructions( void ) const;
-	std::ostringstream const &	getError( void ) const;
+	std::stringstream const &	getError( void ) const;
 	
 	// EXCEPTIONS
 	class ParsingException : public std::exception {
@@ -38,7 +38,6 @@ public:
 		virtual const char *	what() const throw();
 
 	private:
-		std::string			_line;
 		std::string			_error;
 
 		ParsingException( void );
@@ -47,7 +46,7 @@ public:
 private:
 	Lexer *						_lexer;
 	std::vector<Token> *		_instructions;
-	std::ostringstream			_error;
+	std::stringstream			_error;
 	
 	Parser( void );
 	Parser( Parser const & src );	

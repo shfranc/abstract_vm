@@ -20,8 +20,12 @@ void						Parser::parse( void ) {
 
 		try {
 			analyseToken(token);
-		} catch (ParsingException e) {
+		} catch (ParsingException const & e) {
+			// std::cout << "cout: "<< e.what() << std::endl;
 			_error << e.what() << std::endl;
+			// _error.write(e.what(), std::strlen(e.what()));
+			// _error.write("\n", 1);
+			std::cout << "check iostream: " << _error.str() << std::endl;
 		}
 	}
 }
@@ -29,18 +33,18 @@ void						Parser::parse( void ) {
 void						Parser::analyseToken( Token * token ) {
 
 	if ( token->getType() == INVALID ) {
-		delete token;
+		// delete token;
 		throw ParsingException( std::to_string(_lexer->getLine()), token->getStr() + INVALID_TOKEN );
 	}
 	else if ( token->getType() == INSTR ) {
 		analyseInstruction(token);
 	}
 	else if ( token->getType() == OPERAND ) {
-		delete token;
+		// delete token;
 		throw ParsingException( std::to_string(_lexer->getLine()), token->getStr() + LINE_BEGIN );
 	}
-	else
-		delete token;
+	// else
+		// delete token;
 }
 
 
@@ -60,12 +64,12 @@ void						Parser::analyseInstruction( Token * token ) {
 		
 		if ( token == nullptr || token->getType() == SEP ) {
 			_instructions->push_back(*prevToken);
-			delete prevToken;
-			delete token;
+			// delete prevToken;
+			// delete token;
 		}
 		else {
-			delete prevToken;
-			delete token;
+			// delete prevToken;
+			// delete token;
 			throw ParsingException( std::to_string(line), prevToken->getStr() + NEWLINE_EXPECTED );
 		}
 	}
@@ -84,19 +88,19 @@ void						Parser::analyseOperand( Token * token ) {
 	if ( token->getType() == OPERAND ) {
 		_instructions->push_back(*prevToken);
 		_instructions->push_back(*token);
-		delete prevToken;
-		delete token;
+		// delete prevToken;
+		// delete token;
 	}
 	else {
-		delete prevToken;
-		delete token;		
+		// delete prevToken;
+		// delete token;		
 		throw ParsingException( std::to_string(line), prevToken->getStr() + OPERAND_EXPECTED );
 	}
 }
 
 // ACCESSOR
 std::vector<Token> *		Parser::getInstructions( void ) const { return _instructions; }
-std::ostringstream const &	Parser::getError( void ) const { return _error; }
+std::stringstream const &	Parser::getError( void ) const { return _error; }
 
 // OPERATOR <<
 

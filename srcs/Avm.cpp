@@ -214,14 +214,14 @@ void					Avm::e_xit( Token const & token ) {
 }
 
 // ERROR HANDLING
-bool					Avm::checkError( std::ostringstream const & error ) const {
+bool					Avm::checkError( std::stringstream const & error ) const {
 
 	if ( error.str() == "")
 		return true;
 	flushError(error);
 	return false;
 }
-void					Avm::flushError( std::ostringstream const & error ) const {
+void					Avm::flushError( std::stringstream const & error ) const {
 
 	std::cerr << error.str();
 }
@@ -251,4 +251,4 @@ bool					Avm::compareOperand(IOperand const * O1, IOperand const * O2) const {
 
 // ACCESSORS
 
-std::ostringstream const &	Avm::getError( void ) const { return _error; }
+std::stringstream const &	Avm::getError( void ) const { return _error; }
