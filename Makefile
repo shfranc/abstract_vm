@@ -13,6 +13,7 @@ SRCS = $(addprefix $(PATH_SRCS)/, main.cpp \
 		Token.cpp \
 		Parser.cpp \
 		Factory.cpp \
+		Instructions.cpp \
 		Int8.cpp \
 		ParsingException.cpp )
 OBJS = $(SRCS:$(PATH_SRCS)/%.cpp=$(PATH_OBJS)/%.o)

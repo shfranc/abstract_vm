@@ -38,7 +38,7 @@ void						Parser::analyseToken( Token * token ) {
 		analyseInstruction(token);
 	}
 	else if ( token->getType() == OPERAND ) {
-		std::string message = token->getStr() + INVALID_TOKEN;
+		std::string message = token->getStr() + LINE_BEGIN;
 		delete token;
 		throw ParsingException( std::to_string(_lexer->getLine()), message );
 	}
@@ -67,7 +67,7 @@ void						Parser::analyseInstruction( Token * token ) {
 			delete token;
 		}
 		else {
-			std::string message = prevToken->getStr() + INVALID_TOKEN;
+			std::string message = prevToken->getStr() + NEWLINE_EXPECTED;
 			token = skipLine( token );
 			delete prevToken;
 			delete token;
@@ -103,7 +103,7 @@ void						Parser::analyseOperand( Token * token ) {
 		delete token;
 	}
 	else {
-		std::string message = token->getStr() + INVALID_TOKEN;
+		std::string message = token->getStr() + OPERAND_EXPECTED;
 		delete prevToken;
 		delete token;		
 		throw ParsingException( std::to_string(line), message );
