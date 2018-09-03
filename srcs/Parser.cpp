@@ -103,7 +103,7 @@ void						Parser::analyseOperand( Token * token ) {
 		delete token;
 	}
 	else {
-		std::string message = token->getStr() + OPERAND_EXPECTED;
+		std::string message = prevToken->getStr() + OPERAND_EXPECTED;
 		delete prevToken;
 		delete token;		
 		throw ParsingException( std::to_string(line), message );

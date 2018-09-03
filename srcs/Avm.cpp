@@ -71,6 +71,8 @@ void					Avm::compute() {
 	{
 		i = doInstruction(i);
 	}
+	if ( _exit == false )
+		std::cerr << "Exec error: Missing the token `exit' at the end of the program." << std::endl;
 }
 
 int				Avm::doInstruction( int i ) {
@@ -96,29 +98,6 @@ bool					Avm::checkError( std::stringstream const & error ) const {
 void					Avm::flushError( std::stringstream const & error ) const {
 
 	std::cerr << error.str();
-}
-
-// TOOLS
-
-std::string				Avm::captureNumericValue( std::string str ) const {
-
-	std::smatch m;
-	std::regex e("\\((.+)\\)");
-
-	std::regex_search( str, m, e );
-	std::cout << m[1] << std::endl;
-
-	return (m[1]);
-}
-
-bool					Avm::compareOperand(IOperand const * O1, IOperand const * O2) const {
-
-	if ( O1->getType() == O2->getType() )
-	{
-		if ( std::strcmp( O1->toString().c_str(), O2->toString().c_str() ) == 0 )
-			return (true);
-	}
-	return (false);
 }
 
 // ACCESSORS

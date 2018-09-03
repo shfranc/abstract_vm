@@ -36,7 +36,7 @@ void					Avm::dump( Token const & token ) {
 	else {
 		std::cerr << "Line " << token.getLine() << ": Exec error: `" << token.getStr() << "' on an empty stack." << std::endl;
 		// exit(1);
-	}	 	
+	}
 }
 
 void					Avm::a_ssert( Token const & token ) {
@@ -126,4 +126,25 @@ void					Avm::e_xit( Token const & token ) {
 	(void)token;
 	_exit = true;
 	return;
+}
+
+// TOOLS
+
+std::string				Avm::captureNumericValue( std::string str ) const {
+
+	std::smatch m;
+	std::regex e("\\((.+)\\)");
+
+	std::regex_search( str, m, e );
+	return (m[1]);
+}
+
+bool					Avm::compareOperand(IOperand const * O1, IOperand const * O2) const {
+
+	if ( O1->getType() == O2->getType() )
+	{
+		if ( std::strcmp( O1->toString().c_str(), O2->toString().c_str() ) == 0 )
+			return (true);
+	}
+	return (false);
 }
