@@ -16,9 +16,9 @@ Avm::~Avm( void ) {
 
 	delete _reader;
 	delete _parser;
-	for (;!_stack.empty(); _stack.pop()) {
-		delete _stack.top();
-	}
+	// for (;!_stack.empty(); _stack.pop()) {
+		// delete _stack.top();
+	// }
 
 	return;
 }

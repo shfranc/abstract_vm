@@ -7,7 +7,7 @@ void					Avm::push( Token const & token ) {
 	std::cout << "** push" << std::endl;
 	try {
 		IOperand const *	tmp = _factory.createOperand( token.getOperandType(), captureNumericValue(token.getStr()) );
-		_stack.push( tmp );
+		_stack.emplace( _stack.begin(), tmp );
 	} catch (std::out_of_range e) {
 		std::cerr << e.what() << std::endl;
 	}
@@ -18,7 +18,8 @@ void					Avm::pop( Token const & token ) {
 	
 	std::cout << "** pop" << std::endl;
 	if ( !_stack.empty() )
-		_stack.pop();
+		_stack.erase( _stack.begin() );
+		// delete elem ?
 	else {
 		std::cerr << "Line " << token.getLine() << ": Exec error: `" << token.getStr() << "' on an empty stack." << std::endl;
 		// exit(1);
@@ -30,8 +31,8 @@ void					Avm::dump( Token const & token ) {
 
 	std::cout << "** dump" << std::endl;
 	if ( !_stack.empty() ) {
-		for (std::stack<IOperand const *> dump = _stack; !dump.empty(); dump.pop())
-			std::cout << dump.top()->toString() << std::endl;
+		for (size_t i = 0; i < _stack.size(); i++)
+			std::cout << (_stack[i])->toString() << std::endl;
 	}
 	else {
 		std::cerr << "Line " << token.getLine() << ": Exec error: `" << token.getStr() << "' on an empty stack." << std::endl;
@@ -47,7 +48,7 @@ void					Avm::a_ssert( Token const & token ) {
 
 	if ( !_stack.empty() ) {
 
-		tmp = _stack.top();
+		tmp = _stack.front();
 		if ( compareOperand(tmp, reference) == false ) {
 			std::cerr << "Line " << token.getLine() << ": Exec error: `" << tmp->toString() << "' is not equal to `" << reference->toString() << "'." << std::endl;
 		// exit(1);			
@@ -103,7 +104,7 @@ void					Avm::print( Token const & token ) {
 	std::cout << "** print" << std::endl;
 	if ( !_stack.empty() ) {
 
-		tmp = _stack.top();
+		tmp = _stack.front();
 		if ( tmp->getType() == INT8 ) {
 			int c = std::stoi( tmp->toString() );
 			std::cout << static_cast<char>(c);
