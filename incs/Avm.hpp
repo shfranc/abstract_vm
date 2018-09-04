@@ -5,7 +5,7 @@
 #include "Parser.hpp"
 #include "Factory.hpp"
 #include "IOperand.hpp"
-#include <stack>
+// #include <stack>
 #include <map>
 #include <sstream>
 
@@ -32,7 +32,7 @@ public:
 private:
 	Reader *						_reader;
 	Parser *						_parser;
-	std::stack<IOperand const *>	_stack;
+	std::vector<IOperand const *>	_stack;
 	std::vector<Token> *			_instructions;
 	std::map<std::string, execute>	_execute;
 	std::stringstream				_error;
