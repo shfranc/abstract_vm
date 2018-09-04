@@ -35,7 +35,8 @@ void					Avm::dump( Token const & token ) {
 			std::cout << (_stack[i])->toString() << std::endl;
 	}
 	else {
-		std::cerr << "Line " << token.getLine() << ": Exec error: `" << token.getStr() << "' on an empty stack." << std::endl;
+		throw ExecException( std::to_string( token.getLine()), token.getStr() + EMPTY_STACK );
+		// std::cerr << "Line " << token.getLine() << ": Exec error: `" << token.getStr() << "' on an empty stack." << std::endl;
 		// exit(1);
 	}
 }
@@ -55,7 +56,8 @@ void					Avm::a_ssert( Token const & token ) {
 		}
 	}
 	else {
-		std::cerr << "Line " << token.getLine() << ": Exec error: `" << token.getStr() << "' on an empty stack." << std::endl;
+		throw ExecException( std::to_string( token.getLine()), ASSERT_EMPTY_STACK );		
+		// std::cerr << "Line " << token.getLine() << ": Exec error: `" << token.getStr() << "' on an empty stack." << std::endl;
 		// exit(1);
 	}
 	delete reference;

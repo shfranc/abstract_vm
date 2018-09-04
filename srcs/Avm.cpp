@@ -71,11 +71,15 @@ void					Avm::compute() {
 	{
 		try {
 			i = doInstruction(i);
+
 		} catch ( ExecException const & e ) {
 			std::cerr << e.what() << std::endl;
 		}
-	}
 
+		if ( (*_instructions)[i].getInstr() == PUSH || (*_instructions)[i].getInstr() == ASSERT )
+			i++;		
+		
+	}
 	if ( _exit == false )
 		std::cerr << "Exec error: Missing the token `exit' at the end of the program." << std::endl;
 }
@@ -84,7 +88,6 @@ int				Avm::doInstruction( int i ) {
 
 	if ( (*_instructions)[i].getInstr() == PUSH || (*_instructions)[i].getInstr() == ASSERT ) {
 		(this->*_execute[(*_instructions)[i].getStr()])( (*_instructions)[i + 1] );
-		i++;
 	}
 	else {
 		(this->*_execute[(*_instructions)[i].getStr()])( (*_instructions)[i] );
