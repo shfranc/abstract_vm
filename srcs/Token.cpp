@@ -75,15 +75,15 @@ eInstructType		Token::checkInstr( void ) {
 
 eOperandType		Token::checkOperandType( void ) {
 
-	if ( std::regex_match(_str, std::regex("int8[(][-]?[0-9]+[)]") ) )
+	if ( std::regex_match(_str, std::regex("int8\\([-]?[0-9]+\\)") ) )
 		return (INT8);
-	if ( std::regex_match(_str, std::regex("int16[(][-]?[0-9]+[)]") ) )
+	if ( std::regex_match(_str, std::regex("int16\\([-]?[0-9]+\\)") ) )
 		return (INT16);
-	if ( std::regex_match(_str, std::regex("int32[(][-]?[0-9]+[)]") ) )
+	if ( std::regex_match(_str, std::regex("int32\\([-]?[0-9]+\\)") ) )
 		return (INT32);		
-	if ( std::regex_match(_str, std::regex("float[(][-]?[0-9]+[.]?[0-9]*[)]") ) )
+	if ( std::regex_match(_str, std::regex("float\\([-]?[0-9]+\\.[0-9]*\\)") ) )
 		return (FLOAT);
-	if ( std::regex_match(_str, std::regex("double[(][-]?[0-9]+[.]?[0-9]*[)]") ) )
+	if ( std::regex_match(_str, std::regex("double\\([-]?[0-9]+\\.[0-9]*\\)") ) )
 		return (DOUBLE);
 	return (NO_OPERAND);		
 }

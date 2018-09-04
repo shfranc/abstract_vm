@@ -74,6 +74,7 @@ void					Avm::compute() {
 
 		} catch ( ExecException const & e ) {
 			std::cerr << e.what() << std::endl;
+			// return ;
 		}
 
 		if ( (*_instructions)[i].getInstr() == PUSH || (*_instructions)[i].getInstr() == ASSERT )

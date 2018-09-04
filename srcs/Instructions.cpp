@@ -142,11 +142,11 @@ std::string				Avm::captureNumericValue( std::string str ) const {
 	return (m[1]);
 }
 
-bool					Avm::compareOperand(IOperand const * O1, IOperand const * O2) const {
+bool					Avm::compareOperand(IOperand const * operand_1, IOperand const * operand_2) const {
 
-	if ( O1->getType() == O2->getType() )
+	if ( operand_1->getType() == operand_2->getType() )
 	{
-		if ( std::strcmp( O1->toString().c_str(), O2->toString().c_str() ) == 0 )
+		if ( std::strcmp( operand_1->toString().c_str(), operand_2->toString().c_str() ) == 0 )
 			return (true);
 	}
 	return (false);
