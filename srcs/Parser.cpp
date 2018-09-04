@@ -20,7 +20,7 @@ void						Parser::parse( void ) {
 
 		try {
 			analyseToken(token);
-		} catch (ParsingException const & e) {
+		} catch ( ParsingException const & e ) {
 			_error << e.what() << std::endl;
 		}
 	}
@@ -61,7 +61,7 @@ void						Parser::analyseInstruction( Token * token ) {
 		prevToken = token;
 		token = _lexer->getNextToken();
 		
-		if ( token == nullptr || token->getType() == SEP ) {
+		if ( token == nullptr || token->getType() == END_INSTR || token->getType() == SEP ) {
 			_instructions->push_back( *prevToken );
 			delete prevToken;
 			delete token;

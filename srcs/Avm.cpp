@@ -69,8 +69,13 @@ void					Avm::compute() {
 
 	for (size_t i = 0; i < _instructions->size(); i++)
 	{
-		i = doInstruction(i);
+		try {
+			i = doInstruction(i);
+		} catch ( ExecException const & e ) {
+			std::cerr << e.what() << std::endl;
+		}
 	}
+
 	if ( _exit == false )
 		std::cerr << "Exec error: Missing the token `exit' at the end of the program." << std::endl;
 }

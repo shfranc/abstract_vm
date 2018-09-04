@@ -1,6 +1,6 @@
 #include "Parser.hpp"
 
-Parser::ParsingException::ParsingException( std::string line, std::string error ) : _error("Line " + line + ": Parsing error: `" + error) { return; }
+Parser::ParsingException::ParsingException( std::string line, std::string error ) : _error("\033[1;31mParsing error:\033[0m Line " + line + ": `" + error) { return; }
 
 Parser::ParsingException::~ParsingException( void ) throw() { return; }
 

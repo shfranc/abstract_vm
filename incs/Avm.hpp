@@ -5,7 +5,7 @@
 #include "Parser.hpp"
 #include "Factory.hpp"
 #include "IOperand.hpp"
-// #include <stack>
+#include "ExecException.hpp"
 #include <map>
 #include <sstream>
 

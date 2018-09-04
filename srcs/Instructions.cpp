@@ -21,8 +21,8 @@ void					Avm::pop( Token const & token ) {
 		_stack.erase( _stack.begin() );
 		// delete elem ?
 	else {
-		std::cerr << "Line " << token.getLine() << ": Exec error: `" << token.getStr() << "' on an empty stack." << std::endl;
-		// exit(1);
+		// std::cerr << "Line " << token.getLine() << ": Exec error: `" << token.getStr() << "' on an empty stack." << std::endl;
+		throw ExecException( std::to_string( token.getLine()), token.getStr() + EMPTY_STACK );
 	}
 	return;
 }

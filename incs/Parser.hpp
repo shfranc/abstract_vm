@@ -30,11 +30,12 @@ public:
 	
 	public:
 
-		ParsingException( std::string line, std::string error );
 		ParsingException( ParsingException const & src );
+		ParsingException( std::string line, std::string error );
 		virtual ~ParsingException( void ) throw();
 		
 		ParsingException &	operator=( ParsingException const & rhs );
+		
 		virtual const char *	what() const throw();
 
 	private:
