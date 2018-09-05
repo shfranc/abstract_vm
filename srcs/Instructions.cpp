@@ -42,25 +42,34 @@ void					Avm::dump( Token const & token ) {
 }
 
 void					Avm::a_ssert( Token const & token ) {
-	IOperand const *	reference = _factory.createOperand( token.getOperandType(), captureNumericValue(token.getStr()) );
+	// IOperand const *	reference = _factory.createOperand( token.getOperandType(), captureNumericValue(token.getStr()) );
 	IOperand const *	tmp;
 
 	std::cout << "** assert" << std::endl;
 
 	if ( !_stack.empty() ) {
+		try {
+			IOperand const *	reference = _factory.createOperand( token.getOperandType(), captureNumericValue(token.getStr()) );
 
-		tmp = _stack.front();
-		if ( compareOperand(tmp, reference) == false ) {
-			std::cerr << "Line " << token.getLine() << ": Exec error: `" << tmp->toString() << "' is not equal to `" << reference->toString() << "'." << std::endl;
-		// exit(1);			
-		}
+			tmp = _stack.front();
+			if ( compareOperand(tmp, reference) == false ) {
+				// std::cerr << "Line " << token.getLine() << ": Exec error: `" << tmp->toString() << "' is not equal to `" << reference->toString() << "'." << std::endl;
+				std::string error = "assert: " + tmp->toString() + ASSERT_ERROR + reference->toString() + "'.";
+				delete reference;
+				throw ExecException( std::to_string( token.getLine()), error );			
+			}
+			delete reference;
+
+		} catch (std::out_of_range e) {
+			std::cerr << e.what() << std::endl;
+		return ;
+	}	
 	}
 	else {
 		throw ExecException( std::to_string( token.getLine()), ASSERT_EMPTY_STACK );		
 		// std::cerr << "Line " << token.getLine() << ": Exec error: `" << token.getStr() << "' on an empty stack." << std::endl;
 		// exit(1);
 	}
-	delete reference;
 	return;
 }
 

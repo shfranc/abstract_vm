@@ -5,6 +5,7 @@
 
 # define EMPTY_STACK	"' on an empty stack."
 # define ASSERT_EMPTY_STACK	"assert' on an empty stack."
+# define ASSERT_ERROR	"' is not equal to `'"
 
 class ExecException : public std::exception {
 

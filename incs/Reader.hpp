@@ -7,6 +7,7 @@
 # include <sys/stat.h>
 
 # define READ_ERROR "Read error: file doesn't exist or permission is denied."
+# define EOF_ERROR "Read error: reading interrupted by EOF."
 # define NOT_FILE_ERROR "Read error: is not a REGULAR file."
 
 class Reader {

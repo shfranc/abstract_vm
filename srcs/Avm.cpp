@@ -43,20 +43,10 @@ void					Avm::initExecute( void ) {
 
 void					Avm::readUserInput() {
 
-	try {
-		_reader->read();
-	}
-	catch ( std::invalid_argument e) {
-		_error << e.what() << std::endl;
-	}
+	_reader->read();
 }	
 
 void					Avm::parseInstructions() {
-
-	if ( !checkError( _error ) || _reader->getContent() == "" ) {
-		flushError(_error);
-		return;
-	}
 	
 	_parser = new Parser( _reader->getContent() );
 	_parser->parse();
@@ -65,10 +55,13 @@ void					Avm::parseInstructions() {
 }
 
 void					Avm::compute() {
+	
 
-	if ( !checkError( _error ) || !checkError( _parser->getError() ) || !_instructions ) {
+	if ( !checkError( _parser->getError() ) || !_instructions ) {
+		flushError( _parser->getError() );
 		return;
 	}
+	std::cout << "COMPUTE";
 
 	for (size_t i = 0; i < _instructions->size(); i++)
 	{
@@ -104,13 +97,13 @@ int				Avm::doInstruction( int i ) {
 // ERROR HANDLING
 bool					Avm::checkError( std::stringstream const & error ) const {
 
-	if ( error.str() == "")
+	if ( error.str() == "" )
 		return true;
 	return false;
 }
 void					Avm::flushError( std::stringstream const & error ) const {
 
-	std::cerr << error.str();
+	std::cerr << error.rdbuf();
 }
 
 // ACCESSORS

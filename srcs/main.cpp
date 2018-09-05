@@ -18,9 +18,17 @@ int main( int argc, char const *argv[] )
 		return 1;
 	}
 
-	avm->readUserInput();
-	avm->parseInstructions();
-	avm->compute();
+	// avm->readUserInput();
+	// avm->parseInstructions();
+	// avm->compute();
+
+	try {
+		avm->readUserInput();
+		avm->parseInstructions();
+		avm->compute();
+	} catch ( std::invalid_argument const & e) {
+		std::cerr << e.what() << std::endl;
+	}
 
 	delete avm;
 	// while(1);

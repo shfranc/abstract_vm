@@ -35,6 +35,8 @@ void		Reader::read_stdin( void ) {
 			break ;
 		std::cout << "> ";
 	}
+	if (std::cin.eof())
+		throw std::invalid_argument( EOF_ERROR );
 }
 
 void		Reader::read_file( void ) {
@@ -46,7 +48,7 @@ void		Reader::read_file( void ) {
 	if ( !file.is_open() )
 		throw std::invalid_argument( READ_ERROR );
 	if( stat( _filename.c_str(), &s ) == 0 ) {
-		if ( !(s.st_mode & S_IFREG) )
+		if ( (s.st_mode & S_IFMT) != S_IFREG )
 			throw std::invalid_argument( NOT_FILE_ERROR );
 	} else {
 		throw std::invalid_argument( READ_ERROR );
