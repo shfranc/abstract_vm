@@ -3,11 +3,12 @@
 
 # include <iostream>
 
-# define EMPTY_STACK		"' on an empty stack."
-# define ASSERT_EMPTY_STACK	"assert' on an empty stack."
-# define ASSERT_ERROR		"' is not equal to `'"
-# define WRONG_TYPE 		"' is not an 8-bit integer."
-# define LESS_OPERAND 		"' with less than TWO operands."
+# define EMPTY_STACK			"' on an empty stack."
+# define ASSERT_EMPTY_STACK		"assert' on an empty stack."
+# define ASSERT_ERROR			"' is not equal to `'"
+# define WRONG_TYPE 			"' is not an 8-bit integer."
+# define LESS_OPERAND 			"' with less than TWO operands."
+# define FORBIDDEN_OPERATION	"' by ZERO is forbidden."
 
 class ExecException : public std::exception {
 

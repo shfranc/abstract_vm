@@ -70,7 +70,11 @@ void					Avm::add( Token const & token ) {
 
 	std::cout << "** add" << std::endl;
 
-	if ( _stack.size() >= 2 ) {
+	if ( _stack.empty() )
+		throw ExecException( std::to_string( token.getLine()), token.getStr() + EMPTY_STACK );
+	else if ( _stack.size() < 2 )
+		throw ExecException( std::to_string( token.getLine()), token.getStr() + LESS_OPERAND );
+	else {
 		IOperand const * operand_1 = _stack[0];
 		IOperand const * operand_2 = _stack[1];
 		IOperand const * result = *operand_1 + *operand_2;
@@ -79,13 +83,8 @@ void					Avm::add( Token const & token ) {
 		_stack.erase( _stack.begin() );
 		delete _stack[0];
 		_stack.erase( _stack.begin() );
-
 		_stack.emplace( _stack.begin(), result );
-
-	} else if ( !_stack.empty() && _stack.size() < 2 )
-		throw ExecException( std::to_string( token.getLine()), token.getStr() + LESS_OPERAND );
-	else
-		throw ExecException( std::to_string( token.getLine()), token.getStr() + EMPTY_STACK );
+	}
 
 	return;
 }
@@ -141,7 +140,28 @@ void					Avm::mul( Token const & token ) {
 void					Avm::div( Token const & token ) {
 	
 	std::cout << "** div" << std::endl;
-	(void)token;
+
+	if ( _stack.size() >= 2 ) {
+		IOperand const * operand_1 = _stack[0];
+		IOperand const * operand_2 = _stack[1];
+		
+		if ( std::stod(operand_1->toString()) == 0 )
+			throw ExecException( std::to_string( token.getLine()), token.getStr() + FORBIDDEN_OPERATION );
+
+		IOperand const * result = *operand_1 * *operand_2;
+
+		delete _stack[0];
+		_stack.erase( _stack.begin() );
+		delete _stack[0];
+		_stack.erase( _stack.begin() );
+
+		_stack.emplace( _stack.begin(), result );
+
+	} else if ( !_stack.empty() && _stack.size() < 2 )
+		throw ExecException( std::to_string( token.getLine()), token.getStr() + LESS_OPERAND );
+	else
+		throw ExecException( std::to_string( token.getLine()), token.getStr() + EMPTY_STACK );
+
 	return;
 }
 

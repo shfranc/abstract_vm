@@ -58,7 +58,10 @@ public:
 		return _factory.createOperand( std::max( _type, rhs.getType() ), std::to_string(_value * std::stod( rhs.toString()) ) );
 	}
 
-	// IOperand const *	operator/( IOperand const & rhs ) const;
+	IOperand const *	operator/( IOperand const & rhs ) const {
+
+		return _factory.createOperand( std::max( _type, rhs.getType() ), std::to_string(_value / std::stod( rhs.toString()) ) );
+	}
 	// IOperand const *	operator%( IOperand const & rhs ) const;
 
 private:
