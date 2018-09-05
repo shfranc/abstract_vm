@@ -68,17 +68,12 @@ void					Avm::a_ssert( Token const & token ) {
 
 void					Avm::add( Token const & token ) {
 
-	IOperand const *	operand_1;
-	IOperand const *	operand_2;
-	IOperand const *	result;
-
 	std::cout << "** add" << std::endl;
 
 	if ( _stack.size() >= 2 ) {
-		operand_1 = _stack[0];
-		operand_2 = _stack[1];
-
-		result = *operand_1 + *operand_2;
+		IOperand const * operand_1 = _stack[0];
+		IOperand const * operand_2 = _stack[1];
+		IOperand const * result = *operand_1 + *operand_2;
 
 		delete _stack[0];
 		_stack.erase( _stack.begin() );
@@ -97,17 +92,12 @@ void					Avm::add( Token const & token ) {
 
 void					Avm::sub( Token const & token ) {
 
-	IOperand const *	operand_1;
-	IOperand const *	operand_2;
-	IOperand const *	result;
-
 	std::cout << "** sub" << std::endl;
 
 	if ( _stack.size() >= 2 ) {
-		operand_1 = _stack[0];
-		operand_2 = _stack[1];
-
-		result = *operand_1 - *operand_2;
+		IOperand const * operand_1 = _stack[0];
+		IOperand const * operand_2 = _stack[1];
+		IOperand const * result = *operand_1 - *operand_2;
 
 		delete _stack[0];
 		_stack.erase( _stack.begin() );
@@ -126,17 +116,12 @@ void					Avm::sub( Token const & token ) {
 
 void					Avm::mul( Token const & token ) {
 
-	IOperand const *	operand_1;
-	IOperand const *	operand_2;
-	IOperand const *	result;
-
 	std::cout << "** mul" << std::endl;
 
 	if ( _stack.size() >= 2 ) {
-		operand_1 = _stack[0];
-		operand_2 = _stack[1];
-
-		result = *operand_1 * *operand_2;
+		IOperand const * operand_1 = _stack[0];
+		IOperand const * operand_2 = _stack[1];
+		IOperand const * result = *operand_1 * *operand_2;
 
 		delete _stack[0];
 		_stack.erase( _stack.begin() );
