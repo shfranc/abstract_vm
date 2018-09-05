@@ -1,11 +1,11 @@
 #include "Reader.hpp"
 
-Reader::Reader( void ) : _filename("") {
+Reader::Reader( void ) : _filename(""), _content("") {
 
 	return;
 }
 
-Reader::Reader( std::string filename ) : _filename(filename) {
+Reader::Reader( std::string filename ) : _filename(filename), _content("") {
 
 	return;
 }
@@ -41,9 +41,16 @@ void		Reader::read_file( void ) {
 
 	std::ifstream	file( _filename );
 	std::string 	buff;
+	struct stat s;
 
 	if ( !file.is_open() )
-		throw std::invalid_argument( READ_ERROR ); // directory
+		throw std::invalid_argument( READ_ERROR );
+	if( stat( _filename.c_str(), &s ) == 0 ) {
+		if ( !(s.st_mode & S_IFREG) )
+			throw std::invalid_argument( NOT_FILE_ERROR );
+	} else {
+		throw std::invalid_argument( READ_ERROR );
+	}
 	while ( std::getline( file, buff ) )
 	{
 		_content += buff + '\n';

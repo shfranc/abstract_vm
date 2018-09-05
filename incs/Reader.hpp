@@ -3,8 +3,11 @@
 
 # include <iostream>
 # include <fstream>
+# include <sys/types.h>
+# include <sys/stat.h>
 
-# define READ_ERROR "Read error: file doesn't exist or is not open."
+# define READ_ERROR "Read error: file doesn't exist or permission is denied."
+# define NOT_FILE_ERROR "Read error: is not a REGULAR file."
 
 class Reader {
 

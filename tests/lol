@@ -1,0 +1,3 @@
+pop
+assert int8(7) ;;
+push int8(7)

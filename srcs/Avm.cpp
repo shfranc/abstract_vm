@@ -47,15 +47,17 @@ void					Avm::readUserInput() {
 		_reader->read();
 	}
 	catch ( std::invalid_argument e) {
-		_error << e.what() << std::endl;		
+		_error << e.what() << std::endl;
 	}
 }	
 
 void					Avm::parseInstructions() {
 
-	if ( !checkError( _error ) || _reader->getContent() == "" )
+	if ( !checkError( _error ) || _reader->getContent() == "" ) {
+		flushError(_error);
 		return;
-
+	}
+	
 	_parser = new Parser( _reader->getContent() );
 	_parser->parse();
 	std::cout << *_parser;
@@ -64,8 +66,9 @@ void					Avm::parseInstructions() {
 
 void					Avm::compute() {
 
-	if ( !checkError( _parser->getError() ) || !_instructions )
+	if ( !checkError( _error ) || !checkError( _parser->getError() ) || !_instructions ) {
 		return;
+	}
 
 	for (size_t i = 0; i < _instructions->size(); i++)
 	{
@@ -74,12 +77,14 @@ void					Avm::compute() {
 
 		} catch ( ExecException const & e ) {
 			std::cerr << e.what() << std::endl;
-			// return ;
+			return ;
 		}
 
 		if ( (*_instructions)[i].getInstr() == PUSH || (*_instructions)[i].getInstr() == ASSERT )
-			i++;		
+			i++;
 		
+		if ( _exit )
+			return ;
 	}
 	if ( _exit == false )
 		std::cerr << "Exec error: Missing the token `exit' at the end of the program." << std::endl;
@@ -101,7 +106,6 @@ bool					Avm::checkError( std::stringstream const & error ) const {
 
 	if ( error.str() == "")
 		return true;
-	flushError(error);
 	return false;
 }
 void					Avm::flushError( std::stringstream const & error ) const {
