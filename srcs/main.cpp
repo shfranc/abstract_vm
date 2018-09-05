@@ -31,6 +31,6 @@ int main( int argc, char const *argv[] )
 	}
 
 	delete avm;
-	// while(1);
+	while(1);
 	return 0;
 }

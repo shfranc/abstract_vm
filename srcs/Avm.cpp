@@ -16,9 +16,12 @@ Avm::~Avm( void ) {
 
 	delete _reader;
 	delete _parser;
-	// for (;!_stack.empty(); _stack.pop()) {
-		// delete _stack.top();
-	// }
+	
+	size_t len = _stack.size();
+	for ( size_t i = 0; i < len; i++) {
+		std::cout << "delete " << (_stack[i])->toString() << std::endl;
+		delete _stack[i];
+	}
 
 	return;
 }

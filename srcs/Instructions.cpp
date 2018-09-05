@@ -17,11 +17,10 @@ void					Avm::push( Token const & token ) {
 void					Avm::pop( Token const & token ) {
 	
 	std::cout << "** pop" << std::endl;
-	if ( !_stack.empty() )
+	if ( !_stack.empty() ) {
+		delete *_stack.begin();
 		_stack.erase( _stack.begin() );
-		// delete elem ?
-	else {
-		// std::cerr << "Line " << token.getLine() << ": Exec error: `" << token.getStr() << "' on an empty stack." << std::endl;
+	} else {
 		throw ExecException( std::to_string( token.getLine()), token.getStr() + EMPTY_STACK );
 	}
 	return;
@@ -36,13 +35,10 @@ void					Avm::dump( Token const & token ) {
 	}
 	else {
 		throw ExecException( std::to_string( token.getLine()), token.getStr() + EMPTY_STACK );
-		// std::cerr << "Line " << token.getLine() << ": Exec error: `" << token.getStr() << "' on an empty stack." << std::endl;
-		// exit(1);
 	}
 }
 
 void					Avm::a_ssert( Token const & token ) {
-	// IOperand const *	reference = _factory.createOperand( token.getOperandType(), captureNumericValue(token.getStr()) );
 	IOperand const *	tmp;
 
 	std::cout << "** assert" << std::endl;
@@ -53,8 +49,7 @@ void					Avm::a_ssert( Token const & token ) {
 
 			tmp = _stack.front();
 			if ( compareOperand(tmp, reference) == false ) {
-				// std::cerr << "Line " << token.getLine() << ": Exec error: `" << tmp->toString() << "' is not equal to `" << reference->toString() << "'." << std::endl;
-				std::string error = "assert: " + tmp->toString() + ASSERT_ERROR + reference->toString() + "'.";
+				std::string error = tmp->toString() + ASSERT_ERROR + reference->toString() + "'.";
 				delete reference;
 				throw ExecException( std::to_string( token.getLine()), error );			
 			}
@@ -67,8 +62,6 @@ void					Avm::a_ssert( Token const & token ) {
 	}
 	else {
 		throw ExecException( std::to_string( token.getLine()), ASSERT_EMPTY_STACK );		
-		// std::cerr << "Line " << token.getLine() << ": Exec error: `" << token.getStr() << "' on an empty stack." << std::endl;
-		// exit(1);
 	}
 	return;
 }
@@ -114,19 +107,15 @@ void					Avm::print( Token const & token ) {
 
 	std::cout << "** print" << std::endl;
 	if ( !_stack.empty() ) {
-
 		tmp = _stack.front();
 		if ( tmp->getType() == INT8 ) {
 			int c = std::stoi( tmp->toString() );
 			std::cout << static_cast<char>(c);
+		} else {
+			throw ExecException( std::to_string( token.getLine()), tmp->toString() + WRONG_TYPE );		
 		}
-		else {
-			std::cerr << "Line " << token.getLine() << ": Exec error: `" << tmp->toString() << "' is not an 8-bit integer." << std::endl;			
-		}
-	}
-	else {
-		std::cerr << "Line " << token.getLine() << ": Exec error: `" << token.getStr() << "' on an empty stack." << std::endl;
-		// exit(1);
+	} else {
+		throw ExecException( std::to_string( token.getLine()), token.getStr() + EMPTY_STACK );		
 	}
 	(void)token;
 	return;
@@ -153,10 +142,7 @@ std::string				Avm::captureNumericValue( std::string str ) const {
 
 bool					Avm::compareOperand(IOperand const * operand_1, IOperand const * operand_2) const {
 
-	if ( operand_1->getType() == operand_2->getType() )
-	{
-		if ( std::strcmp( operand_1->toString().c_str(), operand_2->toString().c_str() ) == 0 )
-			return (true);
-	}
+	if ( operand_1->toString() == operand_2->toString() )
+		return (true);
 	return (false);
 }
