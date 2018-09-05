@@ -93,7 +93,11 @@ void					Avm::sub( Token const & token ) {
 
 	std::cout << "** sub" << std::endl;
 
-	if ( _stack.size() >= 2 ) {
+	if ( _stack.empty() )
+		throw ExecException( std::to_string( token.getLine()), token.getStr() + EMPTY_STACK );
+	else if ( _stack.size() < 2 )
+		throw ExecException( std::to_string( token.getLine()), token.getStr() + LESS_OPERAND );
+	else {
 		IOperand const * operand_1 = _stack[0];
 		IOperand const * operand_2 = _stack[1];
 		IOperand const * result = *operand_1 - *operand_2;
@@ -102,13 +106,8 @@ void					Avm::sub( Token const & token ) {
 		_stack.erase( _stack.begin() );
 		delete _stack[0];
 		_stack.erase( _stack.begin() );
-
 		_stack.emplace( _stack.begin(), result );
-
-	} else if ( !_stack.empty() && _stack.size() < 2 )
-		throw ExecException( std::to_string( token.getLine()), token.getStr() + LESS_OPERAND );
-	else
-		throw ExecException( std::to_string( token.getLine()), token.getStr() + EMPTY_STACK );
+	}
 
 	return;
 }
@@ -117,7 +116,11 @@ void					Avm::mul( Token const & token ) {
 
 	std::cout << "** mul" << std::endl;
 
-	if ( _stack.size() >= 2 ) {
+	if ( _stack.empty() )
+		throw ExecException( std::to_string( token.getLine()), token.getStr() + EMPTY_STACK );
+	else if ( _stack.size() < 2 )
+		throw ExecException( std::to_string( token.getLine()), token.getStr() + LESS_OPERAND );
+	else {
 		IOperand const * operand_1 = _stack[0];
 		IOperand const * operand_2 = _stack[1];
 		IOperand const * result = *operand_1 * *operand_2;
@@ -126,13 +129,8 @@ void					Avm::mul( Token const & token ) {
 		_stack.erase( _stack.begin() );
 		delete _stack[0];
 		_stack.erase( _stack.begin() );
-
 		_stack.emplace( _stack.begin(), result );
-
-	} else if ( !_stack.empty() && _stack.size() < 2 )
-		throw ExecException( std::to_string( token.getLine()), token.getStr() + LESS_OPERAND );
-	else
-		throw ExecException( std::to_string( token.getLine()), token.getStr() + EMPTY_STACK );
+	}
 
 	return;
 }
