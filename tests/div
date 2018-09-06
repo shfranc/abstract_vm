@@ -1,0 +1,12 @@
+push int8(10)
+push int8(2)
+dump
+div
+dump
+pop
+push double(45.5)
+push double(0.0)
+dump
+div
+dump
+exit
