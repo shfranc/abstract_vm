@@ -68,13 +68,7 @@ void					Avm::compute() {
 
 	for (size_t i = 0; i < _instructions->size(); i++)
 	{
-		try {
-			i = doInstruction(i);
-
-		} catch ( ExecException const & e ) {
-			std::cerr << e.what() << std::endl;
-			return ;
-		}
+		i = doInstruction(i);		
 
 		if ( (*_instructions)[i].getInstr() == PUSH || (*_instructions)[i].getInstr() == ASSERT )
 			i++;

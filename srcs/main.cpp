@@ -1,5 +1,6 @@
 #include "Avm.hpp"
-
+# include <limits>
+# include <float.h>
 void	ft_usage( void )
 {
 	std::cerr << "./avm [input_file]" << std::endl;
@@ -18,13 +19,26 @@ int main( int argc, char const *argv[] )
 		return 1;
 	}
 
+	// std::cout << SCHAR_MAX << std::endl;
+	// std::cout << SCHAR_MIN << std::endl;
+	// std::cout << SHRT_MIN << std::endl;
+	// std::cout << SHRT_MAX << std::endl;
+	// std::cout << INT_MAX << std::endl;
+	// std::cout << INT_MIN << std::endl;
+	// std::cout << FLT_MIN << std::endl;
+	// std::cout << FLT_MAX << std::endl;
+	// std::cout << DBL_MIN << std::endl;
+	// std::cout << DBL_MAX << std::endl;
+
 	try {
 		avm->readUserInput();
 		avm->parseInstructions();
 		avm->compute();
 	} catch ( std::invalid_argument const & e) {
 		std::cerr << e.what() << std::endl;
-	}
+	} catch ( std::exception const & e) {
+		std::cerr << e.what() << std::endl;
+	}	
 
 	delete avm;
 	// while(1);

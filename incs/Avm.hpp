@@ -8,7 +8,6 @@
 #include "ExecException.hpp"
 #include <map>
 #include <sstream>
-#include <cmath>
 
 #include <string> // stoi
 

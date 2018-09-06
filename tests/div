@@ -4,8 +4,8 @@ dump
 div
 dump
 pop
-push double(45.5)
-push double(0.0)
+push double(45.0)
+push double(0.5)
 dump
 div
 dump

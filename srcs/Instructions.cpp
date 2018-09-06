@@ -5,12 +5,8 @@
 void					Avm::push( Token const & token ) {
 
 	std::cout << "** push" << std::endl;
-	try {
-		IOperand const *	tmp = _factory.createOperand( token.getOperandType(), captureNumericValue(token.getStr()) );
-		_stack.emplace( _stack.begin(), tmp );
-	} catch (std::out_of_range e) {
-		std::cerr << e.what() << std::endl;
-	}
+	IOperand const *	tmp = _factory.createOperand( token.getOperandType(), captureNumericValue(token.getStr()) );
+	_stack.emplace( _stack.begin(), tmp );
 	return;
 }
 
@@ -44,21 +40,15 @@ void					Avm::a_ssert( Token const & token ) {
 	std::cout << "** assert" << std::endl;
 
 	if ( !_stack.empty() ) {
-		try {
-			IOperand const *	reference = _factory.createOperand( token.getOperandType(), captureNumericValue(token.getStr()) );
+		IOperand const *	reference = _factory.createOperand( token.getOperandType(), captureNumericValue(token.getStr()) );
 
-			tmp = _stack.front();
-			if ( compareOperand(tmp, reference) == false ) {
-				std::string error = tmp->toString() + ASSERT_ERROR + reference->toString() + "'.";
-				delete reference;
-				throw ExecException( std::to_string( token.getLine()), error );			
-			}
+		tmp = _stack.front();
+		if ( compareOperand(tmp, reference) == false ) {
+			std::string error = tmp->toString() + ASSERT_ERROR + reference->toString() + "'.";
 			delete reference;
-
-		} catch (std::out_of_range e) {
-			std::cerr << e.what() << std::endl;
-		return ;
-	}	
+			throw ExecException( std::to_string( token.getLine()), error );			
+		}
+		delete reference;
 	}
 	else {
 		throw ExecException( std::to_string( token.getLine()), ASSERT_EMPTY_STACK );		
@@ -141,7 +131,7 @@ void					Avm::div( Token const & token ) {
 		if ( std::stod(operand_1->toString()) == 0 )
 			throw ExecException( std::to_string( token.getLine()), token.getStr() + FORBIDDEN_OPERATION );	
 
-		IOperand const * result = *operand_1 / *operand_2;
+		IOperand const * result = *operand_2 / *operand_1;
 
 		popTowOperands();
 		_stack.emplace( _stack.begin(), result );
@@ -170,7 +160,7 @@ void					Avm::mod( Token const & token ) {
 			throw ExecException( std::to_string( token.getLine()), token.getStr() + MOD_IMPOSSIBLE );
 		}	
 
-		IOperand const * result = *operand_1 % *operand_2;
+		IOperand const * result = *operand_2 % *operand_1;
 
 
 		popTowOperands();

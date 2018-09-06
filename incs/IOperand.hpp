@@ -3,7 +3,7 @@
 
 # include "Factory.hpp"
 # include "Token.hpp"
-
+# include <climits>
 
 class IOperand {
 
