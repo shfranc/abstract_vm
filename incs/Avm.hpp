@@ -8,6 +8,7 @@
 #include "ExecException.hpp"
 #include <map>
 #include <sstream>
+#include <cmath>
 
 #include <string> // stoi
 
@@ -64,7 +65,9 @@ private:
 
 	// TOOLS
 	std::string		captureNumericValue( std::string str ) const;
-	bool			compareOperand(IOperand const * O1, IOperand const * O2) const;
+	bool			compareOperand(IOperand const * operand_1, IOperand const * operand_2) const;
+	void			popTowOperands( void );
+
 };
 
 #endif

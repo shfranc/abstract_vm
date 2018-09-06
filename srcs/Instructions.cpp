@@ -79,10 +79,7 @@ void					Avm::add( Token const & token ) {
 		IOperand const * operand_2 = _stack[1];
 		IOperand const * result = *operand_1 + *operand_2;
 
-		delete _stack[0];
-		_stack.erase( _stack.begin() );
-		delete _stack[0];
-		_stack.erase( _stack.begin() );
+		popTowOperands();
 		_stack.emplace( _stack.begin(), result );
 	}
 
@@ -102,10 +99,7 @@ void					Avm::sub( Token const & token ) {
 		IOperand const * operand_2 = _stack[1];
 		IOperand const * result = *operand_1 - *operand_2;
 
-		delete _stack[0];
-		_stack.erase( _stack.begin() );
-		delete _stack[0];
-		_stack.erase( _stack.begin() );
+		popTowOperands();
 		_stack.emplace( _stack.begin(), result );
 	}
 
@@ -125,10 +119,7 @@ void					Avm::mul( Token const & token ) {
 		IOperand const * operand_2 = _stack[1];
 		IOperand const * result = *operand_1 * *operand_2;
 
-		delete _stack[0];
-		_stack.erase( _stack.begin() );
-		delete _stack[0];
-		_stack.erase( _stack.begin() );
+		popTowOperands();
 		_stack.emplace( _stack.begin(), result );
 	}
 
@@ -139,26 +130,22 @@ void					Avm::div( Token const & token ) {
 	
 	std::cout << "** div" << std::endl;
 
-	if ( _stack.size() >= 2 ) {
+	if ( _stack.empty() )
+		throw ExecException( std::to_string( token.getLine()), token.getStr() + EMPTY_STACK );
+	else if ( _stack.size() < 2 )
+		throw ExecException( std::to_string( token.getLine()), token.getStr() + LESS_OPERAND );
+	else {
 		IOperand const * operand_1 = _stack[0];
 		IOperand const * operand_2 = _stack[1];
-		
+
 		if ( std::stod(operand_1->toString()) == 0 )
-			throw ExecException( std::to_string( token.getLine()), token.getStr() + FORBIDDEN_OPERATION );
+			throw ExecException( std::to_string( token.getLine()), token.getStr() + FORBIDDEN_OPERATION );	
 
-		IOperand const * result = *operand_1 * *operand_2;
+		IOperand const * result = *operand_1 / *operand_2;
 
-		delete _stack[0];
-		_stack.erase( _stack.begin() );
-		delete _stack[0];
-		_stack.erase( _stack.begin() );
-
+		popTowOperands();
 		_stack.emplace( _stack.begin(), result );
-
-	} else if ( !_stack.empty() && _stack.size() < 2 )
-		throw ExecException( std::to_string( token.getLine()), token.getStr() + LESS_OPERAND );
-	else
-		throw ExecException( std::to_string( token.getLine()), token.getStr() + EMPTY_STACK );
+	}
 
 	return;
 }
@@ -166,7 +153,30 @@ void					Avm::div( Token const & token ) {
 void					Avm::mod( Token const & token ) {
 
 	std::cout << "** mod" << std::endl;
-	(void)token;
+
+	if ( _stack.empty() )
+		throw ExecException( std::to_string( token.getLine()), token.getStr() + EMPTY_STACK );
+	else if ( _stack.size() < 2 )
+		throw ExecException( std::to_string( token.getLine()), token.getStr() + LESS_OPERAND );
+	else {
+		IOperand const * operand_1 = _stack[0];
+		IOperand const * operand_2 = _stack[1];
+
+		if ( std::stod(operand_1->toString()) == 0 )
+			throw ExecException( std::to_string( token.getLine()), token.getStr() + FORBIDDEN_OPERATION );	
+
+		if ( operand_1->getType() == DOUBLE || operand_1->getType() == FLOAT\
+			||  operand_2->getType() == DOUBLE || operand_2->getType() == FLOAT ) {
+			throw ExecException( std::to_string( token.getLine()), token.getStr() + MOD_IMPOSSIBLE );
+		}	
+
+		IOperand const * result = *operand_1 % *operand_2;
+
+
+		popTowOperands();
+		_stack.emplace( _stack.begin(), result );
+	}
+
 	return;
 }
 
@@ -214,4 +224,13 @@ bool					Avm::compareOperand(IOperand const * operand_1, IOperand const * operan
 	if ( operand_1->toString() == operand_2->toString() )
 		return (true);
 	return (false);
+}
+
+void					Avm::popTowOperands( void ) {
+
+	delete _stack[0];
+	_stack.erase( _stack.begin() );
+	delete _stack[0];
+	_stack.erase( _stack.begin() );
+	return ;
 }

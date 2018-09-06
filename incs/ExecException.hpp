@@ -9,6 +9,7 @@
 # define WRONG_TYPE 			"' is not an 8-bit integer."
 # define LESS_OPERAND 			"' with less than TWO operands."
 # define FORBIDDEN_OPERATION	"' by ZERO is forbidden."
+# define MOD_IMPOSSIBLE			"' on float or double is not possible."
 
 class ExecException : public std::exception {
 

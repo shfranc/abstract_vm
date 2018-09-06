@@ -1,0 +1,14 @@
+push int8(10)
+push int8(2)
+dump
+mod
+dump
+push int32(4)
+mod
+dump
+push double(45.5)
+push double(0.5)
+dump
+mod
+dump
+exit
