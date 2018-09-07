@@ -9,7 +9,7 @@
 #include <map>
 #include <sstream>
 
-#include <string> // stoi
+# define PARSER_OPT	"--parser"
 
 class Avm {
 
@@ -28,6 +28,7 @@ public:
 
 	// ACCESSORS
 	std::stringstream const &	getError( void ) const;
+	Parser const *				getParser( void ) const;
 
 private:
 	Reader *						_reader;

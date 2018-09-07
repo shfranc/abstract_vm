@@ -56,11 +56,9 @@ void						Parser::analyseInstruction( Token * token ) {
 		analyseOperand( token );
 	}
 	else {
-		
 		line = _lexer->getLine();
 		prevToken = token;
 		token = _lexer->getNextToken();
-		
 		if ( token == nullptr || token->getType() == END_INSTR || token->getType() == SEP ) {
 			_instructions->push_back( *prevToken );
 			delete prevToken;
@@ -74,7 +72,6 @@ void						Parser::analyseInstruction( Token * token ) {
 			throw ParsingException( std::to_string(line), message );
 		}
 	}
-
 }
 
 // When an error is detected, the line is skipped.
@@ -95,7 +92,6 @@ void						Parser::analyseOperand( Token * token ) {
 	line = _lexer->getLine();
 	prevToken = token;				
 	token = _lexer->getNextToken();
-	
 	if ( token->getType() == OPERAND ) {
 		_instructions->push_back(*prevToken);
 		_instructions->push_back(*token);

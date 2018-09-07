@@ -103,3 +103,4 @@ void					Avm::flushError( std::stringstream const & error ) const {
 // ACCESSORS
 
 std::stringstream const &	Avm::getError( void ) const { return _error; }
+Parser const *				Avm::getParser( void ) const { return _parser; }
