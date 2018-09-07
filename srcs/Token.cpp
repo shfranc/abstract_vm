@@ -78,6 +78,8 @@ eInstructType		Token::checkInstr( void ) {
 		return (XOR);
 	if ( _str == "reverse" )
 		return (REVERSE);
+	if ( _str == "drop" )
+		return (DROP);
 	return (NO_INSTR);
 }
 

@@ -31,6 +31,7 @@ typedef enum 	InstructType
 	OR,
 	XOR,
 	REVERSE,
+	DROP,
 }				eInstructType;
 
 typedef enum	OperandType {

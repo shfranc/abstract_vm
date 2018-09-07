@@ -16,12 +16,9 @@ Avm::~Avm( void ) {
 
 	delete _reader;
 	delete _parser;
-	
-	size_t len = _stack.size();
-	for ( size_t i = 0; i < len; i++) {
-		delete _stack[i];
+	for ( _stack.begin(); !_stack.empty(); _stack.erase( _stack.begin() )) {
+		delete *(_stack.begin());
 	}
-
 	return;
 }
 
@@ -42,6 +39,7 @@ void					Avm::initExecute( void ) {
 	_execute["or"] = &Avm::b_or;
 	_execute["xor"] = &Avm::b_xor;
 	_execute["reverse"] = &Avm::reverse;
+	_execute["drop"] = &Avm::drop;
 	return;
 }
 

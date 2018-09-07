@@ -218,6 +218,17 @@ void					Avm::reverse( Token const & token ) {
 		std::reverse( _stack.begin(), _stack.end() );
 }
 
+void					Avm::drop( Token const & token ) {
+
+	if ( _stack.empty() )
+		throw ExecException( std::to_string( token.getLine()), token.getStr() + EMPTY_STACK );
+	else {
+		for ( _stack.begin(); !_stack.empty(); _stack.erase( _stack.begin() )) {
+			delete *(_stack.begin());
+		}
+	}
+}
+
 // TOOLS
 
 std::string				Avm::captureNumericValue( std::string str ) const {
