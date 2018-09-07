@@ -19,17 +19,6 @@ int main( int argc, char const *argv[] )
 		return 1;
 	}
 
-	// std::cout << SCHAR_MAX << std::endl;
-	// std::cout << SCHAR_MIN << std::endl;
-	// std::cout << SHRT_MIN << std::endl;
-	// std::cout << SHRT_MAX << std::endl;
-	// std::cout << INT_MAX << std::endl;
-	// std::cout << INT_MIN << std::endl;
-	// std::cout << FLT_MIN << std::endl;
-	// std::cout << FLT_MAX << std::endl;
-	// std::cout << DBL_MIN << std::endl;
-	// std::cout << DBL_MAX << std::endl;
-
 	try {
 		avm->readUserInput();
 		avm->parseInstructions();
