@@ -12,6 +12,10 @@ int main( int argc, char const *argv[] )
 
 	if ( argc == 1 )
 		avm = new Avm();
+	else if ( argc == 2 && (std::string(argv[1]) == PARSER_OPT) ) {
+		avm = new Avm();
+		display = true;
+	}
 	else if ( argc == 2 )
 		avm = new Avm(argv[1]);
 	else if ( argc == 3 && (std::string(argv[1]) == PARSER_OPT) ) {
