@@ -66,6 +66,7 @@ private:
 	void			b_xor( Token const & );
 	void			reverse( Token const & );
 	void			drop( Token const & );
+	void			my_sort( Token const & );
 
 	// ERROR HANDLING
 	bool			checkError( std::stringstream const & error ) const;

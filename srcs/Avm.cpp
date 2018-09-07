@@ -40,6 +40,7 @@ void					Avm::initExecute( void ) {
 	_execute["xor"] = &Avm::b_xor;
 	_execute["reverse"] = &Avm::reverse;
 	_execute["drop"] = &Avm::drop;
+	_execute["sort"] = &Avm::my_sort;
 	return;
 }
 

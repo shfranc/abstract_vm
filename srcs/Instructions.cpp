@@ -229,6 +229,19 @@ void					Avm::drop( Token const & token ) {
 	}
 }
 
+void					Avm::my_sort( Token const & token ) {
+
+	if ( _stack.empty() )
+		throw ExecException( std::to_string( token.getLine()), token.getStr() + EMPTY_STACK );
+	else if ( _stack.size() < 2 )
+		throw ExecException( std::to_string( token.getLine()), token.getStr() + LESS_OPERAND );
+	else {
+		std::sort( _stack.begin(), _stack.end(), []( IOperand const * operand_1, IOperand const * operand_2) {
+			return ( std::stod(operand_1->toString()) < std::stod(operand_2->toString()) );
+		});
+	}
+}
+
 // TOOLS
 
 std::string				Avm::captureNumericValue( std::string str ) const {
