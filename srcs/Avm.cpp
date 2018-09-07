@@ -19,7 +19,6 @@ Avm::~Avm( void ) {
 	
 	size_t len = _stack.size();
 	for ( size_t i = 0; i < len; i++) {
-		std::cout << "delete " << (_stack[i])->toString() << std::endl;
 		delete _stack[i];
 	}
 
@@ -42,6 +41,7 @@ void					Avm::initExecute( void ) {
 	_execute["and"] = &Avm::b_and;
 	_execute["or"] = &Avm::b_or;
 	_execute["xor"] = &Avm::b_xor;
+	_execute["reverse"] = &Avm::reverse;
 	return;
 }
 

@@ -8,6 +8,7 @@
 #include "ExecException.hpp"
 #include <map>
 #include <sstream>
+#include <algorithm> // reverse, sort
 
 # define PARSER_OPT	"--parser"
 
@@ -63,6 +64,7 @@ private:
 	void			b_and( Token const & );
 	void			b_or( Token const & );
 	void			b_xor( Token const & );
+	void			reverse( Token const & );
 
 	// ERROR HANDLING
 	bool			checkError( std::stringstream const & error ) const;

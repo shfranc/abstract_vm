@@ -208,6 +208,16 @@ void					Avm::b_xor( Token const & token ) {
 	}
 }
 
+void					Avm::reverse( Token const & token ) {
+
+	if ( _stack.empty() )
+		throw ExecException( std::to_string( token.getLine()), token.getStr() + EMPTY_STACK );
+	else if ( _stack.size() < 2 )
+		throw ExecException( std::to_string( token.getLine()), token.getStr() + LESS_OPERAND );
+	else
+		std::reverse( _stack.begin(), _stack.end() );
+}
+
 // TOOLS
 
 std::string				Avm::captureNumericValue( std::string str ) const {
