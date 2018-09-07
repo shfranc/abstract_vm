@@ -38,3 +38,10 @@ Z := [-]?[0..9]+.[0..9]+
 
 SEP := '\n'+
 ```
+
+# Bonus
+- Binary operator: and ('&'), or ('|'), xor ('^')
+- Drop the stack entirely.
+- Sort from smallest to biggest operand.
+- Reverse the stack, can be conbine to sort to have it both ways.
+- Display the instructions parsed.
