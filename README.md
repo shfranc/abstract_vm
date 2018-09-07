@@ -43,5 +43,5 @@ SEP := '\n'+
 - Binary operator: and ('&'), or ('|'), xor ('^')
 - Drop the stack entirely.
 - Sort from smallest to biggest operand.
-- Reverse the stack, can be conbine to sort to have it both ways.
+- Reverse the stack, can be combine to sort to have it both ways.
 - Display the instructions parsed.
