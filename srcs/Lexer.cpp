@@ -1,19 +1,10 @@
 #include "Lexer.hpp"
 
-Lexer::Lexer( void ) {
-	
-	return;
-}
+Lexer::Lexer( void ) { return; }
 
-Lexer::Lexer( std::string input ) : _pos(0), _line(1), _input(input) {
-	
-	return;
-}
+Lexer::Lexer( std::string input ) : _pos(0), _line(1), _input(input) { return; }
 
-Lexer::~Lexer( void ) {
-
-	return;
-}
+Lexer::~Lexer( void ) { return; }
 
 Token *			Lexer::getNextToken( void ) {
 
@@ -40,25 +31,13 @@ Token *			Lexer::getNextToken( void ) {
 	return ( nullptr );
 }
 
-bool			Lexer::isWhitespaces( char c ) {
+bool			Lexer::isWhitespaces( char c ) { return ( c == ' ' || c == '\t' ? 1 : 0 ); }
 
-	return ( c == ' ' || c == '\t' ? 1 : 0 );
-}
+bool			Lexer::isNewline( char c ) { return ( c == '\n' ? 1 : 0 ); }
 
-bool			Lexer::isNewline( char c ) {
+bool			Lexer::isComment( char c ) { return ( c == ';' ? 1 : 0 ); }
 
-	return ( c == '\n' ? 1 : 0 );
-}
-
-bool			Lexer::isComment( char c ) {
-
-	return ( c == ';' ? 1 : 0 );
-}
-
-bool			Lexer::isEndOfInstr( void ) {
-
-	return ( std::strncmp(&_input[_pos], ";;", 2) == 0 ? 1 : 0 );
-}
+bool			Lexer::isEndOfInstr( void ) { return ( std::strncmp(&_input[_pos], ";;", 2) == 0 ? 1 : 0 ); }
 
 void			Lexer::skipWhitespaces( void ) {
 
@@ -95,4 +74,5 @@ Token *			Lexer::createToken( void ) {
 }
 
 // ACCESSOR
+
 size_t			Lexer::getLine( void ) const { return _line; }

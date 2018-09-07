@@ -43,7 +43,6 @@ public:
 		T				value;
 
 		check = std::stold( str );
-		std::cout << str << std::endl;
 		checkFlows( check, str );
 
 		if ( _type == INT8 || _type == INT16 || _type == INT32 ) {

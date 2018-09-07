@@ -53,7 +53,6 @@ void					Avm::parseInstructions() {
 	
 	_parser = new Parser( _reader->getContent() );
 	_parser->parse();
-	std::cout << *_parser;
 	_instructions = _parser->getInstructions();
 }
 
@@ -64,8 +63,6 @@ void					Avm::compute() {
 		flushError( _parser->getError() );
 		return;
 	}
-	std::cout << "COMPUTE";
-
 	for (size_t i = 0; i < _instructions->size(); i++)
 	{
 		i = doInstruction(i);		

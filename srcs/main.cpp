@@ -1,6 +1,5 @@
 #include "Avm.hpp"
-# include <limits>
-# include <float.h>
+
 void	ft_usage( void )
 {
 	std::cerr << "./avm [input_file]" << std::endl;
@@ -30,6 +29,5 @@ int main( int argc, char const *argv[] )
 	}	
 
 	delete avm;
-	// while(1);
 	return 0;
 }
