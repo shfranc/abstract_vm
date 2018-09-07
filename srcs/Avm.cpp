@@ -40,6 +40,8 @@ void					Avm::initExecute( void ) {
 	_execute["print"] = &Avm::print;
 	_execute["exit"] = &Avm::e_xit;
 	_execute["and"] = &Avm::b_and;
+	_execute["or"] = &Avm::b_or;
+	_execute["xor"] = &Avm::b_xor;
 	return;
 }
 

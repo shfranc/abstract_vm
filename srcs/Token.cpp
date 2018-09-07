@@ -72,6 +72,10 @@ eInstructType		Token::checkInstr( void ) {
 		return (EXIT);
 	if ( _str == "and" )
 		return (AND);
+	if ( _str == "or" )
+		return (OR);
+	if ( _str == "xor" )
+		return (XOR);
 	return (NO_INSTR);
 }
 

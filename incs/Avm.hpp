@@ -61,6 +61,8 @@ private:
 
 	// INSTRUCTIONS BONUS
 	void			b_and( Token const & );
+	void			b_or( Token const & );
+	void			b_xor( Token const & );
 
 	// ERROR HANDLING
 	bool			checkError( std::stringstream const & error ) const;
