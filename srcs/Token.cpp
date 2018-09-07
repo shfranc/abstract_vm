@@ -70,6 +70,8 @@ eInstructType		Token::checkInstr( void ) {
 		return (PRINT);
 	if ( _str == "exit" )
 		return (EXIT);
+	if ( _str == "and" )
+		return (AND);
 	return (NO_INSTR);
 }
 

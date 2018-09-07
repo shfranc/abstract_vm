@@ -39,6 +39,7 @@ void					Avm::initExecute( void ) {
 	_execute["mod"] = &Avm::mod;
 	_execute["print"] = &Avm::print;
 	_execute["exit"] = &Avm::e_xit;
+	_execute["and"] = &Avm::b_and;
 	return;
 }
 

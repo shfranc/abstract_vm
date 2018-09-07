@@ -59,6 +59,9 @@ private:
 	void			print( Token const & );
 	void			e_xit( Token const & );
 
+	// INSTRUCTIONS BONUS
+	void			b_and( Token const & );
+
 	// ERROR HANDLING
 	bool			checkError( std::stringstream const & error ) const;
 	void			flushError( std::stringstream const & error ) const;

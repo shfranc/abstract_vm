@@ -104,6 +104,11 @@ public:
 		return _factory.createOperand( std::max( _type, rhs.getType() ), std::to_string(static_cast<int>(_value) % std::stoi( rhs.toString()) ) );
 	}
 
+	IOperand const *	operator&( IOperand const & rhs ) const {
+
+		return _factory.createOperand( std::max( _type, rhs.getType() ), std::to_string(static_cast<int>(_value) & std::stoi( rhs.toString()) ) );
+	}
+
 private:
 	Factory			_factory;
 	eOperandType	_type;

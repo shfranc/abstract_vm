@@ -27,6 +27,7 @@ typedef enum 	InstructType
 	MOD,
 	PRINT,
 	EXIT,
+	AND,
 }				eInstructType;
 
 typedef enum	OperandType {

@@ -126,8 +126,6 @@ void					Avm::mod( Token const & token ) {
 		popTowOperands();
 		_stack.emplace( _stack.begin(), result );
 	}
-
-	return;
 }
 
 void					Avm::print( Token const & token ) {
@@ -149,6 +147,27 @@ void					Avm::e_xit( Token const & token ) {
 
 	(void)token;
 	_exit = true;
+}
+
+// BONUS
+
+void					Avm::b_and( Token const & token ) {
+
+	if ( _stack.empty() )
+		throw ExecException( std::to_string( token.getLine()), token.getStr() + EMPTY_STACK );
+	else if ( _stack.size() < 2 )
+		throw ExecException( std::to_string( token.getLine()), token.getStr() + LESS_OPERAND );
+	else {
+		IOperand const * operand_1 = _stack[0];
+		IOperand const * operand_2 = _stack[1];
+		if ( operand_1->getType() == DOUBLE || operand_1->getType() == FLOAT\
+			||  operand_2->getType() == DOUBLE || operand_2->getType() == FLOAT ) {
+			throw ExecException( std::to_string( token.getLine()), token.getStr() + MOD_IMPOSSIBLE );
+		}
+		IOperand const * result = *operand_2 & *operand_1;
+		popTowOperands();
+		_stack.emplace( _stack.begin(), result );
+	}
 }
 
 // TOOLS
