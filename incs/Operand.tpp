@@ -9,7 +9,7 @@
 
 # define OVER_FLOW	"\033[1;31mOverFlow:\033[0m "
 # define UNDER_FLOW	"\033[1;31mUnderFlow:\033[0m "
-# define GREATER		" is greater than "
+# define GREATER	" is greater than "
 # define SMALLER	" is smaller than "
 
 class Factory;
@@ -58,8 +58,6 @@ public:
 
 	void				checkFlows( long double value, std::string str ) {
 
-		std::cout << value << std::endl;
-
 		if ( _type == INT8 && value > SCHAR_MAX )
 			throw std::overflow_error( OVER_FLOW + str + GREATER + std::to_string(SCHAR_MAX) + "." );
 		if ( _type == INT8 && value < SCHAR_MIN )
@@ -74,12 +72,12 @@ public:
 			throw std::underflow_error( UNDER_FLOW + str + SMALLER + std::to_string(INT_MIN) + "." );
 		if ( _type == FLOAT && value > FLT_MAX )
 			throw std::overflow_error( OVER_FLOW + str + GREATER + std::to_string(FLT_MAX) + "." );
-		if ( _type == FLOAT && value < FLT_MIN )
-			throw std::underflow_error( UNDER_FLOW + str + SMALLER + std::to_string(FLT_MIN) + "." );
+		if ( _type == FLOAT && value < -FLT_MAX )
+			throw std::underflow_error( UNDER_FLOW + str + SMALLER + std::to_string(-FLT_MAX) + "." );
 		if ( _type == DOUBLE && value > DBL_MAX )
 			throw std::overflow_error( OVER_FLOW + str + GREATER + std::to_string(DBL_MAX) + "." );
-		if ( _type == DOUBLE && value < DBL_MIN )
-			throw std::underflow_error( UNDER_FLOW + str + SMALLER + std::to_string(DBL_MIN) + "." );		
+		if ( _type == DOUBLE && value < -DBL_MAX )
+			throw std::underflow_error( UNDER_FLOW + str + SMALLER + std::to_string(-DBL_MAX) + "." );		
 	}
 
 	IOperand const *	operator+( IOperand const & rhs ) const {
@@ -115,7 +113,7 @@ private:
 	std::string		_str;
 
 	Operand( void );
-	Operand( Operand< T > const & src ); // avec T ou pas ?
+	Operand( Operand< T > const & src );
 	Operand & operator=( Operand< T > const & rhs );
 
 };
