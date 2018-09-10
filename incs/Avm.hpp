@@ -8,8 +8,9 @@
 #include "ExecException.hpp"
 #include <map>
 #include <sstream>
+#include <algorithm> // reverse, sort
 
-#include <string> // stoi
+# define PARSER_OPT	"--parser"
 
 class Avm {
 
@@ -28,6 +29,7 @@ public:
 
 	// ACCESSORS
 	std::stringstream const &	getError( void ) const;
+	Parser const *				getParser( void ) const;
 
 private:
 	Reader *						_reader;
@@ -57,6 +59,14 @@ private:
 	void			mod( Token const & );
 	void			print( Token const & );
 	void			e_xit( Token const & );
+
+	// INSTRUCTIONS BONUS
+	void			b_and( Token const & );
+	void			b_or( Token const & );
+	void			b_xor( Token const & );
+	void			reverse( Token const & );
+	void			drop( Token const & );
+	void			my_sort( Token const & );
 
 	// ERROR HANDLING
 	bool			checkError( std::stringstream const & error ) const;

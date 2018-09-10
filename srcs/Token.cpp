@@ -70,6 +70,18 @@ eInstructType		Token::checkInstr( void ) {
 		return (PRINT);
 	if ( _str == "exit" )
 		return (EXIT);
+	if ( _str == "and" )
+		return (AND);
+	if ( _str == "or" )
+		return (OR);
+	if ( _str == "xor" )
+		return (XOR);
+	if ( _str == "reverse" )
+		return (REVERSE);
+	if ( _str == "drop" )
+		return (DROP);
+	if ( _str == "sort" )
+		return (SORT);
 	return (NO_INSTR);
 }
 

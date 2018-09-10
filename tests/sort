@@ -1,0 +1,9 @@
+push int32(46185)
+push double(2222222222.0)
+push int8(125)
+push int16(16)
+push float(789.3)
+dump
+sort
+dump
+exit

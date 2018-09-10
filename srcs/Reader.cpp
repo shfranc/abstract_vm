@@ -1,19 +1,10 @@
 #include "Reader.hpp"
 
-Reader::Reader( void ) : _filename(""), _content("") {
+Reader::Reader( void ) : _filename(""), _content("") { return; }
 
-	return;
-}
+Reader::Reader( std::string filename ) : _filename(filename), _content("") { return; }
 
-Reader::Reader( std::string filename ) : _filename(filename), _content("") {
-
-	return;
-}
-
-Reader::~Reader( void ) {
-
-	return;
-}
+Reader::~Reader( void ) { return; }
 
 void		Reader::read( void ) {
 

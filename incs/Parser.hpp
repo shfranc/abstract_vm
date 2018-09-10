@@ -9,7 +9,7 @@
 
 # define LINE_BEGIN			"' all lines must begin with an instruction."
 # define INVALID_TOKEN		"' is not a valid token."
-# define OPERAND_EXPECTED	"' is not followed by an OPERAND."
+# define OPERAND_EXPECTED	"' is not followed by a valid OPERAND."
 # define NEWLINE_EXPECTED	"' is not followed by a <newline>."
 
 class Parser {

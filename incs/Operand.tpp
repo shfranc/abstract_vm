@@ -43,7 +43,6 @@ public:
 		T				value;
 
 		check = std::stold( str );
-		std::cout << str << std::endl;
 		checkFlows( check, str );
 
 		if ( _type == INT8 || _type == INT16 || _type == INT32 ) {
@@ -103,6 +102,21 @@ public:
 	IOperand const *	operator%( IOperand const & rhs ) const {
 
 		return _factory.createOperand( std::max( _type, rhs.getType() ), std::to_string(static_cast<int>(_value) % std::stoi( rhs.toString()) ) );
+	}
+
+	IOperand const *	operator&( IOperand const & rhs ) const {
+
+		return _factory.createOperand( std::max( _type, rhs.getType() ), std::to_string(static_cast<unsigned int>(_value) & static_cast<unsigned int>(std::stoi( rhs.toString()) )) );
+	}
+
+	IOperand const *	operator|( IOperand const & rhs ) const {
+
+		return _factory.createOperand( std::max( _type, rhs.getType() ), std::to_string(static_cast<unsigned int>(_value) | static_cast<unsigned int>(std::stoi( rhs.toString()) )) );
+	}
+
+	IOperand const *	operator^( IOperand const & rhs ) const {
+
+		return _factory.createOperand( std::max( _type, rhs.getType() ), std::to_string(static_cast<unsigned int>(_value) ^ static_cast<unsigned int>(std::stoi( rhs.toString()) )) );
 	}
 
 private:

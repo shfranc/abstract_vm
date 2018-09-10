@@ -3,10 +3,4 @@ push int8(1)
 dump
 add
 dump
-pop
-push double(45.5)
-push double(0.5)
-dump
-add
-dump
 exit

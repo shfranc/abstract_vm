@@ -1,4 +1,0 @@
-push int8(7)
-assert int8(7)
-assert int16(7)
-exit

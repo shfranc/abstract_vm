@@ -1,4 +1,4 @@
-push int8(1)
+push int8(10)
 push int8(1)
 dump
 sub

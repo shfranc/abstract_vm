@@ -10,6 +10,7 @@
 # define LESS_OPERAND 			"' with less than TWO operands."
 # define FORBIDDEN_OPERATION	"' by ZERO is forbidden."
 # define MOD_IMPOSSIBLE			"' on float or double is not possible."
+# define MISSING_EXIT			"exit' is missing at the end of the program."
 
 class ExecException : public std::exception {
 

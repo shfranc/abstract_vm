@@ -18,6 +18,11 @@ virtual IOperand const *	operator*( IOperand const & rhs ) const = 0; // Product
 virtual IOperand const *	operator/( IOperand const & rhs ) const = 0; // Quotient
 virtual IOperand const *	operator%( IOperand const & rhs ) const = 0; // Modulo
 
+// BONUS
+virtual IOperand const *	operator&( IOperand const & rhs ) const = 0; // Binary operator and
+virtual IOperand const *	operator|( IOperand const & rhs ) const = 0; // Binary operator or
+virtual IOperand const *	operator^( IOperand const & rhs ) const = 0; // Binary operator xor
+
 virtual std::string const &	toString( void ) const = 0; // String representation of the instance
 
 virtual	~IOperand( void ) {}

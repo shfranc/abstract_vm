@@ -16,13 +16,9 @@ Avm::~Avm( void ) {
 
 	delete _reader;
 	delete _parser;
-	
-	size_t len = _stack.size();
-	for ( size_t i = 0; i < len; i++) {
-		std::cout << "delete " << (_stack[i])->toString() << std::endl;
-		delete _stack[i];
+	for ( _stack.begin(); !_stack.empty(); _stack.erase( _stack.begin() )) {
+		delete *(_stack.begin());
 	}
-
 	return;
 }
 
@@ -39,6 +35,12 @@ void					Avm::initExecute( void ) {
 	_execute["mod"] = &Avm::mod;
 	_execute["print"] = &Avm::print;
 	_execute["exit"] = &Avm::e_xit;
+	_execute["and"] = &Avm::b_and;
+	_execute["or"] = &Avm::b_or;
+	_execute["xor"] = &Avm::b_xor;
+	_execute["reverse"] = &Avm::reverse;
+	_execute["drop"] = &Avm::drop;
+	_execute["sort"] = &Avm::my_sort;
 	return;
 }
 
@@ -53,7 +55,6 @@ void					Avm::parseInstructions() {
 	
 	_parser = new Parser( _reader->getContent() );
 	_parser->parse();
-	std::cout << *_parser;
 	_instructions = _parser->getInstructions();
 }
 
@@ -64,8 +65,6 @@ void					Avm::compute() {
 		flushError( _parser->getError() );
 		return;
 	}
-	std::cout << "COMPUTE";
-
 	for (size_t i = 0; i < _instructions->size(); i++)
 	{
 		i = doInstruction(i);		
@@ -77,7 +76,7 @@ void					Avm::compute() {
 			return ;
 	}
 	if ( _exit == false )
-		std::cerr << "Exec error: Missing the token `exit' at the end of the program." << std::endl;
+		throw ExecException( "", MISSING_EXIT );
 }
 
 int				Avm::doInstruction( int i ) {
@@ -98,6 +97,7 @@ bool					Avm::checkError( std::stringstream const & error ) const {
 		return true;
 	return false;
 }
+
 void					Avm::flushError( std::stringstream const & error ) const {
 
 	std::cerr << error.rdbuf();
@@ -106,3 +106,4 @@ void					Avm::flushError( std::stringstream const & error ) const {
 // ACCESSORS
 
 std::stringstream const &	Avm::getError( void ) const { return _error; }
+Parser const *				Avm::getParser( void ) const { return _parser; }
