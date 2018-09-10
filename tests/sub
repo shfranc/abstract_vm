@@ -1,5 +1,5 @@
 push int8(10)
-push int8(1)
+push double(5.5)
 dump
 sub
 dump

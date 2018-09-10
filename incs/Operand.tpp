@@ -4,7 +4,8 @@
 # include <algorithm>
 # include <limits>
 # include <float.h>
-# include <stdexcept>
+# include <sstream>
+# include <iomanip>
 # include "IOperand.hpp"
 
 # define OVER_FLOW	"\033[1;31mOverFlow:\033[0m "
@@ -23,8 +24,8 @@ public:
 		_type(type),
 		_precision(type),
 		_value(setValue( str )),
-		_str(std::to_string( _value )) {
-
+		_str(setStr()) {
+			
 		return;
 	}
 
@@ -53,6 +54,18 @@ public:
 			value = std::stod( str );
 		}
 		return (value);
+	}
+
+	std::string 			setStr( void ) {
+
+		std::stringstream	ss;
+		std::string			str;
+
+		if ( _type == FLOAT || _type == DOUBLE) {
+			ss << std::setprecision(15) << _value;
+			return ( ss.str() );
+		} else
+			return ( std::to_string(_value) );
 	}
 
 	void				checkFlows( long double value, std::string str ) {
@@ -120,11 +133,11 @@ public:
 	}
 
 private:
-	Factory			_factory;
-	eOperandType	_type;
-	int				_precision;
-	T				_value;
-	std::string		_str;
+	Factory				_factory;
+	eOperandType		_type;
+	int					_precision;
+	T					_value;
+	std::string			_str;
 
 	Operand( void );
 	Operand( Operand< T > const & src );
