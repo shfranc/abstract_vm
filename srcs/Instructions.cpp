@@ -69,7 +69,7 @@ void					Avm::sub( Token const & token ) {
 	else {
 		IOperand const * operand_1 = _stack[0];
 		IOperand const * operand_2 = _stack[1];
-		IOperand const * result = *operand_1 - *operand_2;
+		IOperand const * result = *operand_2 - *operand_1;
 		popTowOperands();
 		_stack.emplace( _stack.begin(), result );
 	}

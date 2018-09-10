@@ -18,10 +18,10 @@ Token *			Lexer::getNextToken( void ) {
 			skipNewline();
 			return ( new Token("<newline>", _line) );
 		}
-		if ( isEndOfInstr() ) {
-			skipEndOfInstr();
-			return ( new Token(";;", _line) );
-		}		
+		// if ( isEndOfInstr() ) {
+			// skipEndOfInstr();
+			// return ( new Token(";;", _line) );
+		// }		
 		if ( isComment( _input[_pos]) ) {
 			skipComment();
 		}
@@ -37,7 +37,7 @@ bool			Lexer::isNewline( char c ) { return ( c == '\n' ? 1 : 0 ); }
 
 bool			Lexer::isComment( char c ) { return ( c == ';' ? 1 : 0 ); }
 
-bool			Lexer::isEndOfInstr( void ) { return ( std::strncmp(&_input[_pos], ";;", 2) == 0 ? 1 : 0 ); }
+// bool			Lexer::isEndOfInstr( void ) { return ( std::strncmp(&_input[_pos], ";;", 2) == 0 ? 1 : 0 ); }
 
 void			Lexer::skipWhitespaces( void ) {
 

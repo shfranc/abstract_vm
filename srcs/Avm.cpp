@@ -76,7 +76,7 @@ void					Avm::compute() {
 			return ;
 	}
 	if ( _exit == false )
-		std::cerr << "Exec error: Missing the token `exit' at the end of the program." << std::endl;
+		throw ExecException( "", MISSING_EXIT );
 }
 
 int				Avm::doInstruction( int i ) {
@@ -97,6 +97,7 @@ bool					Avm::checkError( std::stringstream const & error ) const {
 		return true;
 	return false;
 }
+
 void					Avm::flushError( std::stringstream const & error ) const {
 
 	std::cerr << error.rdbuf();

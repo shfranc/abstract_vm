@@ -1,4 +1,0 @@
-push int8(9)
-push double(56.7)
-dump
-exit
