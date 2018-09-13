@@ -28,11 +28,14 @@ void						Parser::parse( void ) {
 
 void						Parser::analyseToken( Token * token ) {
 
+	size_t			line;
+
 	if ( token->getType() == INVALID ) {
+		line = _lexer->getLine();
 		std::string message = token->getStr() + INVALID_TOKEN;
 		token = skipLine( token );
 		delete token;
-		throw ParsingException( std::to_string(_lexer->getLine()), message );
+		throw ParsingException( std::to_string(line), message );
 	}
 	else if ( token->getType() == INSTR ) {
 		analyseInstruction(token);
@@ -59,7 +62,6 @@ void						Parser::analyseInstruction( Token * token ) {
 		line = _lexer->getLine();
 		prevToken = token;
 		token = _lexer->getNextToken();
-		// if ( token == nullptr || token->getType() == END_INSTR || token->getType() == SEP ) {
 		if ( token == nullptr || token->getType() == SEP ) {
 			_instructions->push_back( *prevToken );
 			delete prevToken;
